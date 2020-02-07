@@ -1,0 +1,18 @@
+click event for how to play pop up box;
+click event for play start {
+
+for loop to create 52 card deck with suits
+number generator from 0 to array.length to deal cards to player array and computer array
+remove dealt cards from deck array
+if deck.length = 0 then shuffle
+parse player arrays and apply number, suit and color to cards.
+face cards will have values of 12,13,14 and computer will rewrite them to be 10 when adding
+add card values and check if 21 (auto win)
+click events for hit or stay
+hit will deal another random card from deck and remove it from the deck array.
+check for 21/bust (if bust && Ace in hand, change ace value to 1)
+on stay click event, computer takes turn (repeat previous hit steps and math logic)
+~ end of round ~
+check for greater hand value / check for busts / check for blackjack
+win/lose message pop up window
+}
