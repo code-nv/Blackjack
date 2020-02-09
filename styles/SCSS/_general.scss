@@ -1,0 +1,42 @@
+html{
+    font-size: 62.5%;
+}
+main {
+    height: 100vh;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin:0;
+}
+
+h2 {
+    font-size: 5rem;
+    margin: 0;
+}
+
+p,
+li,
+label {
+    font-size: 1.6rem;
+}
+
+a {
+    display: inline-block;
+}
+.wrapper {
+    width: 80%;
+    max-width: 1080px;
+}
+
+
+.hide {
+    display:none;
+}
+
+.show{
+    display: block;
+}

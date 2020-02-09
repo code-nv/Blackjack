@@ -13,10 +13,111 @@
 
 </head>
 
+<main class="gameBoard">
+    <div class="wrapper">
+        <button class="rulesButton">rules</button>
+        <section class="rulesModal hide">
+            <span class="closeRules">X</span>
+            <h2>Rules</h2>
+            <input type="radio" name="rules" id="basicRules" class="leftRadio">
+            <label for="basicRules" class="rulesRadio leftRadioLabel">basic</label>
+            <input type="radio" name="rules" id="advancedRules" class="rightRadio">
+            <label for="advancedRules" class="rulesRadio rightRadioLabel">advanced</label>
+            <h3>The object is to get closest to 21 without going over</h3>
+            <ol class="basicRulesList">
+                <li>Cards 2-9 are worth face value. Jacks, Queens, and Kings are worth 10, Aces are worth 11 or 1 and may be reassigned at any time during play.</li>
+                <li>Players are dealt 2 cards.</li>
+                <li>The house is dealth 2 cards, one face down.</li>
+                <li>Players may 'hit' to recieve another card.</li>
+                <li>Player may keep hitting until they decide to stop, or 'stay'.</li>
+                <li>If player reaches a value of 21 they win automatically, or if they go over 21 they lose or 'bust'.</li>
+                <li>Once players have gone the house will reveal cards and take its turn. The house will continue to hit until reaching a minimum value of 17.</li>
+                <li>hands are tallied and anyone beating the house will win or be paid out chips.</li>
+            </ol>
 
-<button class="deal">deal</button>
-<button class="hit">hit</button>
-<button class="stay">stay</button>
+            <ol class="advancedRulesList">
+                <li>Players place bets before cards are dealt</li>
+                <li>All bets are paid out at a 3:2 ratio meaning a $500 bet will pay out $750 etc etc.</li>
+                <li>A player may 'double down' before their first hit, whereby they will double their bet and recieve only one additional card.</li>
+                <li>If a player has a pair (two of the same card) they may 'split' their hand, whereby each card becomes its own hand and the bet is doubled and split between the two hands.</li>
+                <li>For a split hand play will continue as normal and the player will play two hands, one after the other.</li>
+                <li>You may double down or further split a previously split hand.</li>
+            </ol>
+
+            <button class="letsPlay">let's play!</button>
+        </section>
+        <button class="deal">deal</button>
+        <button class="hit">hit</button>
+        <button class="stay">stay</button>
+
+        <div class="deck">
+
+        </div>
+    <!-- human player -->
+        <section class="p1">
+            <div class="card card1">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card2">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card3">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card4">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card5">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+
+        </section>
+    <!-- computer -->
+        <section class="p2">
+            <div class="card card1">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card2">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card3">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card4">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+            <div class="card card5">
+                <h3 class="cardNumber"></h3>
+                <div class="cardSuit"></div>
+                <h4 class="cardNumber"></h4>
+            </div>
+        </section>
+</div>
+
+<div class="winScreen">
+    <h2>WINNER GANIER</h2>
+    <p></p>
+</div>
+
+</main class="gameBoard">
 
 
 

@@ -1,0 +1,78 @@
+.p1,
+.p2 {
+    @include flexRow();
+}
+
+.card {
+@include flexCol();
+border: 1px solid black;
+border-radius: 5px;
+width: 150px;
+background: $white;
+}
+
+h3, h4 {
+    font-size: 2rem;
+    padding: 0 10px;
+}
+
+.card h3 {
+    align-self: flex-start;
+    margin: 15px 10px;
+}
+
+.card h4 {
+    margin: 15px 10px;
+    transform: rotate(180deg);
+    align-self: flex-end;
+}
+
+.♥️:after {
+    content: "♥️";
+    padding: 2px;
+}
+
+.♠️:after {
+    content: "♠️";
+    padding: 2px;
+}
+
+.♦️:after{
+    content: "♦️";
+    padding: 2px;
+}
+
+.♣️:after{
+    content: "♣️";
+    padding: 2px;
+}
+
+.cardSuit {
+    font-size: 4rem;
+}
+    
+.card1 {
+    position: absolute;
+    z-index: 1;
+    position: relative;
+    left: 100px;
+}
+
+.p2 .card1 {
+    background: $primary;
+}
+.card2 {
+    z-index: 2;
+}
+
+.card1,
+.card2,
+.card3,
+.card4,
+.card5 {
+    display: none;
+}
+
+.brightSuit {
+    color: $primary;
+}

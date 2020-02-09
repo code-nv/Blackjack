@@ -1,14 +1,77 @@
+// variables
+// $primary: #931806;
+$primary: #446455;
+$secondary: #d3dddc;
+$accent: #fdd262;
+$accentDarker: #f2c146;
+$dark: #444C49;
+$bright: #56A2A7;
+$black: #232323;
+$white: #FAFAFA;
 
-@mixin flexrow {
+$headingStack: "Abril Fatface", cursive;
+$bodyStack: "Montserrat", sans-serif;
+
+
+//mixins
+@mixin flexRow($justify: center) {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: $justify;
     align-items: center;
 }
 
-@mixin flexcolumn {
+@mixin flexCol($align: center) {
     display: flex;
     flex-direction: column;
+    justify-content: $align;
     align-items: center;
-    justify-content: center;
+}
+
+@mixin buttonStyle {
+    background: linear-gradient($accent 70%, darken($accentDarker, 30%) 90%);
+    box-shadow: inset 0 0 5px 2px lighten($accent, 10%), 0 0 4px darken($primary, 10%);
+    color: darken($dark, 10%);
+    padding: 10px;
+    border-radius: 10px;
+    border:none;
+    font-size: 1.5rem;
+}
+
+@mixin buttonActive {
+    background: linear-gradient($accentDarker 40%, $accent 60%);
+    box-shadow: inset 0 0 5px 3px darken($accentDarker, 40%), 0 0 3px darken($primary, 10%);
+    color: darken($dark, 10%);
+    border: 1px solid black;
+}
+
+//media query mixins
+@mixin mq1000 {
+    @media (max-width:1000px) {
+        @content;
+    }
+}
+
+@mixin mq800 {
+    @media (max-width: 800px) {
+        @content;
+    }
+}
+
+@mixin mq680 {
+    @media (max-width: 680px) {
+        @content;
+    }
+}
+
+@mixin mq600 {
+    @media (max-width: 600px) {
+        @content;
+    }
+}
+
+@mixin mq500 {
+    @media (max-width: 500px) {
+        @content;
+    }
 }
