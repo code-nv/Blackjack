@@ -5,15 +5,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    padding: 40px;
+    padding: 20px;
     background: $primary;
     color: $white;
     border-radius: 10px;
     border: 2px solid $accent;
     box-shadow: 0px 0px 0px 5px $primary;
-    width: 60%;
+    width: 70%;
     max-width: 1000px;
     height: 80%;
+    overflow-y: scroll;
     text-align: center;
 }
 
@@ -132,6 +133,12 @@ button:focus {
     outline: 2px $accent dotted;
 }
 
+.closeRules {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 .hit,
 .stay,
 .deal,
@@ -146,6 +153,27 @@ button:focus {
     left: 50%;
 }
 
+
+@include mq600 {
+    .hit,
+    .stay,
+    .deal {
+        width: 37%;
+    }
+
+    .hit,
+    .deal {
+        left: 20%;
+    }
+
+    .stay {
+        right:0;
+        left: auto;
+    }
+}
+
+
+
 .deal {
     top: -100px;
 }
@@ -155,7 +183,16 @@ button:focus {
     left: 50%;
     transform: translateX(-50%);
     box-shadow: inset 5px -2px 3px darken($accentDarker, 40%), 3px 3px 3px darken($primary, 20%);
-}
+
+    @include mq740 {
+        box-shadow: inset -4px -2px 3px darken($accentDarker, 40%), 3px 3px 3px darken($primary, 20%);
+    }
+
+    @include mq600 {
+        left: 0;
+        transform: none;
+        }
+    }
 
 .animatingOut {
     animation: hideMe 0.8s;
@@ -173,11 +210,11 @@ button:focus {
         line-height: 0;
         padding: 10px 0;
         color: transparent;
-        box-shadow: inset 20px 20px 1px 1px black;  
+        // box-shadow: inset 20px 20px 1px 1px black;  
     }
 
     60% {
-        box-shadow: inset 20px 80px 1px 1px black; 
+        box-shadow: inset 50px 80px 1px 1px black; 
     }
     61% {
         background: $primary;
@@ -205,16 +242,16 @@ button:focus {
         border-right: 100% solid $primary;
         padding: 10px 0;
         color: transparent;
-        box-shadow: inset 20px 20px 1px 1px black;  
+        // box-shadow: inset 20px 20px 1px 1px black;  
     }
 
     60% {
-        box-shadow: inset 20px 100px 1px 1px black; 
+        box-shadow: inset 20px 80px 1px 1px black; 
         background: $primary;
     }
     61% {
         @extend .deal;
-        box-shadow: inset 20px 50px 1px 1px black; 
+        box-shadow: inset 20px 80px 1px 1px black; 
     }
 
     80% {

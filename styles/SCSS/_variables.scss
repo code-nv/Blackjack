@@ -106,14 +106,20 @@ $bodyStack: "Montserrat", sans-serif;
     }
 }
 
-@mixin mq680 {
-    @media (max-width: 680px) {
+@mixin mq600 {
+    @media (max-width: 600px) {
+        @content;
+    }
+}
+
+@mixin mq500 {
+    @media (max-width: 500px){
         @content;
     }
 }
 
 
-@mixin mqh510 {
+@mixin mqh580 {
     @media (max-height: 580px) {
         @content;
     }

@@ -11,6 +11,8 @@ app.p1Total = 0;
 app.p2Total = 0;
 app.p1Clone = [];
 app.p2Clone = [];
+app.p1ScoreClone;
+app.p2ScoreClone;
 
 
 
@@ -24,18 +26,24 @@ app.captureInitialState = function(){
     app.p1Clone[i] = $(`.p1 .card${y}`).clone();
     app.p2Clone[i] = $(`.p2 .card${y}`).clone();
     }
+    app.p1ScoreClone = $(`.p1Score p`).clone();
+    app.p2ScoreClone = $(`.p2Score p`).clone();
 }
 
 // on next round this gets rid of old html and restores initial state
 app.restoreInitialState = function(){
-    for(let i=0, y=1; i<5; i++, y++){
+    for(let i=0, y=1; i<6; i++, y++){
         $(`.p1 .card${y}`).replaceWith(app.p1Clone[i]);
         $(`.p2 .card${y}`).replaceWith(app.p2Clone[i]);
-
         // recloning the empty player areas so I can rinse and repeate
         app.p1Clone[i] = $(`.p1 .card${y}`).clone();
         app.p2Clone[i] = $(`.p2 .card${y}`).clone();
     }
+    $(`.p1Score p`).replaceWith(app.p1ScoreClone);
+    $(`.p2Score p`).replaceWith(app.p2ScoreClone);
+
+    app.p1ScoreClone = $(`.p1Score p`).clone();
+    app.p2ScoreClone = $(`.p2Score p`).clone();
 }
 
 app.createDeck = () => {
@@ -395,11 +403,6 @@ app.init = function(){
         app.nextRound();
         app.showMe();
         app.restoreInitialState();
-    });
-
-    $('.dark').on('click', () => {
-        $(':root').css({
-        "--primary": "red"});
     });
 };
 

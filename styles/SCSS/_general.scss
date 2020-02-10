@@ -1,13 +1,27 @@
 html{
     font-size: 62.5%;
     background: darken($secondary, 70%);
+
+    @include mq740 {
+        background: linear-gradient(darken($primary, 20%) 10%, $primary);
+    }
 }
 
-
 .wrapper {
-    // position: relative;
+    width: 90%;
+    max-width: 1400px;
     perspective: 500px;
     height:100vh;
+    margin: 0 auto;
+
+    @include mq740 {
+        perspective: none;
+        width: 95%;
+    }
+
+    @include mq500 {
+        width: 100%;
+    }
 }
 
 h1,
@@ -32,6 +46,13 @@ h1 {
     text-shadow: 2px 2px 20px $accent;
     font-size: 4rem;
     animation: flicker 7s infinite;
+
+    @include mq740 {
+        position: absolute;
+        font-size: 3rem;
+        z-index: 1;
+        top: 20px;
+    }
 }
 
 @keyframes flicker {
@@ -65,12 +86,6 @@ label {
 a {
     display: inline-block;
 }
-.wrapper {
-    width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
 
 .hide {
     display:none;
