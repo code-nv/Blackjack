@@ -2,12 +2,19 @@
 // $primary: #931806;
 $primary: #446455;
 $secondary: #d3dddc;
+$tertiary: #c7b19c;
 $accent: #fdd262;
 $accentDarker: #f2c146;
 $dark: #444C49;
-$bright: #56A2A7;
+// $bright: #56A2A7;
 $black: #232323;
 $white: #FAFAFA;
+
+:root {
+    --primary: 446455;
+    --secondary-color: white;
+    --text-color: black; 
+}
 
 $headingStack: "Abril Fatface", cursive;
 $bodyStack: "Montserrat", sans-serif;
@@ -36,6 +43,7 @@ $bodyStack: "Montserrat", sans-serif;
     border-radius: 10px;
     border:none;
     font-size: 1.5rem;
+    height: 3.7rem;
 }
 
 @mixin buttonActive {
@@ -45,15 +53,55 @@ $bodyStack: "Montserrat", sans-serif;
     border: 1px solid black;
 }
 
+@mixin cardBack {
+    background: radial-gradient(
+    $primary 10%, 
+    $white 10%,
+    $white 12%,
+    $primary 12%,
+    $primary 22%, 
+    $white 22%,
+    $white 24%,
+    $primary 24%,
+    $primary 34%,
+    $white 34%,
+    $white 36%,
+    $primary 36%,
+    $primary 46%,
+    $white 46%,
+    $white 48%,
+    $primary 48%,
+    $primary 58%,
+    $white 58%,
+    $white 60%,
+    $primary 60%,
+    $primary 70%,
+    $white 70%,
+    $white 72%,
+    $primary 72%,
+    $primary 82%,
+    $white 82%,
+    $white 84%,
+    $primary 84%,
+    $primary 94%,
+    $white 94%,
+    $white 96%,
+    $primary 96%
+    );
+}
+
+@import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900&display=swap');
+
+
 //media query mixins
-@mixin mq1000 {
-    @media (max-width:1000px) {
+@mixin mq950 {
+    @media (max-width:950px) {
         @content;
     }
 }
-
-@mixin mq800 {
-    @media (max-width: 800px) {
+// major break
+@mixin mq740 {
+    @media (max-width: 740px) {
         @content;
     }
 }
@@ -64,14 +112,9 @@ $bodyStack: "Montserrat", sans-serif;
     }
 }
 
-@mixin mq600 {
-    @media (max-width: 600px) {
-        @content;
-    }
-}
 
-@mixin mq500 {
-    @media (max-width: 500px) {
+@mixin mqh510 {
+    @media (max-height: 580px) {
         @content;
     }
 }

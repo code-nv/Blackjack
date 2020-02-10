@@ -4,24 +4,29 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Document</title>
+    <title>Blackjack</title>
     <script src='https://kit.fontawesome.com/8ffef1b7fa.js' crossorigin='anonymous'></script>
 
+    <!-- jQuery -->
     <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
     <link rel='stylesheet' href='./styles/style.css'>
 
 </head>
 
-<main class="gameBoard">
+<main>
+    <h1>Nick's Blackjack</h1>
+    <button class="dark">dark</button>
     <div class="wrapper">
-        <button class="rulesButton">rules</button>
         <section class="rulesModal hide">
-            <span class="closeRules">X</span>
+            <button class="closeRules">X</button>
             <h2>Rules</h2>
-            <input type="radio" name="rules" id="basicRules" class="leftRadio">
+            <input type="radio" name="rules" id="basicRules" class="leftRadio rulesRadioInput" checked>
             <label for="basicRules" class="rulesRadio leftRadioLabel">basic</label>
-            <input type="radio" name="rules" id="advancedRules" class="rightRadio">
+            <input type="radio" name="rules" id="advancedRules" class="rightRadio rulesRadioInput">
             <label for="advancedRules" class="rulesRadio rightRadioLabel">advanced</label>
             <h3>The object is to get closest to 21 without going over</h3>
             <ol class="basicRulesList">
@@ -46,81 +51,100 @@
 
             <button class="letsPlay">let's play!</button>
         </section>
-        <button class="deal">deal</button>
-        <button class="hit">hit</button>
-        <button class="stay">stay</button>
+        
 
-        <div class="deck">
+        <section class="gameBoard">
+            
+            <div class="deck">
+            </div>
+        <!-- human player -->
+            <section class="p1">
+                <button class="deal">deal</button>
+                <button class="hit">hit</button>
+                <button class="stay">stay</button>
+                <div class="scoreCounter p1Score" title="hand value">
+                    <p> </p>
+                </div>
+                <div class="card card1">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card2">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card3 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card4 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card5 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card6 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
 
-        </div>
-    <!-- human player -->
-        <section class="p1">
-            <div class="card card1">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card2">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card3">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card4">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card5">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-
+            </section>
+        <!-- computer -->
+            <section class="p2">
+                <button class="rulesButton">rules</button>
+                <div class="scoreCounter p2Score" title="hand value">
+                    <p> </p>
+                </div>
+                <div class="card card1 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card2">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card3 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card4 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                <div class="card card5 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                <div class="card card6 fadeInRight">
+                    <h3 class="cardNumber"></h3>
+                    <div class="cardSuit"></div>
+                    <h4 class="cardNumber"></h4>
+                </div>
+                </div>
+            </section>
         </section>
-    <!-- computer -->
-        <section class="p2">
-            <div class="card card1">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card2">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card3">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card4">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-            <div class="card card5">
-                <h3 class="cardNumber"></h3>
-                <div class="cardSuit"></div>
-                <h4 class="cardNumber"></h4>
-            </div>
-        </section>
-</div>
-
-<div class="winScreen">
-    <h2>WINNER GANIER</h2>
-    <p></p>
-</div>
-
+    </div>
+    <div class="winScreen">
+        <h2></h2>
+        <p></p>
+        <button class="playAgain">
+            play again
+        </button>
+        
+    </div>
 </main class="gameBoard">
-
-
-
-    <script src='script.js'></script>
+<script src='script.js'></script>
 </body>
 </html>
