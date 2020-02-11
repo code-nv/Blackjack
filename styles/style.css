@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Fira+Sans|Playfair+Display&display=swap");
 html {
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
@@ -289,14 +289,14 @@ h6 {
 
 h1 {
   text-transform: uppercase;
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: "Cinzel Decorative", cursive;
   font-weight: 700;
   position: absolute;
   top: 20px;
   left: 0;
   width: 100%;
   text-align: center;
-  color: #FAFAFA;
+  color: #fafafa;
   text-shadow: 2px 2px 20px #fdd262;
   font-size: 4rem;
   -webkit-animation: flicker 7s infinite;
@@ -345,14 +345,56 @@ h1 {
 }
 
 h2 {
+  font-family: "Cinzel Decorative", cursive;
   font-size: 5rem;
-  margin: 0;
+  margin: 2%;
+}
+
+.p1 h2,
+.p2 h2 {
+  position: absolute;
+  color: #fdd262;
+  opacity: 0.9;
+  font-size: 2rem;
+  top: 5px;
+  right: 5px;
+  font-family: serif;
+  text-transform: capitalize;
+}
+
+.earnings {
+  position: absolute;
+  color: #fdd262;
+  width: calc(100% - 20px);
+  text-align: center;
+}
+
+.bettingPool {
+  position: absolute;
+  top: 20%;
+  color: #fdd262;
+  font-size: 3rem;
+}
+
+@media (max-width: 600px) {
+  .bettingPool {
+    font-size: 2.5rem;
+    top: 0;
+    left: 20px;
+  }
+}
+
+.rulesModal h3 {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: calc(1.5rem + 50%);
+  margin: 2%;
+  text-decoration: underline;
 }
 
 p,
 li,
 label {
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
 
 a {
@@ -377,7 +419,7 @@ a {
           transform: translate(-50%, -50%);
   padding: 20px;
   background: #446455;
-  color: #FAFAFA;
+  color: #fafafa;
   border-radius: 10px;
   border: 2px solid #fdd262;
   -webkit-box-shadow: 0px 0px 0px 5px #446455;
@@ -423,7 +465,8 @@ a {
   top: 5px;
   width: 100px;
   background: #fdd262;
-  content: "If using keyboard, left & right arrow keys will switch ruleset";
+  text-transform: lowercase;
+  content: "If using a keyboard, the arrow keys will switch ruleset";
 }
 
 .rulesRadio {
@@ -435,8 +478,9 @@ a {
   padding: 10px;
   border-radius: 10px;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   height: 3.7rem;
+  text-transform: capitalize;
 }
 
 .leftRadioLabel {
@@ -490,8 +534,9 @@ a {
   padding: 10px;
   border-radius: 10px;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   height: 3.7rem;
+  text-transform: capitalize;
 }
 
 .letsPlay:active {
@@ -512,6 +557,7 @@ a {
 .deal,
 .hit,
 .stay,
+.bet,
 .playAgain {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
@@ -521,8 +567,9 @@ a {
   padding: 10px;
   border-radius: 10px;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   height: 3.7rem;
+  text-transform: capitalize;
   position: relative;
   z-index: 1;
 }
@@ -532,7 +579,8 @@ a {
 .deal:active,
 .hit:active,
 .stay:active,
-.playAgain:active {
+.playAgain:active,
+.bet:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
   -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
@@ -554,7 +602,8 @@ button:focus {
 .hit,
 .stay,
 .deal,
-.rulesButton {
+.rulesButton,
+.bet {
   position: absolute;
   top: -50px;
   width: 40%;
@@ -562,28 +611,66 @@ button:focus {
           box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
 }
 
-.stay {
+.stay,
+.bet {
   left: 50%;
+}
+
+.hit,
+.stay,
+.bet {
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.hit:disabled,
+.stay:disabled,
+.bet:disabled {
+  opacity: 0.4;
+}
+
+.hit:disabled.hit:active,
+.stay:disabled.stay:active,
+.bet:disabled.bet:active {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
+  background: linear-gradient(#fdd262 70%, #956d0a 90%);
+  -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
+          box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
+  border: none;
+}
+
+.deal,
+.bet {
+  top: -95px;
 }
 
 @media (max-width: 600px) {
   .hit,
   .stay,
-  .deal {
+  .deal,
+  .bet {
     width: 37%;
+    height: 50px;
+    top: -62px;
   }
-  .hit,
-  .deal {
+  .deal,
+  .hit {
     left: 20%;
   }
+  .bet,
   .stay {
     right: 0;
     left: auto;
   }
-}
-
-.deal {
-  top: -100px;
+  .deal,
+  .bet {
+    padding: 5px;
+    top: -120px;
+  }
+  .rulesButton {
+    height: 50px;
+    top: -62px;
+  }
 }
 
 .rulesButton {
@@ -654,8 +741,9 @@ button:focus {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     height: 3.7rem;
+    text-transform: capitalize;
     background: transparent;
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -697,8 +785,9 @@ button:focus {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     height: 3.7rem;
+    text-transform: capitalize;
     background: transparent;
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -716,8 +805,9 @@ button:focus {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     height: 3.7rem;
+    text-transform: capitalize;
     background: transparent;
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -759,8 +849,9 @@ button:focus {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     height: 3.7rem;
+    text-transform: capitalize;
     background: transparent;
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -811,9 +902,8 @@ button:focus {
           align-items: flex-end;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1b2721), to(#446455));
   background: linear-gradient(#1b2721 10%, #446455);
-  border: 10px solid #876206;
-  -webkit-box-shadow: 0px 10px 0px #543c00;
-          box-shadow: 0px 10px 0px #543c00;
+  -webkit-box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #35270f;
+          box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #35270f;
   border-radius: 50px 50px 50% 50%;
   padding: 50px 40px;
   margin: 0 auto;
@@ -860,7 +950,7 @@ button:focus {
 }
 
 .deck {
-  background: radial-gradient(#446455 10%, #FAFAFA 10%, #FAFAFA 12%, #446455 12%, #446455 22%, #FAFAFA 22%, #FAFAFA 24%, #446455 24%, #446455 34%, #FAFAFA 34%, #FAFAFA 36%, #446455 36%, #446455 46%, #FAFAFA 46%, #FAFAFA 48%, #446455 48%, #446455 58%, #FAFAFA 58%, #FAFAFA 60%, #446455 60%, #446455 70%, #FAFAFA 70%, #FAFAFA 72%, #446455 72%, #446455 82%, #FAFAFA 82%, #FAFAFA 84%, #446455 84%, #446455 94%, #FAFAFA 94%, #FAFAFA 96%, #446455 96%);
+  background: radial-gradient(#446455 10%, #fafafa 10%, #fafafa 12%, #446455 12%, #446455 22%, #fafafa 22%, #fafafa 24%, #446455 24%, #446455 34%, #fafafa 34%, #fafafa 36%, #446455 36%, #446455 46%, #fafafa 46%, #fafafa 48%, #446455 48%, #446455 58%, #fafafa 58%, #fafafa 60%, #446455 60%, #446455 70%, #fafafa 70%, #fafafa 72%, #446455 72%, #446455 82%, #fafafa 82%, #fafafa 84%, #446455 84%, #446455 94%, #fafafa 94%, #fafafa 96%, #446455 96%);
   position: absolute;
   top: 20px;
   right: 20px;
@@ -870,8 +960,8 @@ button:focus {
   border-radius: 5px;
   -webkit-transform: rotateX(30deg);
           transform: rotateX(30deg);
-  -webkit-box-shadow: -1px 2px 0 #FAFAFA, -2px 4px 0 #232323, -3px 6px 0 #FAFAFA, -4px 8px 0 #232323, -5px 10px 0 #FAFAFA, -6px 12px 0 #232323, -7px 14px 0 #FAFAFA, -8px 16px 0 #232323, -9px 18px 0 #FAFAFA;
-          box-shadow: -1px 2px 0 #FAFAFA, -2px 4px 0 #232323, -3px 6px 0 #FAFAFA, -4px 8px 0 #232323, -5px 10px 0 #FAFAFA, -6px 12px 0 #232323, -7px 14px 0 #FAFAFA, -8px 16px 0 #232323, -9px 18px 0 #FAFAFA;
+  -webkit-box-shadow: -1px 2px 0 #fafafa, -2px 4px 0 #232323, -3px 6px 0 #fafafa, -4px 8px 0 #232323, -5px 10px 0 #fafafa, -6px 12px 0 #232323, -7px 14px 0 #fafafa, -8px 16px 0 #232323, -9px 18px 0 #fafafa;
+          box-shadow: -1px 2px 0 #fafafa, -2px 4px 0 #232323, -3px 6px 0 #fafafa, -4px 8px 0 #232323, -5px 10px 0 #fafafa, -6px 12px 0 #232323, -7px 14px 0 #fafafa, -8px 16px 0 #232323, -9px 18px 0 #fafafa;
 }
 
 @media (max-width: 740px) {
@@ -960,9 +1050,9 @@ button:focus {
   width: calc(20px + 1.7rem);
   font-size: 2rem;
   background: radial-gradient(circle at top left, grey 20%, #232323 40%);
-  -webkit-box-shadow: inset 0 0 2px 0 #FAFAFA;
-          box-shadow: inset 0 0 2px 0 #FAFAFA;
-  color: #FAFAFA;
+  -webkit-box-shadow: inset 0 0 2px 0 #fafafa;
+          box-shadow: inset 0 0 2px 0 #fafafa;
+  color: #fafafa;
   border-radius: 5px;
 }
 
@@ -983,7 +1073,7 @@ button:focus {
     border: none;
     -webkit-box-shadow: none;
             box-shadow: none;
-    color: #FAFAFA;
+    color: #fafafa;
     font-family: cursive;
     left: -15px;
     top: -60px;
@@ -1031,12 +1121,13 @@ button:focus {
           box-shadow: -0.5px 1px #c7c7c7, -1.5px 1.5px black;
   border-radius: 5px;
   width: 40%;
-  background: #FAFAFA;
+  background: #fafafa;
   -webkit-transform: rotateX(10deg);
           transform: rotateX(10deg);
 }
 
-.card h3, .card h4 {
+.card h3,
+.card h4 {
   font-size: 2rem;
   padding: 0 2%;
   margin: 5% 5%;
@@ -1090,7 +1181,7 @@ button:focus {
 }
 
 .p2 .card1 {
-  background: radial-gradient(#446455 10%, #FAFAFA 10%, #FAFAFA 12%, #446455 12%, #446455 22%, #FAFAFA 22%, #FAFAFA 24%, #446455 24%, #446455 34%, #FAFAFA 34%, #FAFAFA 36%, #446455 36%, #446455 46%, #FAFAFA 46%, #FAFAFA 48%, #446455 48%, #446455 58%, #FAFAFA 58%, #FAFAFA 60%, #446455 60%, #446455 70%, #FAFAFA 70%, #FAFAFA 72%, #446455 72%, #446455 82%, #FAFAFA 82%, #FAFAFA 84%, #446455 84%, #446455 94%, #FAFAFA 94%, #FAFAFA 96%, #446455 96%);
+  background: radial-gradient(#446455 10%, #fafafa 10%, #fafafa 12%, #446455 12%, #446455 22%, #fafafa 22%, #fafafa 24%, #446455 24%, #446455 34%, #fafafa 34%, #fafafa 36%, #446455 36%, #446455 46%, #fafafa 46%, #fafafa 48%, #446455 48%, #446455 58%, #fafafa 58%, #fafafa 60%, #446455 60%, #446455 70%, #fafafa 70%, #fafafa 72%, #446455 72%, #446455 82%, #fafafa 82%, #fafafa 84%, #446455 84%, #446455 94%, #fafafa 94%, #fafafa 96%, #446455 96%);
 }
 
 .card2 {

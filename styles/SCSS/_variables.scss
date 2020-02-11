@@ -1,7 +1,7 @@
 // variables
 // $primary: #931806;
 $primary: #446455;
-$secondary: #d3dddc;
+$secondary: #889b9b;
 $tertiary: #c7b19c;
 $accent: #fdd262;
 $accentDarker: #f2c146;
@@ -15,9 +15,11 @@ $white: #fafafa;
 	--secondary-color: white;
 	--text-color: black;
 }
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Fira+Sans|Playfair+Display&display=swap");
 
-$headingStack: "Abril Fatface", cursive;
-$bodyStack: "Montserrat", sans-serif;
+$titleStack: "Cinzel Decorative", cursive;
+$headingStack: "Playfair Display", serif;
+$bodyStack: "Fira Sans Condensed", sans-serif;
 
 //mixins
 @mixin flexRow($justify: center) {
@@ -42,8 +44,9 @@ $bodyStack: "Montserrat", sans-serif;
 	padding: 10px;
 	border-radius: 10px;
 	border: none;
-	font-size: 1.5rem;
-	height: 3.7rem;
+    font-size: 1.6rem;
+    height: 3.7rem;
+    text-transform: capitalize;
 }
 
 @mixin buttonActive {
@@ -90,8 +93,6 @@ $bodyStack: "Montserrat", sans-serif;
 		$primary 96%
 	);
 }
-
-@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900&display=swap");
 
 //media query mixins
 @mixin mq950 {

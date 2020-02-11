@@ -51,8 +51,9 @@
 	left: 5px;
 	top: 5px;
 	width: 100px;
-	background: $accent;
-	content: "If using keyboard, left & right arrow keys will switch ruleset";
+    background: $accent;
+    text-transform: lowercase;
+	content: "If using a keyboard, the arrow keys will switch ruleset";
 }
 
 .rulesRadio {
@@ -112,6 +113,7 @@
 .deal,
 .hit,
 .stay,
+.bet,
 .playAgain {
 	@include buttonStyle;
 	position: relative;
@@ -122,7 +124,8 @@
 .deal:active,
 .hit:active,
 .stay:active,
-.playAgain:active {
+.playAgain:active,
+.bet:active {
 	@include buttonActive;
 }
 
@@ -139,7 +142,8 @@ button:focus {
 .hit,
 .stay,
 .deal,
-.rulesButton {
+.rulesButton,
+.bet {
 	position: absolute;
 	top: -50px;
 	width: 40%;
@@ -147,30 +151,68 @@ button:focus {
 		3px 3px 3px darken($primary, 20%);
 }
 
-.stay {
+.stay,
+.bet {
 	left: 50%;
+}
+
+.hit,
+.stay,
+.bet {
+    transition: opacity 0.3s;
+}
+
+.hit:disabled,
+.stay:disabled,
+.bet:disabled {
+	opacity: 0.4;
+}
+
+.hit:disabled.hit:active,
+.stay:disabled.stay:active,
+.bet:disabled.bet:active {
+	background: linear-gradient($accent 70%, darken($accentDarker, 30%) 90%);
+	box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
+	border: none;
+}
+
+
+.deal,
+.bet {
+	top: -95px;
 }
 
 @include mq600 {
 	.hit,
 	.stay,
-	.deal {
-		width: 37%;
+    .deal,
+    .bet {
+        width: 37%;
+        height: 50px;
+        top: -62px;
 	}
 
-	.hit,
-	.deal {
+    .deal,
+    .hit {
 		left: 20%;
 	}
 
-	.stay {
+    .bet,
+    .stay {
 		right: 0;
-		left: auto;
-	}
-}
+        left: auto;
+    }
+    
+    .deal,
+    .bet {
+        padding: 5px;
+        top: -120px;
+    }
 
-.deal {
-	top: -100px;
+    .rulesButton {
+        height: 50px;
+        top: -62px;
+    }
 }
 
 .rulesButton {
@@ -207,7 +249,6 @@ button:focus {
 		line-height: 0;
 		padding: 10px 0;
 		color: transparent;
-		// box-shadow: inset 20px 20px 1px 1px black;
 	}
 
 	60% {
@@ -238,7 +279,6 @@ button:focus {
 		border-right: 100% solid $primary;
 		padding: 10px 0;
 		color: transparent;
-		// box-shadow: inset 20px 20px 1px 1px black;
 	}
 
 	60% {

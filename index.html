@@ -53,14 +53,18 @@
         
 
         <section class="gameBoard">
+            <p class="bettingPool">Current Bet $0 </p>
             
             <div class="deck">
             </div>
         <!-- human player -->
             <section class="p1">
+                <p class="earnings">Wallet: $500 </p>
+                <h2>player 1</h2>
                 <button class="deal">deal</button>
-                <button class="hit">hit</button>
-                <button class="stay">stay</button>
+                <button class="bet">bet $50</button>
+                <button class="hit" disabled>hit</button>
+                <button class="stay" disabled>stay</button>
                 <div class="scoreCounter p1Score" title="hand value">
                     <p> </p>
                 </div>
@@ -98,6 +102,7 @@
             </section>
         <!-- computer -->
             <section class="p2">
+                <h2>House</h2>
                 <button class="rulesButton">rules</button>
                 <div class="scoreCounter p2Score" title="hand value">
                     <p> </p>

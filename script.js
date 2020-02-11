@@ -92,6 +92,28 @@ app.showMe = () => {
 		.removeAttr("disabled");
 };
 
+app.current = 500;
+app.pool = 0;
+$myMoney = $(".earnings");
+$bettingPool = $(".bettingPool");
+app.winner = true;
+
+app.betLogic = () => {
+	app.current -= 50;
+	app.pool += 50;
+	$myMoney.text("Wallet: $" + app.current);
+	$bettingPool.text("Current Bet $" + app.pool);
+};
+
+app.payOutLogic = () => {
+	if (app.winner) {
+		app.current += app.pool * 1.5;
+	}
+	$myMoney.text("Wallet: $" + app.current);
+	app.pool = 0;
+	$bettingPool.text("Current Bet $" + app.pool);
+};
+
 app.checkTotal = (player, playerHand, playerTotal) => {
 	// parsing card number from raw data by splitting and taking the first value (card format ex [5, clubs])
 	app[player].push(app[playerHand][0].split(" "));
@@ -241,7 +263,8 @@ app.hit = function(player, playerHand, playerTotal) {
 			$(`.${player}Score p`).text(app[playerTotal]);
 		}
 		if (app.p1Total > 21) {
-			app.lose();
+			app.endRound();
+			app.freezePlayer();
 		} else {
 			app.checkWin();
 		}
@@ -252,15 +275,27 @@ app.hit = function(player, playerHand, playerTotal) {
 app.checkWin = function() {
 	if (app.p1Total == 21) {
 		app.winBy21();
+		app.freezePlayer();
 	} else if (app.p2Total == 21) {
 		app.loseSpecial();
+		app.freezePlayer();
 	}
 };
 
-// app.freezePlayerToggle = () => {
-//     const $hitButton = $('.hit');
-//     const $stayButton = $('.stay');
-// }
+const $hitButton = $(".hit");
+const $stayButton = $(".stay");
+const $betButton = $(".bet");
+// stop player from hitting / staying outside of their turn
+app.unfreezePlayer = () => {
+	$hitButton.removeAttr("disabled");
+	$stayButton.removeAttr("disabled");
+	$betButton.attr("disabled", "true");
+};
+
+app.freezePlayer = () => {
+	$hitButton.attr("disabled", "true");
+	$stayButton.attr("disabled", "true");
+};
 
 // reveal houses' facedown card
 app.showHouse = function() {
@@ -293,10 +328,14 @@ app.computerHit = function() {
 };
 
 app.endRound = function() {
+	app.winner = true;
+	app.freezePlayer();
+	app.payOutLogic();
 	if (app.p1Total === 21) {
 		app.winBy21();
 	} else if (app.p2Total === 21) {
 		app.loseSpecial();
+		app.winner = false;
 	} else if (app.p2Total > 21) {
 		app.winEnd();
 	} else if (app.p1Total > app.p2Total) {
@@ -305,6 +344,7 @@ app.endRound = function() {
 		app.winTie();
 	} else {
 		app.lose();
+		app.winner = false;
 	}
 };
 
@@ -319,6 +359,8 @@ app.nextRound = function() {
 	app.p2Hand.length = 0;
 	app.p1Total = 0;
 	app.p2Total = 0;
+
+	$betButton.removeAttr("disabled");
 };
 
 // ===================== //
@@ -359,6 +401,13 @@ app.loseSpecial = function() {
 	$win.children("p").text(`house got 21, that's just bad luck`);
 };
 
+// ========================================= //
+//  IINNNNNIIIITTTTTTIIAALLLIIIZEEEE IIIITTT //
+// ========================================= //
+
+
+
+
 app.init = function() {
 	// was having weird resizing issues with vh units on firefox
 	$(window).on("resize", function() {
@@ -373,11 +422,15 @@ app.init = function() {
 		$(".rulesModal").toggleClass("show, hide");
 	});
 
+	$(".bet").on("click", function() {
+		app.betLogic();
+	});
+
 	$(`.deal`).on("click", function(e) {
 		e.preventDefault();
 		app.dealCards();
 		app.hideMe();
-		// app.freezePlayerToggle();
+		app.unfreezePlayer();
 		app.checkTotal("p1", "p1Hand", "p1Total");
 		app.checkTotal("p2", "p2Hand", "p2Total");
 		app.populateCards("p1Hand", "p1");
@@ -391,7 +444,7 @@ app.init = function() {
 
 	$(`.stay`).on("click", function(e) {
 		e.preventDefault();
-		// app.freezePlayerToggle();
+		app.freezePlayer();
 		app.showHouse();
 		app.computerHit();
 	});
