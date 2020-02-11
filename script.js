@@ -14,6 +14,16 @@ app.p2Clone = [];
 app.p1ScoreClone;
 app.p2ScoreClone;
 
+// betting caching / setting up
+app.current = 500;
+app.pool = 0;
+app.winner = true;
+const $myMoney = $(".earnings");
+const $bettingPool = $(".bettingPool");
+const $hitButton = $(".hit");
+const $stayButton = $(".stay");
+const $betButton = $(".bet");
+
 // p1Hand is receiving array
 // p1 is the array for total calc
 //p1Populate is array for card represent
@@ -91,12 +101,6 @@ app.showMe = () => {
 		.css("animation-fill-mode", "reverse")
 		.removeAttr("disabled");
 };
-
-app.current = 500;
-app.pool = 0;
-$myMoney = $(".earnings");
-$bettingPool = $(".bettingPool");
-app.winner = true;
 
 app.checkTotal = (player, playerHand, playerTotal) => {
 	// parsing card number from raw data by splitting and taking the first value (card format ex [5, clubs])
@@ -262,10 +266,6 @@ app.checkWin = function() {
 		app.endRound();
 	}
 };
-
-const $hitButton = $(".hit");
-const $stayButton = $(".stay");
-const $betButton = $(".bet");
 // stop player from hitting / staying outside of their turn
 
 app.unfreezePlayer = () => {
@@ -350,15 +350,24 @@ app.nextRound = function() {
 	app.p2Hand.length = 0;
 	app.p1Total = 0;
 	app.p2Total = 0;
-	if (app.current < 50) {
-		alert(`you're out of money, would you like some more?`);
-		{
-			app.current = 500;
-			$myMoney.text("Wallet: $" + app.current);
-			$('.bet').text('Bet $50')
-		}
-	}
+
 	$betButton.removeAttr("disabled");
+};
+
+app.moreMoney = function() {
+	app.winScreen();
+	$win.children("h2").text("You Lost!");
+	$win
+		.children("p")
+		.text("You're broke too, that's rough! Let's try again, here's $500");
+};
+
+app.checkIfFillingWallet = function() {
+	if (app.current < 1) {
+		app.current = 500;
+		$myMoney.text("Wallet: $" + app.current);
+		$(".bet").text("Bet $50");
+	}
 };
 
 // ===================== //
@@ -384,36 +393,40 @@ app.winEnd = function() {
 
 app.winTie = function() {
 	app.winScreen();
-	$win.children("p").text(`lucky for you, ties don't go to the house!`);
+	$win.children('h2').text('You tied!')
+	$win.children("p").text(`No one wins, but at least you get your bet back!`);
 };
 
 app.lose = function() {
-	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text("you lost 💀");
+	if (app.current < 50) {
+		app.moreMoney();
+	} else {
+		app.winScreen();
+		$win.children("h2").text("wasted");
+		$win.children("p").text("you lost 💀");
+	}
 };
 
 app.loseSpecial = function() {
-	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text(`house got 21, that's just bad luck`);
+	if (app.current < 50) {
+		app.moreMoney();
+	} else {
+		app.winScreen();
+		$win.children("h2").text("wasted");
+		$win.children("p").text(`house got 21, that's just bad luck`);
+	}
 };
 
 // ======= //
 // BETTING //
 // ======= //
 app.betLogic = () => {
-	if (app.current < 50) {
-		app.pool += app.current;
-		app.current = 0;
-	} else {
-		app.current -= 50;
-		app.pool += 50;
-	}
+	app.current -= 50;
+	app.pool += 50;
 	$myMoney.text("Wallet: $" + app.current);
 	$bettingPool.text("Current Bet $" + app.pool);
-	if (app.current < 50) {
-		$(".bet").text("bet $" + app.current);
+	if (app.current < 1) {
+		$betButton.attr("disabled", "true");
 	}
 };
 
@@ -421,9 +434,9 @@ app.payOutLogic = amount => {
 	if (app.winner) {
 		app.current += app.pool * amount;
 	}
-	app.pool -= app.pool;
+	app.pool = 0;
 	$myMoney.text("Wallet: $" + app.current);
-	$(".bettingPool").text("Current Bet $" + app.pool);
+	$(".bettingPool").text("Current Bet $0");
 };
 
 // ========================================= //
@@ -477,6 +490,7 @@ app.init = function() {
 		app.nextRound();
 		app.showMe();
 		app.restoreInitialState();
+		app.checkIfFillingWallet();
 	});
 };
 
@@ -486,3 +500,5 @@ $(function() {
 
 // weird quirks with betting.
 // if less than 50 and win, betting remains $25???
+// maybe just prompt them when they're less than 50?
+// maybe use the .map method to work with card hand totals?
