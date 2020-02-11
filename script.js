@@ -98,22 +98,6 @@ $myMoney = $(".earnings");
 $bettingPool = $(".bettingPool");
 app.winner = true;
 
-app.betLogic = () => {
-	app.current -= 50;
-	app.pool += 50;
-	$myMoney.text("Wallet: $" + app.current);
-	$bettingPool.text("Current Bet $" + app.pool);
-};
-
-app.payOutLogic = () => {
-	if (app.winner) {
-		app.current += app.pool * 1.5;
-	}
-	$myMoney.text("Wallet: $" + app.current);
-	app.pool = 0;
-	$bettingPool.text("Current Bet $" + app.pool);
-};
-
 app.checkTotal = (player, playerHand, playerTotal) => {
 	// parsing card number from raw data by splitting and taking the first value (card format ex [5, clubs])
 	app[player].push(app[playerHand][0].split(" "));
@@ -263,8 +247,8 @@ app.hit = function(player, playerHand, playerTotal) {
 			$(`.${player}Score p`).text(app[playerTotal]);
 		}
 		if (app.p1Total > 21) {
-			app.endRound();
 			app.freezePlayer();
+			app.endRound();
 		} else {
 			app.checkWin();
 		}
@@ -273,12 +257,9 @@ app.hit = function(player, playerHand, playerTotal) {
 
 // checking for 21 on each hit
 app.checkWin = function() {
-	if (app.p1Total == 21) {
-		app.winBy21();
+	if (app.p1Total == 21 || app.p2Total == 21) {
 		app.freezePlayer();
-	} else if (app.p2Total == 21) {
-		app.loseSpecial();
-		app.freezePlayer();
+		app.endRound();
 	}
 };
 
@@ -286,6 +267,7 @@ const $hitButton = $(".hit");
 const $stayButton = $(".stay");
 const $betButton = $(".bet");
 // stop player from hitting / staying outside of their turn
+
 app.unfreezePlayer = () => {
 	$hitButton.removeAttr("disabled");
 	$stayButton.removeAttr("disabled");
@@ -330,21 +312,30 @@ app.computerHit = function() {
 app.endRound = function() {
 	app.winner = true;
 	app.freezePlayer();
-	app.payOutLogic();
 	if (app.p1Total === 21) {
 		app.winBy21();
+		app.payOutLogic(2);
 	} else if (app.p2Total === 21) {
-		app.loseSpecial();
 		app.winner = false;
+		app.loseSpecial();
+		app.payOutLogic(0);
 	} else if (app.p2Total > 21) {
 		app.winEnd();
+		app.payOutLogic(1.5);
+	} else if (app.p1Total > 21) {
+		app.winner = false;
+		app.lose();
+		app.payOutLogic(0);
 	} else if (app.p1Total > app.p2Total) {
 		app.winEnd();
+		app.payOutLogic(1.5);
 	} else if (app.p1Total === app.p2Total) {
 		app.winTie();
+		app.payOutLogic(1);
 	} else {
-		app.lose();
 		app.winner = false;
+		app.lose();
+		app.payOutLogic(0);
 	}
 };
 
@@ -359,7 +350,14 @@ app.nextRound = function() {
 	app.p2Hand.length = 0;
 	app.p1Total = 0;
 	app.p2Total = 0;
-
+	if (app.current < 50) {
+		alert(`you're out of money, would you like some more?`);
+		{
+			app.current = 500;
+			$myMoney.text("Wallet: $" + app.current);
+			$('.bet').text('Bet $50')
+		}
+	}
 	$betButton.removeAttr("disabled");
 };
 
@@ -401,12 +399,36 @@ app.loseSpecial = function() {
 	$win.children("p").text(`house got 21, that's just bad luck`);
 };
 
+// ======= //
+// BETTING //
+// ======= //
+app.betLogic = () => {
+	if (app.current < 50) {
+		app.pool += app.current;
+		app.current = 0;
+	} else {
+		app.current -= 50;
+		app.pool += 50;
+	}
+	$myMoney.text("Wallet: $" + app.current);
+	$bettingPool.text("Current Bet $" + app.pool);
+	if (app.current < 50) {
+		$(".bet").text("bet $" + app.current);
+	}
+};
+
+app.payOutLogic = amount => {
+	if (app.winner) {
+		app.current += app.pool * amount;
+	}
+	app.pool -= app.pool;
+	$myMoney.text("Wallet: $" + app.current);
+	$(".bettingPool").text("Current Bet $" + app.pool);
+};
+
 // ========================================= //
 //  IINNNNNIIIITTTTTTIIAALLLIIIZEEEE IIIITTT //
 // ========================================= //
-
-
-
 
 app.init = function() {
 	// was having weird resizing issues with vh units on firefox
@@ -461,3 +483,6 @@ app.init = function() {
 $(function() {
 	app.init();
 });
+
+// weird quirks with betting.
+// if less than 50 and win, betting remains $25???

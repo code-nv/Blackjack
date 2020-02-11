@@ -902,8 +902,8 @@ button:focus {
           align-items: flex-end;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1b2721), to(#446455));
   background: linear-gradient(#1b2721 10%, #446455);
-  -webkit-box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #35270f;
-          box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #35270f;
+  -webkit-box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #291e0c;
+          box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #291e0c;
   border-radius: 50px 50px 50% 50%;
   padding: 50px 40px;
   margin: 0 auto;

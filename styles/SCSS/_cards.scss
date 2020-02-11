@@ -2,8 +2,8 @@
 	position: relative;
 	@include flexRow(space-around);
 	align-items: flex-end;
-	background: linear-gradient(darken($primary, 20%) 10%, $primary);
-	box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #35270f;
+    background: linear-gradient(darken($primary, 20%) 10%, $primary);
+	box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #291e0c;
 	border-radius: 50px 50px 50% 50%;
 	padding: 50px 40px;
 	margin: 0 auto;
