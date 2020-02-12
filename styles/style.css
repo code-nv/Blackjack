@@ -303,8 +303,8 @@ h1 {
   color: #fafafa;
   text-shadow: 2px 2px 20px var(--primary);
   font-size: 4rem;
-  -webkit-animation: flicker 7s infinite;
-          animation: flicker 7s infinite;
+  -webkit-animation: flicker 7s forwards;
+          animation: flicker 7s forwards;
 }
 
 @media (max-width: 740px) {
@@ -395,6 +395,16 @@ h2 {
           animation: attention 0.8s forwards;
 }
 
+.attention {
+  -webkit-animation: attention 0.8s forwards;
+          animation: attention 0.8s forwards;
+}
+
+.attention2 {
+  -webkit-animation: attention2 0.8s forwards;
+          animation: attention2 0.8s forwards;
+}
+
 @-webkit-keyframes attention {
   0%,
   100% {
@@ -402,7 +412,7 @@ h2 {
     font-size: 2rem;
   }
   50% {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     text-shadow: 0 0 10px #fdd262;
   }
 }
@@ -414,7 +424,31 @@ h2 {
     font-size: 2rem;
   }
   50% {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px #fdd262;
+  }
+}
+
+@-webkit-keyframes attention2 {
+  0%,
+  100% {
+    text-shadow: none;
+    font-size: 2rem;
+  }
+  50% {
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px #fdd262;
+  }
+}
+
+@keyframes attention2 {
+  0%,
+  100% {
+    text-shadow: none;
+    font-size: 2rem;
+  }
+  50% {
+    font-size: 2.2rem;
     text-shadow: 0 0 10px #fdd262;
   }
 }

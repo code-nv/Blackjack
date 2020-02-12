@@ -3,10 +3,7 @@ html {
 	background: var(--background);
 
 	@include mq740 {
-		background: linear-gradient(
-			var(--primaryDark20) 10%,
-			var(--primary)
-		);
+		background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
 	}
 }
 
@@ -49,7 +46,7 @@ h1 {
 	// text-shadow: 2px 2px 20px $accent;
 	text-shadow: 2px 2px 20px var(--primary);
 	font-size: 4rem;
-	animation: flicker 7s infinite;
+	animation: flicker 7s forwards;
 
 	@include mq740 {
 		position: absolute;
@@ -112,6 +109,14 @@ h2 {
 	animation: attention 0.8s forwards;
 }
 
+.attention{
+	animation: attention 0.8s forwards;
+}
+
+.attention2 {
+	animation: attention2 0.8s forwards;
+}
+
 @keyframes attention {
 	0%,
 	100% {
@@ -119,11 +124,21 @@ h2 {
 		font-size: 2rem;
 	}
 	50% {
-		font-size: 2.5rem;
+		font-size: 2.2rem;
 		text-shadow: 0 0 10px $accent;
 	}
+}
 
-	
+@keyframes attention2 {
+	0%,
+	100% {
+		text-shadow: none;
+		font-size: 2rem;
+	}
+	50% {
+		font-size: 2.2rem;
+		text-shadow: 0 0 10px $accent;
+	}
 }
 
 .bettingPool {

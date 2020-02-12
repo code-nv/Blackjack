@@ -352,6 +352,7 @@ app.nextRound = function() {
 	app.p2Total = 0;
 
 	$betButton.removeAttr("disabled");
+	$(".earnings").toggleClass("attention attention2");
 };
 
 app.moreMoney = function() {
@@ -362,7 +363,7 @@ app.moreMoney = function() {
 		.text(
 			"You can't afford the minimum bet, that's rough! Let's try again, here's $500"
 		);
-		app.checkIfFillingWallet();
+	app.checkIfFillingWallet();
 };
 
 app.checkIfFillingWallet = function() {
@@ -394,16 +395,14 @@ app.winBy21 = function() {
 };
 
 app.winEnd = function() {
-		app.winScreen();
-		$win.children("p").text("YOU DID IT HELL YEAH");
-	}
+	app.winScreen();
+	$win.children("p").text("YOU DID IT HELL YEAH");
+};
 
 app.winTie = function() {
-	
-		app.winScreen();
-		$win.children("h2").text("You tied!");
-		$win.children("p").text(`No one wins, but at least you get your bet back!`);
-	
+	app.winScreen();
+	$win.children("h2").text("You tied!");
+	$win.children("p").text(`No one wins, but at least you get your bet back!`);
 };
 
 app.lose = function() {
@@ -497,7 +496,7 @@ $(`.shop`).on("click", function() {
 	checkPrice();
 });
 
-// table color pallets 
+// table color pallets
 $(".closeShop").on("click", function() {
 	$(".shopWindow").css("display", "none");
 });
