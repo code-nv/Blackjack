@@ -1,8 +1,10 @@
 // variables
-// $primary: #931806;
-$primary: #446455;
+// var(--primary): #931806;
+// var(--primary): #446455;
 $secondary: #889b9b;
-$tertiary: #c7b19c;
+// $tertiary: #805e27;
+$tertiary: #6c5021;
+$tertiaryDark: #291e0c;
 $accent: #fdd262;
 $accentDarker: #f2c146;
 $dark: #444c49;
@@ -10,10 +12,20 @@ $black: #232323;
 $white: #fafafa;
 
 :root {
-	--primary: 446455;
-	--secondary-color: white;
-	--text-color: black;
+	--primary: #446455;
+	--primaryLight: #adc7bb;
+	--primaryDark10: #2f463b;
+	--primaryDark20: #1b2721;
+	--background: #212a29;
+	// --secondary: #889b9b;
+	// --tertiary: #805e27;
+	// --accent: #fdd262;
+	// --accentDarker:#f2c146;
+	// --accentLight10:#fee094;
+	// --accentDark30: #956d0a;
+	// --accentDark40:#654a07;
 }
+
 @import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Fira+Sans|Playfair+Display&display=swap");
 
 $titleStack: "Cinzel Decorative", cursive;
@@ -38,58 +50,58 @@ $bodyStack: "Fira Sans Condensed", sans-serif;
 @mixin buttonStyle {
 	background: linear-gradient($accent 70%, darken($accentDarker, 30%) 90%);
 	box-shadow: inset 0 0 5px 2px lighten($accent, 10%),
-		0 0 4px darken($primary, 10%);
+		0 0 4px var(--primaryDark10);
 	color: darken($dark, 10%);
 	padding: 10px;
 	border-radius: 10px;
 	border: none;
-    font-size: 1.6rem;
-    height: 3.7rem;
-    text-transform: capitalize;
+	font-size: 1.6rem;
+	height: 3.7rem;
+	text-transform: capitalize;
 }
 
 @mixin buttonActive {
 	background: linear-gradient($accentDarker 40%, $accent 60%);
 	box-shadow: inset 0 0 5px 3px darken($accentDarker, 40%),
-		0 0 3px darken($primary, 10%);
+		0 0 3px var(--primaryDark10);
 	color: darken($dark, 10%);
 	border: 1px solid black;
 }
 
 @mixin cardBack {
 	background: radial-gradient(
-		$primary 10%,
+		var(--primary) 10%,
 		$white 10%,
 		$white 12%,
-		$primary 12%,
-		$primary 22%,
+		var(--primary) 12%,
+		var(--primary) 22%,
 		$white 22%,
 		$white 24%,
-		$primary 24%,
-		$primary 34%,
+		var(--primary) 24%,
+		var(--primary) 34%,
 		$white 34%,
 		$white 36%,
-		$primary 36%,
-		$primary 46%,
+		var(--primary) 36%,
+		var(--primary) 46%,
 		$white 46%,
 		$white 48%,
-		$primary 48%,
-		$primary 58%,
+		var(--primary) 48%,
+		var(--primary) 58%,
 		$white 58%,
 		$white 60%,
-		$primary 60%,
-		$primary 70%,
+		var(--primary) 60%,
+		var(--primary) 70%,
 		$white 70%,
 		$white 72%,
-		$primary 72%,
-		$primary 82%,
+		var(--primary) 72%,
+		var(--primary) 82%,
 		$white 82%,
 		$white 84%,
-		$primary 84%,
-		$primary 94%,
+		var(--primary) 84%,
+		var(--primary) 94%,
 		$white 94%,
 		$white 96%,
-		$primary 96%
+		var(--primary) 96%
 	);
 }
 

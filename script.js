@@ -352,6 +352,7 @@ app.nextRound = function() {
 	app.p2Total = 0;
 
 	$betButton.removeAttr("disabled");
+	app.changeTable();
 };
 
 app.moreMoney = function() {
@@ -359,7 +360,9 @@ app.moreMoney = function() {
 	$win.children("h2").text("You Lost!");
 	$win
 		.children("p")
-		.text("You're broke too, that's rough! Let's try again, here's $500");
+		.text(
+			"You can't afford the minimum bet, that's rough! Let's try again, here's $500"
+		);
 };
 
 app.checkIfFillingWallet = function() {
@@ -393,7 +396,7 @@ app.winEnd = function() {
 
 app.winTie = function() {
 	app.winScreen();
-	$win.children('h2').text('You tied!')
+	$win.children("h2").text("You tied!");
 	$win.children("p").text(`No one wins, but at least you get your bet back!`);
 };
 
@@ -425,7 +428,7 @@ app.betLogic = () => {
 	app.pool += 50;
 	$myMoney.text("Wallet: $" + app.current);
 	$bettingPool.text("Current Bet $" + app.pool);
-	if (app.current < 1) {
+	if (app.current <= 25) {
 		$betButton.attr("disabled", "true");
 	}
 };
@@ -494,10 +497,85 @@ app.init = function() {
 	});
 };
 
+$(".changeTable1").on("click", function() {
+	$(":root").css({
+		"--primary": "#446455",
+		"--primaryLight": "#adc7bb",
+		"--primaryDark10": "#2f463b",
+		"--primaryDark20": "#1b2721",
+		"--background": "#212a29"
+	});
+});
+
+$(".changeTable2").on("click", function() {
+	$(":root").css({
+		"--primary": "#A1454A",
+		"--primaryLight": "#ca8286",
+		"--primaryDark10": "#5a2629",
+		"--primaryDark20": "#361719",
+		"--background": "#2d2827"
+	});
+});
+
+$(".changeTable3").on("click", function() {
+	$(":root").css({
+		"--primary": "#5c415d",
+		"--primaryLight": "#ac8aad",
+		"--primaryDark10": "#3e2c3f",
+		"--primaryDark20": "#211721",
+		"--background": "#332e33"
+	});
+});
+
+$(".changeTable4").on("click", function() {
+	$(":root").css({
+		"--primary": "#292f36",
+		"--primaryLight": "#dee2e6",
+		"--primaryDark10": "#131619",
+		"--primaryDark20": "#000000",
+		"--background": "#232323"
+	});
+});
+
 $(function() {
 	app.init();
 });
 
+app.changeTable = function() {
+	if (app.current > 800) {
+		$(":root").css({
+			"--primary": "#292f36",
+			"--primaryLight": "#dee2e6",
+			"--primaryDark10": "#131619",
+			"--primaryDark20": "#000000",
+			"--background": "#232323"
+		});
+	} else if (app.current > 700) {
+		$(":root").css({
+			"--primary": "#5c415d",
+			"--primaryLight": "#ac8aad",
+			"--primaryDark10": "#3e2c3f",
+			"--primaryDark20": "#211721",
+			"--background": "#332e33"
+		});
+	} else if (app.current > 500) {
+		$(":root").css({
+			"--primary": "#A1454A",
+			"--primaryLight": "#ca8286",
+			"--primaryDark10": "#5a2629",
+			"--primaryDark20": "#361719",
+			"--background": "#2d2827"
+		});
+	} else {
+		$(":root").css({
+			"--primary": "#446455",
+			"--primaryLight": "#adc7bb",
+			"--primaryDark10": "#2f463b",
+			"--primaryDark20": "#1b2721",
+			"--background": "#212a29"
+		});
+	}
+};
 // weird quirks with betting.
 // if less than 50 and win, betting remains $25???
 // maybe just prompt them when they're less than 50?

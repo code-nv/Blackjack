@@ -6,11 +6,11 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	padding: 20px;
-	background: $primary;
+	background: var(--primary);
 	color: $white;
 	border-radius: 10px;
 	border: 2px solid $accent;
-	box-shadow: 0px 0px 0px 5px $primary;
+	box-shadow: 0px 0px 0px 5px var(--primary);
 	width: 70%;
 	max-width: 1000px;
 	height: 80%;
@@ -148,7 +148,7 @@ button:focus {
 	top: -50px;
 	width: 40%;
 	box-shadow: inset -4px -2px 3px darken($accentDarker, 40%),
-		3px 3px 3px darken($primary, 20%);
+		3px 3px 3px var(--primaryDark20);
 }
 
 .stay,
@@ -220,11 +220,11 @@ button:focus {
 	left: 50%;
 	transform: translateX(-50%);
 	box-shadow: inset 5px -2px 3px darken($accentDarker, 40%),
-		3px 3px 3px darken($primary, 20%);
+		3px 3px 3px var(--primaryDark20);
 
 	@include mq740 {
 		box-shadow: inset -4px -2px 3px darken($accentDarker, 40%),
-			3px 3px 3px darken($primary, 20%);
+			3px 3px 3px var(--primaryDark20);
 	}
 
 	@include mq600 {
@@ -255,7 +255,7 @@ button:focus {
 		box-shadow: inset 50px 80px 1px 1px black;
 	}
 	61% {
-		background: $primary;
+		background: var(--primary);
 	}
 	70% {
 		box-shadow: inset 20px 20px 1px 1px black;
@@ -276,14 +276,14 @@ button:focus {
 		color: transparent;
 	}
 	50% {
-		border-right: 100% solid $primary;
+		border-right: 100% solid var(--primary);
 		padding: 10px 0;
 		color: transparent;
 	}
 
 	60% {
 		box-shadow: inset 20px 80px 1px 1px black;
-		background: $primary;
+		background: var(--primary);
 	}
 	61% {
 		@extend .deal;

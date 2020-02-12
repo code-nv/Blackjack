@@ -238,20 +238,22 @@ html {
 }
 
 :root {
-  --primary: 446455;
-  --secondary-color: white;
-  --text-color: black;
+  --primary: #446455;
+  --primaryLight: #adc7bb;
+  --primaryDark10: #2f463b;
+  --primaryDark20: #1b2721;
+  --background: #212a29;
 }
 
 html {
   font-size: 62.5%;
-  background: #212a29;
+  background: var(--background);
 }
 
 @media (max-width: 740px) {
   html {
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1b2721), to(#446455));
-    background: linear-gradient(#1b2721 10%, #446455);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, var(--primaryDark20)), to(var(--primary)));
+    background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
   }
 }
 
@@ -297,7 +299,7 @@ h1 {
   width: 100%;
   text-align: center;
   color: #fafafa;
-  text-shadow: 2px 2px 20px #fdd262;
+  text-shadow: 2px 2px 20px var(--primary);
   font-size: 4rem;
   -webkit-animation: flicker 7s infinite;
           animation: flicker 7s infinite;
@@ -318,12 +320,21 @@ h1 {
   15%,
   49%,
   51%,
-  53% {
-    text-shadow: 2px 2px 20px #fdd262;
+  53%,
+  69%,
+  71%,
+  100% {
+    text-shadow: 0px 0px 20px var(--primaryLight);
+  }
+  30%,
+  40%,
+  80% {
+    text-shadow: 0px 0px 15px var(--primaryLight);
   }
   14%,
   50%,
-  52% {
+  52%,
+  70% {
     text-shadow: none;
   }
 }
@@ -334,12 +345,21 @@ h1 {
   15%,
   49%,
   51%,
-  53% {
-    text-shadow: 2px 2px 20px #fdd262;
+  53%,
+  69%,
+  71%,
+  100% {
+    text-shadow: 0px 0px 20px var(--primaryLight);
+  }
+  30%,
+  40%,
+  80% {
+    text-shadow: 0px 0px 15px var(--primaryLight);
   }
   14%,
   50%,
-  52% {
+  52%,
+  70% {
     text-shadow: none;
   }
 }
@@ -373,14 +393,30 @@ h2 {
   position: absolute;
   top: 20%;
   color: #fdd262;
-  font-size: 3rem;
+  font-size: 5rem;
+}
+
+@media (max-width: 950px) {
+  .bettingPool {
+    font-size: 3rem;
+    top: 0;
+    left: 20px;
+  }
+}
+
+@media (max-height: 580px) {
+  .bettingPool {
+    top: 0;
+    left: 20px;
+    font-size: 4rem;
+  }
 }
 
 @media (max-width: 600px) {
   .bettingPool {
     font-size: 2.5rem;
-    top: 0;
-    left: 20px;
+    max-width: 30%;
+    word-wrap: break-word;
   }
 }
 
@@ -418,12 +454,12 @@ a {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   padding: 20px;
-  background: #446455;
+  background: var(--primary);
   color: #fafafa;
   border-radius: 10px;
   border: 2px solid #fdd262;
-  -webkit-box-shadow: 0px 0px 0px 5px #446455;
-          box-shadow: 0px 0px 0px 5px #446455;
+  -webkit-box-shadow: 0px 0px 0px 5px var(--primary);
+          box-shadow: 0px 0px 0px 5px var(--primary);
   width: 70%;
   max-width: 1000px;
   height: 80%;
@@ -472,8 +508,8 @@ a {
 .rulesRadio {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
-  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
   color: #2c312f;
   padding: 10px;
   border-radius: 10px;
@@ -503,8 +539,8 @@ a {
 .rightRadio:checked ~ .rightRadioLabel {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
-  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
-          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
   color: #2c312f;
   border: 1px solid black;
 }
@@ -528,8 +564,8 @@ a {
 .letsPlay {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
-  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
   color: #2c312f;
   padding: 10px;
   border-radius: 10px;
@@ -542,8 +578,8 @@ a {
 .letsPlay:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
-  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
-          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
   color: #2c312f;
   border: 1px solid black;
 }
@@ -561,8 +597,8 @@ a {
 .playAgain {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
-  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
   color: #2c312f;
   padding: 10px;
   border-radius: 10px;
@@ -583,8 +619,8 @@ a {
 .bet:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
-  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
-          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
+  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
   color: #2c312f;
   border: 1px solid black;
 }
@@ -607,8 +643,8 @@ button:focus {
   position: absolute;
   top: -50px;
   width: 40%;
-  -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
-          box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
+  -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
+          box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
 }
 
 .stay,
@@ -678,14 +714,14 @@ button:focus {
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  -webkit-box-shadow: inset 5px -2px 3px #654a07, 3px 3px 3px #1b2721;
-          box-shadow: inset 5px -2px 3px #654a07, 3px 3px 3px #1b2721;
+  -webkit-box-shadow: inset 5px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
+          box-shadow: inset 5px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
 }
 
 @media (max-width: 740px) {
   .rulesButton {
-    -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
-            box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
+    -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
+            box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
   }
 }
 
@@ -711,8 +747,8 @@ button:focus {
   0% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
     background: linear-gradient(#f2c146 40%, #fdd262 60%);
-    -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
-            box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
     color: #2c312f;
     border: 1px solid black;
   }
@@ -726,7 +762,7 @@ button:focus {
             box-shadow: inset 50px 80px 1px 1px black;
   }
   61% {
-    background: #446455;
+    background: var(--primary);
   }
   70% {
     -webkit-box-shadow: inset 20px 20px 1px 1px black;
@@ -735,8 +771,8 @@ button:focus {
   100% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
     background: linear-gradient(#fdd262 70%, #956d0a 90%);
-    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
     color: #2c312f;
     padding: 10px;
     border-radius: 10px;
@@ -755,8 +791,8 @@ button:focus {
   0% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
     background: linear-gradient(#f2c146 40%, #fdd262 60%);
-    -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
-            box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
     color: #2c312f;
     border: 1px solid black;
   }
@@ -770,7 +806,7 @@ button:focus {
             box-shadow: inset 50px 80px 1px 1px black;
   }
   61% {
-    background: #446455;
+    background: var(--primary);
   }
   70% {
     -webkit-box-shadow: inset 20px 20px 1px 1px black;
@@ -779,8 +815,8 @@ button:focus {
   100% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
     background: linear-gradient(#fdd262 70%, #956d0a 90%);
-    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
     color: #2c312f;
     padding: 10px;
     border-radius: 10px;
@@ -799,8 +835,8 @@ button:focus {
   0% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
     background: linear-gradient(#fdd262 70%, #956d0a 90%);
-    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
     color: #2c312f;
     padding: 10px;
     border-radius: 10px;
@@ -814,14 +850,14 @@ button:focus {
     color: transparent;
   }
   50% {
-    border-right: 100% solid #446455;
+    border-right: 100% solid var(--primary);
     padding: 10px 0;
     color: transparent;
   }
   60% {
     -webkit-box-shadow: inset 20px 80px 1px 1px black;
             box-shadow: inset 20px 80px 1px 1px black;
-    background: #446455;
+    background: var(--primary);
   }
   61% {
     -webkit-box-shadow: inset 20px 80px 1px 1px black;
@@ -843,8 +879,8 @@ button:focus {
   0% {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
     background: linear-gradient(#fdd262 70%, #956d0a 90%);
-    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
-            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px #2f463b;
+    -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+            box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
     color: #2c312f;
     padding: 10px;
     border-radius: 10px;
@@ -858,14 +894,14 @@ button:focus {
     color: transparent;
   }
   50% {
-    border-right: 100% solid #446455;
+    border-right: 100% solid var(--primary);
     padding: 10px 0;
     color: transparent;
   }
   60% {
     -webkit-box-shadow: inset 20px 80px 1px 1px black;
             box-shadow: inset 20px 80px 1px 1px black;
-    background: #446455;
+    background: var(--primary);
   }
   61% {
     -webkit-box-shadow: inset 20px 80px 1px 1px black;
@@ -900,10 +936,10 @@ button:focus {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1b2721), to(#446455));
-  background: linear-gradient(#1b2721 10%, #446455);
-  -webkit-box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #291e0c;
-          box-shadow: 0 0 0px 10px #805e27,0 10px 5px 5px #805e27, 0px 15px 1px 10px #291e0c;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, var(--primaryDark20)), to(var(--primary)));
+  background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
+  -webkit-box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 15px 1px 10px #291e0c;
+          box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 15px 1px 10px #291e0c;
   border-radius: 50px 50px 50% 50%;
   padding: 50px 40px;
   margin: 0 auto;
@@ -950,7 +986,7 @@ button:focus {
 }
 
 .deck {
-  background: radial-gradient(#446455 10%, #fafafa 10%, #fafafa 12%, #446455 12%, #446455 22%, #fafafa 22%, #fafafa 24%, #446455 24%, #446455 34%, #fafafa 34%, #fafafa 36%, #446455 36%, #446455 46%, #fafafa 46%, #fafafa 48%, #446455 48%, #446455 58%, #fafafa 58%, #fafafa 60%, #446455 60%, #446455 70%, #fafafa 70%, #fafafa 72%, #446455 72%, #446455 82%, #fafafa 82%, #fafafa 84%, #446455 84%, #446455 94%, #fafafa 94%, #fafafa 96%, #446455 96%);
+  background: radial-gradient(var(--primary) 10%, #fafafa 10%, #fafafa 12%, var(--primary) 12%, var(--primary) 22%, #fafafa 22%, #fafafa 24%, var(--primary) 24%, var(--primary) 34%, #fafafa 34%, #fafafa 36%, var(--primary) 36%, var(--primary) 46%, #fafafa 46%, #fafafa 48%, var(--primary) 48%, var(--primary) 58%, #fafafa 58%, #fafafa 60%, var(--primary) 60%, var(--primary) 70%, #fafafa 70%, #fafafa 72%, var(--primary) 72%, var(--primary) 82%, #fafafa 82%, #fafafa 84%, var(--primary) 84%, var(--primary) 94%, #fafafa 94%, #fafafa 96%, var(--primary) 96%);
   position: absolute;
   top: 20px;
   right: 20px;
@@ -1181,7 +1217,7 @@ button:focus {
 }
 
 .p2 .card1 {
-  background: radial-gradient(#446455 10%, #fafafa 10%, #fafafa 12%, #446455 12%, #446455 22%, #fafafa 22%, #fafafa 24%, #446455 24%, #446455 34%, #fafafa 34%, #fafafa 36%, #446455 36%, #446455 46%, #fafafa 46%, #fafafa 48%, #446455 48%, #446455 58%, #fafafa 58%, #fafafa 60%, #446455 60%, #446455 70%, #fafafa 70%, #fafafa 72%, #446455 72%, #446455 82%, #fafafa 82%, #fafafa 84%, #446455 84%, #446455 94%, #fafafa 94%, #fafafa 96%, #446455 96%);
+  background: radial-gradient(var(--primary) 10%, #fafafa 10%, #fafafa 12%, var(--primary) 12%, var(--primary) 22%, #fafafa 22%, #fafafa 24%, var(--primary) 24%, var(--primary) 34%, #fafafa 34%, #fafafa 36%, var(--primary) 36%, var(--primary) 46%, #fafafa 46%, #fafafa 48%, var(--primary) 48%, var(--primary) 58%, #fafafa 58%, #fafafa 60%, var(--primary) 60%, var(--primary) 70%, #fafafa 70%, #fafafa 72%, var(--primary) 72%, var(--primary) 82%, #fafafa 82%, #fafafa 84%, var(--primary) 84%, var(--primary) 94%, #fafafa 94%, #fafafa 96%, var(--primary) 96%);
 }
 
 .card2 {
@@ -1245,5 +1281,5 @@ button:focus {
 }
 
 .brightSuit {
-  color: #446455;
+  color: var(--primary);
 }

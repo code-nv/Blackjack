@@ -1,9 +1,12 @@
 html {
 	font-size: 62.5%;
-	background: darken(#d3dddc, 70%);
+	background: var(--background);
 
 	@include mq740 {
-		background: linear-gradient(darken($primary, 20%) 10%, $primary);
+		background: linear-gradient(
+			var(--primaryDark20) 10%,
+			var(--primary)
+		);
 	}
 }
 
@@ -43,7 +46,8 @@ h1 {
 	width: 100%;
 	text-align: center;
 	color: $white;
-	text-shadow: 2px 2px 20px $accent;
+	// text-shadow: 2px 2px 20px $accent;
+	text-shadow: 2px 2px 20px var(--primary);
 	font-size: 4rem;
 	animation: flicker 7s infinite;
 
@@ -61,12 +65,21 @@ h1 {
 	15%,
 	49%,
 	51%,
-	53% {
-		text-shadow: 2px 2px 20px $accent;
+	53%,
+	69%,
+	71%,
+	100% {
+		text-shadow: 0px 0px 20px var(--primaryLight);
+	}
+	30%,
+	40%,
+	80% {
+		text-shadow: 0px 0px 15px var(--primaryLight);
 	}
 	14%,
 	50%,
-	52% {
+	52%,
+	70% {
 		text-shadow: none;
 	}
 }
@@ -79,34 +92,46 @@ h2 {
 
 .p1 h2,
 .p2 h2 {
-    position: absolute;
-    color: $accent;
-    opacity: 0.9;
-    font-size: 2rem;
-    top:5px;
-    right:5px;
-    font-family: serif;
-    text-transform: capitalize;
+	position: absolute;
+	color: $accent;
+	opacity: 0.9;
+	font-size: 2rem;
+	top: 5px;
+	right: 5px;
+	font-family: serif;
+	text-transform: capitalize;
 }
 
 .earnings {
-    position: absolute;
-    color: $accent;
-    width: calc(100% - 20px);
-    text-align: center;
+	position: absolute;
+	color: $accent;
+	width: calc(100% - 20px);
+	text-align: center;
 }
 
 .bettingPool {
-    position: absolute;
-    top: 20%;
-    color: $accent;
-    font-size: 3rem;
+	position: absolute;
+	top: 20%;
+	color: $accent;
+	font-size: 5rem;
 
-    @include mq600 {
-        font-size: 2.5rem;
-        top: 0;
-        left: 20px;
-    }
+	@include mq950 {
+		font-size: 3rem;
+		top: 0;
+		left: 20px;
+	}
+
+	@include mqh580 {
+		top: 0;
+		left: 20px;
+		font-size: 4rem;
+	}
+
+	@include mq600 {
+		font-size: 2.5rem;
+		max-width: 30%;
+		word-wrap: break-word;
+	}
 }
 
 .rulesModal h3 {
