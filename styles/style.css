@@ -243,6 +243,8 @@ html {
   --primaryDark10: #2f463b;
   --primaryDark20: #1b2721;
   --background: #212a29;
+  --tertiary: #6c5021;
+  --tertiaryDark:#291e0c;
 }
 
 html {
@@ -448,7 +450,7 @@ h2 {
   }
 }
 
-.rulesModal h3, .winScreen h3 {
+.rulesModal h3, .winScreen h3, .shopWindow h3 {
   font-family: "Cinzel Decorative", cursive;
   font-size: calc(1.5rem + 45%);
   margin: 2% 0;
@@ -476,7 +478,7 @@ a {
   display: block;
 }
 
-.rulesModal, .winScreen {
+.rulesModal, .winScreen, .shopWindow {
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -496,7 +498,7 @@ a {
 }
 
 @media (max-width: 740px) {
-  .rulesModal, .winScreen {
+  .rulesModal, .winScreen, .shopWindow {
     min-height: 100vh;
     width: 100%;
     top: 0;
@@ -508,7 +510,7 @@ a {
   }
 }
 
-.rulesModal ol, .winScreen ol {
+.rulesModal ol, .winScreen ol, .shopWindow ol {
   position: relative;
   border: 2px solid #fdd262;
   border-left: none;
@@ -517,11 +519,11 @@ a {
   padding-top: 10px;
 }
 
-.rulesModal ol li, .winScreen ol li {
+.rulesModal ol li, .winScreen ol li, .shopWindow ol li {
   margin: 1% 0;
 }
 
-.rulesModal ol:before, .winScreen ol:before, .rulesModal ol:after, .winScreen ol:after {
+.rulesModal ol:before, .winScreen ol:before, .shopWindow ol:before, .rulesModal ol:after, .winScreen ol:after, .shopWindow ol:after {
   position: absolute;
   content: "";
   width: 100%;
@@ -532,21 +534,21 @@ a {
   border-radius: 20px;
 }
 
-.rulesModal ol:after, .winScreen ol:after {
+.rulesModal ol:after, .winScreen ol:after, .shopWindow ol:after {
   top: auto;
   bottom: -40px;
   border-top: 2px solid #fdd262;
   border-bottom: none;
 }
 
-.winScreen {
+.winScreen, .shopWindow {
   top: 200px;
   height: 250px;
   width: 40%;
 }
 
 @media (max-width: 740px) {
-  .winScreen {
+  .winScreen, .shopWindow {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -681,12 +683,13 @@ a {
   border: 1px solid black;
 }
 
-.winScreen {
+.winScreen, .shopWindow {
   display: none;
 }
 
 .rulesButton,
 .closeRules,
+.closeShop,
 .deal,
 .hit,
 .stay,
@@ -710,6 +713,7 @@ a {
 
 .rulesButton:active,
 .closeRules:active,
+.closeShop:active,
 .deal:active,
 .hit:active,
 .stay:active,
@@ -728,7 +732,9 @@ button:focus {
   outline: 2px #fdd262 dotted;
 }
 
-.closeRules {
+
+.closeRules,
+.closeShop {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -773,7 +779,8 @@ button:focus {
 
 .hit:disabled.hit:active,
 .stay:disabled.stay:active,
-.bet:disabled.bet:active {
+.bet:disabled.bet:active,
+.table:disabled.table:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
   -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
@@ -815,6 +822,52 @@ button:focus {
 
 .shop {
   top: -95px;
+}
+
+.shopWindow {
+  height: auto;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%, -50%);
+          transform: translateY(-50%, -50%);
+}
+
+.shopWindow ol {
+  list-style-type: none;
+  text-align: center;
+  padding: 0 0 10px;
+}
+
+.shopWindow p {
+  margin: 20px 0 10px;
+}
+
+.table {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
+  background: linear-gradient(#fdd262 70%, #956d0a 90%);
+  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
+  color: #2c312f;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.6rem;
+  height: 3.7rem;
+  text-transform: capitalize;
+  width: 100px;
+}
+
+.table:active {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
+  background: linear-gradient(#f2c146 40%, #fdd262 60%);
+  -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+          box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
+  color: #2c312f;
+  border: 1px solid black;
+}
+
+.table:disabled {
+  opacity: 0.4;
 }
 
 .animatingOut {
@@ -1041,7 +1094,7 @@ button:focus {
     font-size: 3rem;
     margin-top: 20px;
   }
-  .rulesModal h3, .winScreen h3 {
+  .rulesModal h3, .winScreen h3, .shopWindow h3 {
     font-size: 1.5rem;
   }
   .leftRadioLabel,
@@ -1081,13 +1134,13 @@ button:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-shadow: 0 0 0px 10px var(--tertiary), 0 10px 5px 5px #6c5021, 0px 25px 0px 5px var(--tertiaryDark);
+          box-shadow: 0 0 0px 10px var(--tertiary), 0 10px 5px 5px #6c5021, 0px 25px 0px 5px var(--tertiaryDark);
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, var(--primaryDark20)), to(var(--primary)));
   background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
-  -webkit-box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 25px 0px 5px #291e0c;
-          box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 25px 0px 5px #291e0c;
   border-radius: 50px 50px 50% 50%;
   padding: 50px 40px;
   margin: 0 auto;

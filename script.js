@@ -352,17 +352,17 @@ app.nextRound = function() {
 	app.p2Total = 0;
 
 	$betButton.removeAttr("disabled");
-	app.changeTable();
 };
 
 app.moreMoney = function() {
 	app.winScreen();
-	$win.children("h2").text("You Lost!");
+	$win.children("h2").text("Uh Oh!");
 	$win
 		.children("p")
 		.text(
 			"You can't afford the minimum bet, that's rough! Let's try again, here's $500"
 		);
+		app.checkIfFillingWallet();
 };
 
 app.checkIfFillingWallet = function() {
@@ -384,20 +384,26 @@ app.winScreen = function() {
 };
 
 app.winBy21 = function() {
-	app.winScreen();
-	$win.children("h2").text(`BLACKJACK!!`);
-	$win.children("p").text(`Congrats! You get the big bucks$$$`);
+	if (app.current < 50) {
+		app.moreMoney();
+	} else {
+		app.winScreen();
+		$win.children("h2").text(`BLACKJACK!!`);
+		$win.children("p").text(`Congrats! You get the big bucks$$$`);
+	}
 };
 
 app.winEnd = function() {
-	app.winScreen();
-	$win.children("p").text("YOU DID IT HELL YEAH");
-};
+		app.winScreen();
+		$win.children("p").text("YOU DID IT HELL YEAH");
+	}
 
 app.winTie = function() {
-	app.winScreen();
-	$win.children("h2").text("You tied!");
-	$win.children("p").text(`No one wins, but at least you get your bet back!`);
+	
+		app.winScreen();
+		$win.children("h2").text("You tied!");
+		$win.children("p").text(`No one wins, but at least you get your bet back!`);
+	
 };
 
 app.lose = function() {
@@ -445,8 +451,55 @@ app.payOutLogic = amount => {
 // ======== //
 // SHOPPING //
 // ======== //
-$(`.shop`).on('click',function(){
-// WRITE SHOP LOGIC TOMORROW
+
+$(`.shop`).on("click", function() {
+	// show the shop
+	$(".shopWindow").css("display", "block");
+	// grab the table values and manipulate them to get prices
+	const shopItems = $(".table")
+		.text()
+		.split("$")
+		.filter(item => {
+			// ignoring 'switch' because that's the value of a purchased table
+			return item !== "Switch";
+		});
+	// assess if I have enough to afford the tables
+	function checkPrice() {
+		shopItems.forEach(item => {
+			if (app.current < item) {
+				$(`.${item}`).attr("disabled", true);
+			} else if ($(".shopWindow button").hasClass(item)) {
+				$(`.${item}`).removeAttr("disabled");
+			}
+			// logic to purchase a table
+			$(`.${item}`).on("click", function() {
+				// if its free don't charge me!
+				if ($(this).hasClass("free")) {
+					app.current = app.current;
+				} else {
+					// take the cost out of my wallet!
+					app.current -= item;
+					$(`.${item}`)
+						.text("Switch")
+						.removeClass(item)
+						.addClass("free");
+					$(".earnings").text("Wallet: $" + app.current);
+					// disable bet button if I can't afford it
+					if (app.current <= 50) {
+						$betButton.attr("disabled", "true");
+					}
+					// run the function again to disable the tables I can't afford now
+					checkPrice();
+				}
+			});
+		});
+	}
+	checkPrice();
+});
+
+// table color pallets 
+$(".closeShop").on("click", function() {
+	$(".shopWindow").css("display", "none");
 });
 
 $(".changeTable1").on("click", function() {
@@ -455,7 +508,9 @@ $(".changeTable1").on("click", function() {
 		"--primaryLight": "#adc7bb",
 		"--primaryDark10": "#2f463b",
 		"--primaryDark20": "#1b2721",
-		"--background": "#212a29"
+		"--background": "#212a29",
+		"--tertiary": "#6c5021",
+		"--tertiaryDark": "#291e0c"
 	});
 });
 
@@ -465,7 +520,9 @@ $(".changeTable2").on("click", function() {
 		"--primaryLight": "#ca8286",
 		"--primaryDark10": "#5a2629",
 		"--primaryDark20": "#361719",
-		"--background": "#2d2827"
+		"--background": "#2d2827",
+		"--tertiary": "#6c5021",
+		"--tertiaryDark": "#291e0c"
 	});
 });
 
@@ -475,7 +532,9 @@ $(".changeTable3").on("click", function() {
 		"--primaryLight": "#ac8aad",
 		"--primaryDark10": "#3e2c3f",
 		"--primaryDark20": "#211721",
-		"--background": "#332e33"
+		"--background": "#332e33",
+		"--tertiary": "#6c5021",
+		"--tertiaryDark": "#291e0c"
 	});
 });
 
@@ -485,7 +544,9 @@ $(".changeTable4").on("click", function() {
 		"--primaryLight": "#dee2e6",
 		"--primaryDark10": "#131619",
 		"--primaryDark20": "#000000",
-		"--background": "#232323"
+		"--background": "#232323",
+		"--tertiary": "#fdd262",
+		"--tertiaryDark": "#f0b92e"
 	});
 });
 
@@ -548,41 +609,5 @@ $(function() {
 	app.init();
 });
 
-
-
-// if shop doesnt work use this
-// app.changeTable = function() {
-// 	if (app.current > 800) {
-// 		$(":root").css({
-// 			"--primary": "#292f36",
-// 			"--primaryLight": "#dee2e6",
-// 			"--primaryDark10": "#131619",
-// 			"--primaryDark20": "#000000",
-// 			"--background": "#232323"
-// 		});
-// 	} else if (app.current > 700) {
-// 		$(":root").css({
-// 			"--primary": "#5c415d",
-// 			"--primaryLight": "#ac8aad",
-// 			"--primaryDark10": "#3e2c3f",
-// 			"--primaryDark20": "#211721",
-// 			"--background": "#332e33"
-// 		});
-// 	} else if (app.current > 500) {
-// 		$(":root").css({
-// 			"--primary": "#A1454A",
-// 			"--primaryLight": "#ca8286",
-// 			"--primaryDark10": "#5a2629",
-// 			"--primaryDark20": "#361719",
-// 			"--background": "#2d2827"
-// 		});
-// 	} else {
-// 		$(":root").css({
-// 			"--primary": "#446455",
-// 			"--primaryLight": "#adc7bb",
-// 			"--primaryDark10": "#2f463b",
-// 			"--primaryDark20": "#1b2721",
-// 			"--background": "#212a29"
-// 		});
-// 	}
-// };
+// make betting pool look sunken in?
+// maybe add chip animations? sr-only circles stacked? idfk
