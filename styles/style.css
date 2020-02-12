@@ -367,7 +367,9 @@ h1 {
 h2 {
   font-family: "Cinzel Decorative", cursive;
   font-size: 5rem;
-  margin: 2%;
+  margin: 10px;
+  line-height: 0.7;
+  color: #fdd262;
 }
 
 .p1 h2,
@@ -387,6 +389,32 @@ h2 {
   color: #fdd262;
   width: calc(100% - 20px);
   text-align: center;
+  -webkit-animation: attention 0.8s forwards;
+          animation: attention 0.8s forwards;
+}
+
+@-webkit-keyframes attention {
+  0%,
+  100% {
+    text-shadow: none;
+    font-size: 2rem;
+  }
+  50% {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px #fdd262;
+  }
+}
+
+@keyframes attention {
+  0%,
+  100% {
+    text-shadow: none;
+    font-size: 2rem;
+  }
+  50% {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px #fdd262;
+  }
 }
 
 .bettingPool {
@@ -420,11 +448,14 @@ h2 {
   }
 }
 
-.rulesModal h3 {
+.rulesModal h3, .winScreen h3 {
   font-family: "Cinzel Decorative", cursive;
-  font-size: calc(1.5rem + 50%);
-  margin: 2%;
-  text-decoration: underline;
+  font-size: calc(1.5rem + 45%);
+  margin: 2% 0;
+  width: 100%;
+  padding: 0 2%;
+  color: #fdd262;
+  position: relative;
 }
 
 p,
@@ -445,8 +476,7 @@ a {
   display: block;
 }
 
-.rulesModal,
-.winScreen {
+.rulesModal, .winScreen {
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -460,17 +490,74 @@ a {
   border: 2px solid #fdd262;
   -webkit-box-shadow: 0px 0px 0px 5px var(--primary);
           box-shadow: 0px 0px 0px 5px var(--primary);
-  width: 70%;
   max-width: 1000px;
-  height: 80%;
-  overflow-y: scroll;
+  width: 100%;
   text-align: center;
+}
+
+@media (max-width: 740px) {
+  .rulesModal, .winScreen {
+    min-height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    -webkit-transform: none;
+            transform: none;
+    border-radius: 0;
+    border: 4px solid #fdd262;
+  }
+}
+
+.rulesModal ol, .winScreen ol {
+  position: relative;
+  border: 2px solid #fdd262;
+  border-left: none;
+  border-right: none;
+  border-radius: 20px;
+  padding-top: 10px;
+}
+
+.rulesModal ol li, .winScreen ol li {
+  margin: 1% 0;
+}
+
+.rulesModal ol:before, .winScreen ol:before, .rulesModal ol:after, .winScreen ol:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 40px;
+  left: 0;
+  top: -40px;
+  border-bottom: 2px solid #fdd262;
+  border-radius: 20px;
+}
+
+.rulesModal ol:after, .winScreen ol:after {
+  top: auto;
+  bottom: -40px;
+  border-top: 2px solid #fdd262;
+  border-bottom: none;
 }
 
 .winScreen {
   top: 200px;
   height: 250px;
   width: 40%;
+}
+
+@media (max-width: 740px) {
+  .winScreen {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    width: 80%;
+    height: 50%;
+    min-height: 0;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 0px 5px var(--primary), 0 0 10px 10px black;
+            box-shadow: 0px 0px 0px 5px var(--primary), 0 0 10px 10px black;
+  }
 }
 
 .basicRulesList,
@@ -520,19 +607,29 @@ a {
 }
 
 .leftRadioLabel {
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  position: absolute;
+  top: 26.5px;
+  left: 50%;
+  -webkit-transform: translateX(-190%);
+          transform: translateX(-190%);
+  border-radius: 50px 5px 5px 50px;
   display: inline-block;
   width: 100px;
   text-align: right;
+  font-weight: bold;
 }
 
 .rightRadioLabel {
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  position: absolute;
+  top: 26.5px;
+  right: 50%;
+  -webkit-transform: translateX(190%);
+          transform: translateX(190%);
+  border-radius: 5px 50px 50px 5px;
   display: inline-block;
   width: 100px;
   text-align: left;
+  font-weight: bold;
 }
 
 .leftRadio:checked ~ .leftRadioLabel,
@@ -594,7 +691,8 @@ a {
 .hit,
 .stay,
 .bet,
-.playAgain {
+.playAgain,
+.shop {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
   -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
@@ -616,7 +714,8 @@ a {
 .hit:active,
 .stay:active,
 .playAgain:active,
-.bet:active {
+.bet:active,
+.shop:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
   -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
@@ -633,13 +732,20 @@ button:focus {
   position: absolute;
   top: 10px;
   right: 10px;
+  padding: 5px;
+  height: auto;
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .hit,
 .stay,
 .deal,
 .rulesButton,
-.bet {
+.bet,
+.shop {
   position: absolute;
   top: -50px;
   width: 40%;
@@ -680,36 +786,8 @@ button:focus {
   top: -95px;
 }
 
-@media (max-width: 600px) {
-  .hit,
-  .stay,
-  .deal,
-  .bet {
-    width: 37%;
-    height: 50px;
-    top: -62px;
-  }
-  .deal,
-  .hit {
-    left: 20%;
-  }
-  .bet,
-  .stay {
-    right: 0;
-    left: auto;
-  }
-  .deal,
-  .bet {
-    padding: 5px;
-    top: -120px;
-  }
-  .rulesButton {
-    height: 50px;
-    top: -62px;
-  }
-}
-
-.rulesButton {
+.rulesButton,
+.shop {
   width: 80%;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -719,18 +797,24 @@ button:focus {
 }
 
 @media (max-width: 740px) {
-  .rulesButton {
+  .rulesButton,
+  .shop {
     -webkit-box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
             box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px var(--primaryDark20);
   }
 }
 
 @media (max-width: 600px) {
-  .rulesButton {
+  .rulesButton,
+  .shop {
     left: 0;
     -webkit-transform: none;
             transform: none;
   }
+}
+
+.shop {
+  top: -95px;
 }
 
 .animatingOut {
@@ -919,6 +1003,70 @@ button:focus {
   }
 }
 
+@media (max-width: 600px) {
+  .hit,
+  .stay,
+  .deal,
+  .bet {
+    width: 37%;
+    height: 50px;
+    top: -62px;
+  }
+  .deal,
+  .hit {
+    left: 20%;
+  }
+  .bet,
+  .stay {
+    right: 0;
+    left: auto;
+  }
+  .deal,
+  .bet {
+    padding: 5px;
+    top: -120px;
+  }
+  .rulesButton {
+    height: 50px;
+    top: -62px;
+  }
+  .shop {
+    height: 50px;
+    top: -120px;
+  }
+}
+
+@media (max-width: 500px) {
+  h2 {
+    font-size: 3rem;
+    margin-top: 20px;
+  }
+  .rulesModal h3, .winScreen h3 {
+    font-size: 1.5rem;
+  }
+  .leftRadioLabel,
+  .rightRadioLabel {
+    top: 35px;
+    width: 85px;
+    padding: 5px;
+    height: auto;
+  }
+  .leftRadioLabel {
+    -webkit-transform: translateX(-170%);
+            transform: translateX(-170%);
+  }
+  .rightRadioLabel {
+    -webkit-transform: translateX(170%);
+            transform: translateX(170%);
+  }
+  ol {
+    padding-left: 25px;
+  }
+  li {
+    font-size: 1.8rem;
+  }
+}
+
 .gameBoard {
   position: relative;
   display: -webkit-box;
@@ -938,8 +1086,8 @@ button:focus {
           align-items: flex-end;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, var(--primaryDark20)), to(var(--primary)));
   background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
-  -webkit-box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 15px 1px 10px #291e0c;
-          box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 15px 1px 10px #291e0c;
+  -webkit-box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 25px 0px 5px #291e0c;
+          box-shadow: 0 0 0px 10px #6c5021, 0 10px 5px 5px #6c5021, 0px 25px 0px 5px #291e0c;
   border-radius: 50px 50px 50% 50%;
   padding: 50px 40px;
   margin: 0 auto;

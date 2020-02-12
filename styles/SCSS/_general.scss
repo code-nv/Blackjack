@@ -87,7 +87,9 @@ h1 {
 h2 {
 	font-family: $titleStack;
 	font-size: 5rem;
-	margin: 2%;
+	margin: 10px;
+	line-height: 0.7;
+	color: $accent;
 }
 
 .p1 h2,
@@ -107,6 +109,21 @@ h2 {
 	color: $accent;
 	width: calc(100% - 20px);
 	text-align: center;
+	animation: attention 0.8s forwards;
+}
+
+@keyframes attention {
+	0%,
+	100% {
+		text-shadow: none;
+		font-size: 2rem;
+	}
+	50% {
+		font-size: 2.5rem;
+		text-shadow: 0 0 10px $accent;
+	}
+
+	
 }
 
 .bettingPool {
@@ -136,9 +153,12 @@ h2 {
 
 .rulesModal h3 {
 	font-family: $titleStack;
-	font-size: calc(1.5rem + 50%);
-	margin: 2%;
-	text-decoration: underline;
+	font-size: calc(1.5rem + 45%);
+	margin: 2% 0;
+	width: 100%;
+	padding: 0 2%;
+	color: $accent;
+	position: relative;
 }
 
 p,

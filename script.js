@@ -442,6 +442,53 @@ app.payOutLogic = amount => {
 	$(".bettingPool").text("Current Bet $0");
 };
 
+// ======== //
+// SHOPPING //
+// ======== //
+$(`.shop`).on('click',function(){
+// WRITE SHOP LOGIC TOMORROW
+});
+
+$(".changeTable1").on("click", function() {
+	$(":root").css({
+		"--primary": "#446455",
+		"--primaryLight": "#adc7bb",
+		"--primaryDark10": "#2f463b",
+		"--primaryDark20": "#1b2721",
+		"--background": "#212a29"
+	});
+});
+
+$(".changeTable2").on("click", function() {
+	$(":root").css({
+		"--primary": "#A1454A",
+		"--primaryLight": "#ca8286",
+		"--primaryDark10": "#5a2629",
+		"--primaryDark20": "#361719",
+		"--background": "#2d2827"
+	});
+});
+
+$(".changeTable3").on("click", function() {
+	$(":root").css({
+		"--primary": "#5c415d",
+		"--primaryLight": "#ac8aad",
+		"--primaryDark10": "#3e2c3f",
+		"--primaryDark20": "#211721",
+		"--background": "#332e33"
+	});
+});
+
+$(".changeTable4").on("click", function() {
+	$(":root").css({
+		"--primary": "#292f36",
+		"--primaryLight": "#dee2e6",
+		"--primaryDark10": "#131619",
+		"--primaryDark20": "#000000",
+		"--background": "#232323"
+	});
+});
+
 // ========================================= //
 //  IINNNNNIIIITTTTTTIIAALLLIIIZEEEE IIIITTT //
 // ========================================= //
@@ -497,86 +544,45 @@ app.init = function() {
 	});
 };
 
-$(".changeTable1").on("click", function() {
-	$(":root").css({
-		"--primary": "#446455",
-		"--primaryLight": "#adc7bb",
-		"--primaryDark10": "#2f463b",
-		"--primaryDark20": "#1b2721",
-		"--background": "#212a29"
-	});
-});
-
-$(".changeTable2").on("click", function() {
-	$(":root").css({
-		"--primary": "#A1454A",
-		"--primaryLight": "#ca8286",
-		"--primaryDark10": "#5a2629",
-		"--primaryDark20": "#361719",
-		"--background": "#2d2827"
-	});
-});
-
-$(".changeTable3").on("click", function() {
-	$(":root").css({
-		"--primary": "#5c415d",
-		"--primaryLight": "#ac8aad",
-		"--primaryDark10": "#3e2c3f",
-		"--primaryDark20": "#211721",
-		"--background": "#332e33"
-	});
-});
-
-$(".changeTable4").on("click", function() {
-	$(":root").css({
-		"--primary": "#292f36",
-		"--primaryLight": "#dee2e6",
-		"--primaryDark10": "#131619",
-		"--primaryDark20": "#000000",
-		"--background": "#232323"
-	});
-});
-
 $(function() {
 	app.init();
 });
 
-app.changeTable = function() {
-	if (app.current > 800) {
-		$(":root").css({
-			"--primary": "#292f36",
-			"--primaryLight": "#dee2e6",
-			"--primaryDark10": "#131619",
-			"--primaryDark20": "#000000",
-			"--background": "#232323"
-		});
-	} else if (app.current > 700) {
-		$(":root").css({
-			"--primary": "#5c415d",
-			"--primaryLight": "#ac8aad",
-			"--primaryDark10": "#3e2c3f",
-			"--primaryDark20": "#211721",
-			"--background": "#332e33"
-		});
-	} else if (app.current > 500) {
-		$(":root").css({
-			"--primary": "#A1454A",
-			"--primaryLight": "#ca8286",
-			"--primaryDark10": "#5a2629",
-			"--primaryDark20": "#361719",
-			"--background": "#2d2827"
-		});
-	} else {
-		$(":root").css({
-			"--primary": "#446455",
-			"--primaryLight": "#adc7bb",
-			"--primaryDark10": "#2f463b",
-			"--primaryDark20": "#1b2721",
-			"--background": "#212a29"
-		});
-	}
-};
-// weird quirks with betting.
-// if less than 50 and win, betting remains $25???
-// maybe just prompt them when they're less than 50?
-// maybe use the .map method to work with card hand totals?
+
+
+// if shop doesnt work use this
+// app.changeTable = function() {
+// 	if (app.current > 800) {
+// 		$(":root").css({
+// 			"--primary": "#292f36",
+// 			"--primaryLight": "#dee2e6",
+// 			"--primaryDark10": "#131619",
+// 			"--primaryDark20": "#000000",
+// 			"--background": "#232323"
+// 		});
+// 	} else if (app.current > 700) {
+// 		$(":root").css({
+// 			"--primary": "#5c415d",
+// 			"--primaryLight": "#ac8aad",
+// 			"--primaryDark10": "#3e2c3f",
+// 			"--primaryDark20": "#211721",
+// 			"--background": "#332e33"
+// 		});
+// 	} else if (app.current > 500) {
+// 		$(":root").css({
+// 			"--primary": "#A1454A",
+// 			"--primaryLight": "#ca8286",
+// 			"--primaryDark10": "#5a2629",
+// 			"--primaryDark20": "#361719",
+// 			"--background": "#2d2827"
+// 		});
+// 	} else {
+// 		$(":root").css({
+// 			"--primary": "#446455",
+// 			"--primaryLight": "#adc7bb",
+// 			"--primaryDark10": "#2f463b",
+// 			"--primaryDark20": "#1b2721",
+// 			"--background": "#212a29"
+// 		});
+// 	}
+// };

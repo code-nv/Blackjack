@@ -1,5 +1,4 @@
-.rulesModal,
-.winScreen {
+.rulesModal {
 	position: absolute;
 	z-index: 10;
 	top: 50%;
@@ -11,17 +10,71 @@
 	border-radius: 10px;
 	border: 2px solid $accent;
 	box-shadow: 0px 0px 0px 5px var(--primary);
-	width: 70%;
 	max-width: 1000px;
-	height: 80%;
-	overflow-y: scroll;
+	width: 100%;
 	text-align: center;
+
+	@include mq740 {
+		min-height: 100vh;
+		width: 100%;
+		top: 0;
+		left: 0;
+		transform: none;
+		border-radius: 0;
+		border: 4px solid $accent;
+	}
+
+	ol {
+		position: relative;
+		border: 2px solid $accent;
+		border-left: none;
+		border-right: none;
+		border-radius: 20px;
+		padding-top: 10px;
+
+		li {
+			margin: 1% 0;
+		}
+
+		&:before,
+		&:after {
+			position: absolute;
+			content: "";
+			width: 100%;
+			height: 40px;
+			left: 0;
+			top: -40px;
+			border-bottom: 2px solid $accent;
+			border-radius: 20px;
+		}
+
+		&:after {
+			top:auto;
+			bottom: -40px;
+			border-top: 2px solid $accent;
+			border-bottom:none;
+		}
+	}
 }
 
+
+
 .winScreen {
+	@extend .rulesModal;
 	top: 200px;
 	height: 250px;
 	width: 40%;
+
+	@include mq740 {
+		top:50%;
+		left: 50%;
+		transform:translate(-50%, -50%);
+		width: 80%;
+		height: 50%;
+		min-height: 0;
+		border-radius: 10px;
+		box-shadow: 0px 0px 0px 5px var(--primary), 0 0 10px 10px black;
+	}
 }
 
 .basicRulesList,
@@ -51,8 +104,8 @@
 	left: 5px;
 	top: 5px;
 	width: 100px;
-    background: $accent;
-    text-transform: lowercase;
+	background: $accent;
+	text-transform: lowercase;
 	content: "If using a keyboard, the arrow keys will switch ruleset";
 }
 
@@ -60,19 +113,27 @@
 	@include buttonStyle;
 }
 .leftRadioLabel {
-	border-top-left-radius: 50px;
-	border-bottom-left-radius: 50px;
+	position: absolute;
+	top: 26.5px;
+	left: 50%;
+	transform: translateX(-190%);
+	border-radius: 50px 5px 5px 50px;
 	display: inline-block;
 	width: 100px;
 	text-align: right;
+	font-weight: bold;
 }
 
 .rightRadioLabel {
-	border-top-right-radius: 50px;
-	border-bottom-right-radius: 50px;
+	position: absolute;
+	top: 26.5px;
+	right: 50%;
+	transform: translateX(190%);
+	border-radius: 5px 50px 50px 5px;
 	display: inline-block;
 	width: 100px;
 	text-align: left;
+	font-weight: bold;
 }
 
 .leftRadio:checked ~ .leftRadioLabel,
@@ -114,7 +175,8 @@
 .hit,
 .stay,
 .bet,
-.playAgain {
+.playAgain,
+.shop {
 	@include buttonStyle;
 	position: relative;
 	z-index: 1;
@@ -125,7 +187,8 @@
 .hit:active,
 .stay:active,
 .playAgain:active,
-.bet:active {
+.bet:active,
+.shop:active {
 	@include buttonActive;
 }
 
@@ -137,13 +200,20 @@ button:focus {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	padding: 5px;
+	height: auto;
+	border-radius: 4px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	line-height: 1;
 }
 
 .hit,
 .stay,
 .deal,
 .rulesButton,
-.bet {
+.bet,
+.shop {
 	position: absolute;
 	top: -50px;
 	width: 40%;
@@ -159,7 +229,7 @@ button:focus {
 .hit,
 .stay,
 .bet {
-    transition: opacity 0.3s;
+	transition: opacity 0.3s;
 }
 
 .hit:disabled,
@@ -176,46 +246,13 @@ button:focus {
 	border: none;
 }
 
-
 .deal,
 .bet {
 	top: -95px;
 }
 
-@include mq600 {
-	.hit,
-	.stay,
-    .deal,
-    .bet {
-        width: 37%;
-        height: 50px;
-        top: -62px;
-	}
-
-    .deal,
-    .hit {
-		left: 20%;
-	}
-
-    .bet,
-    .stay {
-		right: 0;
-        left: auto;
-    }
-    
-    .deal,
-    .bet {
-        padding: 5px;
-        top: -120px;
-    }
-
-    .rulesButton {
-        height: 50px;
-        top: -62px;
-    }
-}
-
-.rulesButton {
+.rulesButton,
+.shop {
 	width: 80%;
 	left: 50%;
 	transform: translateX(-50%);
@@ -231,6 +268,10 @@ button:focus {
 		left: 0;
 		transform: none;
 	}
+}
+
+.shop {
+	top: -95px;
 }
 
 .animatingOut {
@@ -299,5 +340,76 @@ button:focus {
 	100% {
 		@extend .deal;
 		color: black;
+	}
+}
+
+@include mq600 {
+	.hit,
+	.stay,
+	.deal,
+	.bet {
+		width: 37%;
+		height: 50px;
+		top: -62px;
+	}
+
+	.deal,
+	.hit {
+		left: 20%;
+	}
+
+	.bet,
+	.stay {
+		right: 0;
+		left: auto;
+	}
+
+	.deal,
+	.bet {
+		padding: 5px;
+		top: -120px;
+	}
+
+	.rulesButton {
+		height: 50px;
+		top: -62px;
+	}
+
+	.shop {
+		height: 50px;
+		top: -120px;
+	}
+}
+
+@include mq500 {
+	h2 {
+		font-size: 3rem;
+		margin-top: 20px;
+	}
+	.rulesModal h3 {
+		font-size: 1.5rem;
+	}
+	.leftRadioLabel,
+	.rightRadioLabel {
+		top: 35px;
+		width: 85px;
+		padding: 5px;
+		height: auto;
+	}
+
+	.leftRadioLabel {
+		transform: translateX(-170%);
+	}
+
+	.rightRadioLabel {
+		transform: translateX(170%);
+	}
+
+	ol {
+		padding-left: 25px;
+	}
+
+	li {
+		font-size: 1.8rem;
 	}
 }
