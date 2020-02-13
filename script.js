@@ -5,7 +5,6 @@ app.p2 = [];
 app.p1Hand = [];
 app.p2Hand = [];
 app.cardOne = "";
-// app.cardTwo = "";
 app.hitCard = [];
 app.p1Total = 0;
 app.p2Total = 0;
@@ -26,7 +25,6 @@ const $betButton = $(".bet");
 
 // p1Hand is receiving array
 // p1 is the array for total calc
-//p1Populate is array for card represent
 
 // making a clone of initial unpopulated player areas and cards
 app.captureInitialState = function() {
@@ -562,12 +560,6 @@ $(".changeTable4").on("click", function() {
 // ========================================= //
 
 app.init = function() {
-	// was having weird resizing issues with vh units on firefox
-	$(window).on("resize", function() {
-		let heightFix = $(window).height();
-		$(".wrapper").css("height", `${heightFix}`);
-	});
-
 	app.captureInitialState();
 	app.createDeck();
 
@@ -638,9 +630,9 @@ const checkSplit = function() {
 	}
 };
 
-const buzz = ()=>{
-$('.p1').append(app.p1Clone[1]);
-}
+const buzz = () => {
+	$(".p1").append(app.p1Clone[1]);
+};
 
 // figure out a way to differentiate the two hands
 // add class 'original' to all the p1 cards? then append all the clones?
@@ -648,4 +640,4 @@ $('.p1').append(app.p1Clone[1]);
 // might have to make a new 'stay' button or write an if statement inside the if button whereby if split == true then call 'hit(p1b) or something.
 // figure out a way to compare each of the hands and pay out accordingly.
 
-ugh
+ugh;
