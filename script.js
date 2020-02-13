@@ -363,6 +363,7 @@ app.nextRound = function() {
 	app.p2Total = 0;
 
 	$betButton.removeAttr("disabled");
+	$(".doubleDown").attr("disabled", "true");
 	$(".earnings").toggleClass("attention attention2");
 };
 

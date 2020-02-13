@@ -157,6 +157,7 @@
 
 .letsPlay {
 	@include buttonStyle;
+	margin-top: 20px;
 }
 
 .letsPlay:active {
@@ -241,11 +242,14 @@ button:focus {
 .doubleDown:disabled {
 	opacity: 0.4;
 }
+.table:disabled.table:active {
+	@include buttonStyle;
+	opacity: 0.4;
+}
 
 .hit:disabled.hit:active,
 .stay:disabled.stay:active,
 .bet:disabled.bet:active,
-.table:disabled.table:active,
 .doubleDown:disabled.doubleDown:active {
 	background: linear-gradient($accent 70%, darken($accentDarker, 30%) 90%);
 	box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
