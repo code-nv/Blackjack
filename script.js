@@ -273,8 +273,8 @@ app.checkWin = function() {
 		app.endRound();
 	}
 };
-// stop player from hitting / staying outside of their turn
 
+// stop player from hitting / staying outside of their turn
 app.unfreezePlayer = () => {
 	$hitButton.removeAttr("disabled");
 	$stayButton.removeAttr("disabled");
@@ -458,7 +458,6 @@ app.payOutLogic = amount => {
 // ======== //
 // SHOPPING //
 // ======== //
-
 $(`.shop`).on("click", function() {
 	// show the shop
 	$(".shopWindow").css("display", "block");
@@ -612,8 +611,8 @@ app.init = function() {
 			app.computerHit();
 		}, 1500);
 	});
-	// disable the hit button once player has chosen to stay, remember to re-enable this on new round
 
+	// disable the hit button once player has chosen to stay, remember to re-enable this on new round
 	$(".winScreen").on("click", ".playAgain", function(e) {
 		e.preventDefault();
 		app.nextRound();
@@ -625,6 +624,3 @@ app.init = function() {
 $(function() {
 	app.init();
 });
-
-// make betting pool look sunken in?
-// maybe add chip animations? sr-only circles stacked? idfk
