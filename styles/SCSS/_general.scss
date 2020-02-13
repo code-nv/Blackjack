@@ -143,11 +143,11 @@ h2 {
 
 .bettingPool {
 	position: absolute;
-	top: 20%;
+	top: 8%;
 	color: $accent;
 	font-size: 5rem;
 
-	@include mq950 {
+	@include mq740 {
 		font-size: 3rem;
 		top: 0;
 		left: 20px;
@@ -156,7 +156,7 @@ h2 {
 	@include mqh580 {
 		top: 0;
 		left: 20px;
-		font-size: 4rem;
+		font-size: 3rem;
 	}
 
 	@include mq600 {

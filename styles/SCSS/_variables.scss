@@ -18,7 +18,7 @@ $white: #fafafa;
 	--primaryDark20: #1b2721;
 	--background: #212a29;
 	--tertiary: #6c5021;
-	--tertiaryDark:#291e0c;
+	--tertiaryDark: #291e0c;
 	// --secondary: #889b9b;
 	// --tertiary: #805e27;
 	// --accent: #fdd262;
@@ -122,6 +122,12 @@ $bodyStack: "Fira Sans Condensed", sans-serif;
 
 @mixin mq600 {
 	@media (max-width: 600px) {
+		@content;
+	}
+}
+
+@mixin mq530by580 {
+	@media (max-width: 530px) and (max-height: 580px) {
 		@content;
 	}
 }

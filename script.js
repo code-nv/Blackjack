@@ -185,8 +185,15 @@ app.colorCards = function(player) {
 	}
 };
 
+app.doubleDown = function() {
+	if (app.current >= app.pool) {
+		$(".doubleDown").removeAttr("disabled");
+	}
+};
+
 // logic to hit new cards
 app.hit = function(player, playerHand, playerTotal) {
+	$(".doubleDown").attr("disabled", "true");
 	setTimeout(function() {
 		// pick a random card
 		app.hitCard = Math.floor(Math.random() * app.cards.length);
@@ -314,21 +321,21 @@ app.endRound = function() {
 	app.freezePlayer();
 	if (app.p1Total === 21) {
 		app.winBy21();
-		app.payOutLogic(2);
+		app.payOutLogic(3);
 	} else if (app.p2Total === 21) {
 		app.winner = false;
 		app.loseSpecial();
 		app.payOutLogic(0);
 	} else if (app.p2Total > 21) {
 		app.winEnd();
-		app.payOutLogic(1.5);
+		app.payOutLogic(2);
 	} else if (app.p1Total > 21) {
 		app.winner = false;
 		app.lose();
 		app.payOutLogic(0);
 	} else if (app.p1Total > app.p2Total) {
 		app.winEnd();
-		app.payOutLogic(1.5);
+		app.payOutLogic(2);
 	} else if (app.p1Total === app.p2Total) {
 		app.winTie();
 		app.payOutLogic(1);
@@ -343,6 +350,10 @@ app.nextRound = function() {
 	$(".winScreen").css("display", "none");
 	if (app.cards.length < 16) {
 		app.createDeck();
+	}
+
+	if (app.current < 50) {
+		app.moreMoney();
 	}
 	app.p1.length = 0;
 	app.p2.length = 0;
@@ -359,19 +370,28 @@ app.moreMoney = function() {
 	app.winScreen();
 	$win.children("h2").text("Uh Oh!");
 	$win
+		.css("display", "block")
 		.children("p")
 		.text(
 			"You can't afford the minimum bet, that's rough! Let's try again, here's $500"
 		);
-	app.checkIfFillingWallet();
-};
+	$win
+		.children("button")
+		.removeClass("playAgain")
+		.addClass("getMoney");
 
-app.checkIfFillingWallet = function() {
+	$(".getMoney").on("click", function() {
+		$win.css("display", "none");
+		$(".getMoney")
+			.removeClass("getMoney")
+			.addClass("playAgain");
+	});
 	if (app.current < 1) {
 		app.current = 500;
 		$myMoney.text("Wallet: $" + app.current);
 		$(".bet").text("Bet $50");
 	}
+	app.showMe();
 };
 
 // ===================== //
@@ -385,13 +405,9 @@ app.winScreen = function() {
 };
 
 app.winBy21 = function() {
-	if (app.current < 50) {
-		app.moreMoney();
-	} else {
-		app.winScreen();
-		$win.children("h2").text(`BLACKJACK!!`);
-		$win.children("p").text(`Congrats! You get the big bucks$$$`);
-	}
+	app.winScreen();
+	$win.children("h2").text(`BLACKJACK!!`);
+	$win.children("p").text(`Congrats! You get the big bucks$$$`);
 };
 
 app.winEnd = function() {
@@ -406,23 +422,15 @@ app.winTie = function() {
 };
 
 app.lose = function() {
-	if (app.current < 50) {
-		app.moreMoney();
-	} else {
-		app.winScreen();
-		$win.children("h2").text("wasted");
-		$win.children("p").text("you lost 💀");
-	}
+	app.winScreen();
+	$win.children("h2").text("wasted");
+	$win.children("p").text("you lost 💀");
 };
 
 app.loseSpecial = function() {
-	if (app.current < 50) {
-		app.moreMoney();
-	} else {
-		app.winScreen();
-		$win.children("h2").text("wasted");
-		$win.children("p").text(`house got 21, that's just bad luck`);
-	}
+	app.winScreen();
+	$win.children("h2").text("wasted");
+	$win.children("p").text(`house got 21, that's just bad luck`);
 };
 
 // ======= //
@@ -580,6 +588,7 @@ app.init = function() {
 		app.checkTotal("p2", "p2Hand", "p2Total");
 		app.populateCards("p1Hand", "p1");
 		app.populateCards("p2Hand", "p2");
+		app.doubleDown();
 	});
 
 	$(`.hit`).on("click", function(e) {
@@ -593,14 +602,23 @@ app.init = function() {
 		app.showHouse();
 		app.computerHit();
 	});
+
+	$(".doubleDown").on("click", function() {
+		app.hit("p1", "p1Hand", "p1Total");
+		$(".doubleDown").attr("disabled", "true");
+		setTimeout(function() {
+			app.freezePlayer();
+			app.showHouse();
+			app.computerHit();
+		}, 1500);
+	});
 	// disable the hit button once player has chosen to stay, remember to re-enable this on new round
 
-	$(".playAgain").on("click", function(e) {
+	$(".winScreen").on("click", ".playAgain", function(e) {
 		e.preventDefault();
 		app.nextRound();
 		app.showMe();
 		app.restoreInitialState();
-		app.checkIfFillingWallet();
 	});
 };
 

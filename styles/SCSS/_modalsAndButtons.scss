@@ -174,7 +174,9 @@
 .stay,
 .bet,
 .playAgain,
-.shop {
+.shop,
+.getMoney,
+.doubleDown {
 	@include buttonStyle;
 	position: relative;
 	z-index: 1;
@@ -186,7 +188,9 @@
 .stay:active,
 .playAgain:active,
 .bet:active,
-.shop:active {
+.shop:active,
+.getMoney:active,
+.doubleDown:active {
 	@include buttonActive;
 }
 
@@ -211,7 +215,8 @@ button:focus {
 .deal,
 .rulesButton,
 .bet,
-.shop {
+.shop,
+.doubleDown {
 	position: absolute;
 	top: -50px;
 	width: 40%;
@@ -232,17 +237,45 @@ button:focus {
 
 .hit:disabled,
 .stay:disabled,
-.bet:disabled {
+.bet:disabled,
+.doubleDown:disabled {
 	opacity: 0.4;
 }
 
 .hit:disabled.hit:active,
 .stay:disabled.stay:active,
 .bet:disabled.bet:active,
-.table:disabled.table:active {
+.table:disabled.table:active,
+.doubleDown:disabled.doubleDown:active {
 	background: linear-gradient($accent 70%, darken($accentDarker, 30%) 90%);
 	box-shadow: inset -4px -2px 3px #654a07, 3px 3px 3px #1b2721;
 	border: none;
+}
+
+.doubleDown {
+	position: absolute;
+	top: 30%;
+	width: auto;
+	padding: 0 15px;
+
+	@include mq740 {
+		top: 70px;
+		left: 20px;
+	}
+
+	@include mqh580 {
+		top: 70px;
+		left: 20px;
+	}
+
+	@include mq500 {
+		top: 90px;
+		left: 20px;
+	}
+
+	@include mq530by580 {
+		top: 90px;
+	}
 }
 
 .deal,
