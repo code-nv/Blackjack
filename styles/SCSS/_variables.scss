@@ -1,8 +1,5 @@
 // variables
-// var(--primary): #931806;
-// var(--primary): #446455;
 $secondary: #889b9b;
-// $tertiary: #805e27;
 $tertiary: #6c5021;
 $tertiaryDark: #291e0c;
 $accent: #fdd262;
@@ -11,6 +8,7 @@ $dark: #444c49;
 $black: #232323;
 $white: #fafafa;
 
+// defined with css variables so I can manipulate them with js later
 :root {
 	--primary: #446455;
 	--primaryLight: #adc7bb;
@@ -19,15 +17,8 @@ $white: #fafafa;
 	--background: #212a29;
 	--tertiary: #6c5021;
 	--tertiaryDark: #291e0c;
-	// --secondary: #889b9b;
-	// --tertiary: #805e27;
-	// --accent: #fdd262;
-	// --accentDarker:#f2c146;
-	// --accentLight10:#fee094;
-	// --accentDark30: #956d0a;
-	// --accentDark40:#654a07;
 }
-
+// importing fonts
 @import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Fira+Sans|Playfair+Display&display=swap");
 
 $titleStack: "Cinzel Decorative", cursive;
@@ -126,12 +117,6 @@ $bodyStack: "Fira Sans Condensed", sans-serif;
 	}
 }
 
-@mixin mq530by580 {
-	@media (max-width: 530px) and (max-height: 580px) {
-		@content;
-	}
-}
-
 @mixin mq500 {
 	@media (max-width: 500px) {
 		@content;
@@ -140,6 +125,12 @@ $bodyStack: "Fira Sans Condensed", sans-serif;
 
 @mixin mqh580 {
 	@media (max-height: 580px) {
+		@content;
+	}
+}
+
+@mixin mq530by580 {
+	@media (max-width: 530px) and (max-height: 580px) {
 		@content;
 	}
 }

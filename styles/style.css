@@ -722,17 +722,7 @@ a {
   display: none;
 }
 
-.rulesButton,
-.closeRules,
-.closeShop,
-.deal,
-.hit,
-.stay,
-.bet,
-.playAgain,
-.shop,
-.getMoney,
-.doubleDown {
+button {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
   background: linear-gradient(#fdd262 70%, #956d0a 90%);
   -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
@@ -748,17 +738,7 @@ a {
   z-index: 1;
 }
 
-.rulesButton:active,
-.closeRules:active,
-.closeShop:active,
-.deal:active,
-.hit:active,
-.stay:active,
-.playAgain:active,
-.bet:active,
-.shop:active,
-.getMoney:active,
-.doubleDown:active {
+button:active {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #f2c146), color-stop(60%, #fdd262));
   background: linear-gradient(#f2c146 40%, #fdd262 60%);
   -webkit-box-shadow: inset 0 0 5px 3px #654a07, 0 0 3px var(--primaryDark10);
@@ -771,9 +751,7 @@ button:focus {
   outline: 2px #fdd262 dotted;
 }
 
-
-.closeRules,
-.closeShop {
+.closeRules, .closeShop {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -933,17 +911,6 @@ button:focus {
 }
 
 .table {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(70%, #fdd262), color-stop(90%, #956d0a));
-  background: linear-gradient(#fdd262 70%, #956d0a 90%);
-  -webkit-box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
-          box-shadow: inset 0 0 5px 2px #fee094, 0 0 4px var(--primaryDark10);
-  color: #2c312f;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 1.6rem;
-  height: 3.7rem;
-  text-transform: capitalize;
   width: 100px;
 }
 

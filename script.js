@@ -625,3 +625,27 @@ app.init = function() {
 $(function() {
 	app.init();
 });
+
+let splitMod = [];
+const checkSplit = function() {
+	app.p1Hand.forEach(item => {
+		splitMod.push(item.split(" "));
+	});
+	if (splitMod[0][0] != splitMod[1][0]) {
+		console.log(splitMod[0][0], splitMod[1][0], "nope");
+	} else {
+		console.log("working", splitMod[0][0], splitMod[1][0]);
+	}
+};
+
+const buzz = ()=>{
+$('.p1').append(app.p1Clone[1]);
+}
+
+// figure out a way to differentiate the two hands
+// add class 'original' to all the p1 cards? then append all the clones?
+// if split is hit, modify the hit step plugging in the p1a parameters maybe instead of just p1 parameters?
+// might have to make a new 'stay' button or write an if statement inside the if button whereby if split == true then call 'hit(p1b) or something.
+// figure out a way to compare each of the hands and pay out accordingly.
+
+ugh

@@ -168,30 +168,12 @@
 	display: none;
 }
 
-.rulesButton,
-.closeRules,
-.deal,
-.hit,
-.stay,
-.bet,
-.playAgain,
-.shop,
-.getMoney,
-.doubleDown {
+button {
 	@include buttonStyle;
 	position: relative;
 	z-index: 1;
 }
-.rulesButton:active,
-.closeRules:active,
-.deal:active,
-.hit:active,
-.stay:active,
-.playAgain:active,
-.bet:active,
-.shop:active,
-.getMoney:active,
-.doubleDown:active {
+button:active {
 	@include buttonActive;
 }
 
@@ -333,7 +315,6 @@ button:focus {
 }
 
 .table {
-	@include buttonStyle;
 	width: 100px;
 }
 
@@ -362,7 +343,6 @@ button:focus {
 		padding: 10px 0;
 		color: transparent;
 	}
-
 	60% {
 		box-shadow: inset 50px 80px 1px 1px black;
 	}
