@@ -600,3 +600,47 @@ app.init = function() {
 $(function() {
 	app.init();
 });
+
+const checkSplit = function() {
+	$("p0score").css("display", "block");
+	// prepend the split hand
+	$(`.hand0`).append(hand1a);
+	$(".hand0").css({ height: "100%", width: "50%" });
+	$(".hand1").css("width", "50%");
+	// take the first card out of the second hand's data
+	app.p1Hand.shift();
+
+	// draw second card for each hand
+	app.cardOne = Math.floor(Math.random() * app.cards.length);
+	app.p0Hand.push(app.cards[app.cardOne]);
+	app.cards.splice(app.cardOne, 1);
+	app.cardTwo = Math.floor(Math.random() * app.cards.length);
+	app.p1Hand.push(app.cards[app.cardTwo]);
+	app.cards.splice(app.cardTwo, 1);
+	console.log('p0 hand ' + app.p0Hand);
+	console.log('p1 hand ' +app.p1Hand);
+	app.populateCards("p0Hand", "p1", ".hand0");
+	app.populateCards("p1Hand", "p1", ".hand1");
+	app.checkTotal("p0", "p0Hand", "p0Total");
+	app.p1.length =0;
+	// if(app.p1[1] == "J" || app.p1[1] == "Q" || app.p1[1] == "K"){
+	// 	app.p1[1]=10
+	// }
+	app.checkTotal("p1", "p1Hand", "p1Total");
+	
+	// console.log("p0hand:", app.p0Hand, "p0", app.p0);
+};
+
+// if (splitMod[0][0] != splitMod[1][0]) {
+// 	console.log(splitMod[0][0], splitMod[1][0], "nope");
+// } else {
+// 	console.log("working", splitMod[0][0], splitMod[1][0]);
+// }
+// };
+
+$(`.splitHand`).on("click", function() {
+	checkSplit();
+});
+const splitHand = function() {
+	$(".p1").append(app.p1Clone[1]);
+};
