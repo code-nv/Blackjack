@@ -1339,6 +1339,16 @@ button:hover {
   }
 }
 
+.hand1,
+.houseHand {
+  width: calc(100% - 20px);
+  height: 100%;
+}
+
+.hand0 {
+  display: none;
+}
+
 .scoreCounter {
   position: absolute;
   left: -50px;
@@ -1486,30 +1496,35 @@ button:hover {
   z-index: 2;
   position: absolute;
   left: 20%;
+  top: 10px;
 }
 
 .card3 {
   z-index: 3;
   position: absolute;
   left: 40%;
+  top: 10px;
 }
 
 .card4 {
   z-index: 4;
   position: absolute;
   left: 60%;
+  top: 10px;
 }
 
 .card5 {
   z-index: 5;
   position: absolute;
   left: 80%;
+  top: 10px;
 }
 
 .card6 {
   z-index: 6;
   position: absolute;
   left: 100%;
+  top: 10px;
 }
 
 @media (max-width: 950px) {
