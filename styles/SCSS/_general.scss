@@ -2,7 +2,7 @@ html {
 	font-size: 62.5%;
 	background: var(--background);
 
-	@include mq740 {
+	@include maxWidth740 {
 		background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
 	}
 }
@@ -14,12 +14,12 @@ html {
 	height: 100vh;
 	margin: 0 auto;
 
-	@include mq740 {
+	@include maxWidth740 {
 		perspective: none;
 		width: 95%;
 	}
 
-	@include mq500 {
+	@include maxWidth500 {
 		width: 100%;
 	}
 }
@@ -47,7 +47,7 @@ h1 {
 	font-size: 4rem;
 	animation: flicker 7s forwards;
 
-	@include mq740 {
+	@include maxWidth740 {
 		position: absolute;
 		font-size: 3rem;
 		z-index: 1;
@@ -146,19 +146,19 @@ h2 {
 	color: $accent;
 	font-size: 5rem;
 
-	@include mq740 {
+	@include maxWidth740 {
 		font-size: 3rem;
 		top: 0;
 		left: 20px;
 	}
 
-	@include mqh580 {
+	@include maxHeight580 {
 		top: 0;
 		left: 20px;
 		font-size: 3rem;
 	}
 
-	@include mq600 {
+	@include maxWidth600 {
 		font-size: 2.5rem;
 		max-width: 30%;
 		word-wrap: break-word;

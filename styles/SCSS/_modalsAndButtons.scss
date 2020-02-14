@@ -14,7 +14,7 @@
 	width: 100%;
 	text-align: center;
 
-	@include mq740 {
+	@include maxWidth740 {
 		min-height: 100vh;
 		width: 100%;
 		top: 0;
@@ -63,7 +63,7 @@
 	height: 250px;
 	width: 40%;
 
-	@include mq740 {
+	@include maxWidth740 {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -244,22 +244,22 @@ button:focus {
 	width: auto;
 	padding: 0 15px;
 
-	@include mq740 {
+	@include maxWidth740 {
 		top: 70px;
 		left: 20px;
 	}
 
-	@include mqh580 {
+	@include maxHeight580 {
 		top: 70px;
 		left: 20px;
 	}
 
-	@include mq500 {
+	@include maxWidth500 {
 		top: 90px;
 		left: 20px;
 	}
 
-	@include mq530by580 {
+	@include maxWidth530maxHeight580 {
 		top: 90px;
 	}
 }
@@ -277,12 +277,12 @@ button:focus {
 	box-shadow: inset 5px -2px 3px darken($accentDarker, 40%),
 		3px 3px 3px var(--primaryDark20);
 
-	@include mq740 {
+	@include maxWidth740 {
 		box-shadow: inset -4px -2px 3px darken($accentDarker, 40%),
 			3px 3px 3px var(--primaryDark20);
 	}
 
-	@include mq600 {
+	@include maxWidth600 {
 		left: 0;
 		transform: none;
 	}
@@ -394,7 +394,7 @@ button:focus {
 	}
 }
 
-@include mq600 {
+@include maxWidth600 {
 	.hit,
 	.stay,
 	.deal,
@@ -432,7 +432,7 @@ button:focus {
 	}
 }
 
-@include mq500 {
+@include maxWidth500 {
 	h2 {
 		font-size: 3rem;
 		margin-top: 20px;
