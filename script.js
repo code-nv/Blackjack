@@ -397,18 +397,18 @@ $win = $(`.winScreen`);
 
 app.winScreen = function() {
 	$win.css("display", "block");
-	$win.children("h2").text("Winner! Ganier!");
+	$win.children("h2").text("Winner!");
 };
 
 app.winBy21 = function() {
 	app.winScreen();
-	$win.children("h2").text(`BLACKJACK!!`);
-	$win.children("p").text(`Congrats! You get the big bucks$$$`);
+	$win.children("h2").text(`BLACKJACK!`);
+	$win.children("p").text(`Congratulations! You get the big bucks!`);
 };
 
 app.winEnd = function() {
 	app.winScreen();
-	$win.children("p").text("YOU DID IT HELL YEAH");
+	$win.children("p").text("congratulations! Enjoy your Winnings.");
 };
 
 app.winTie = function() {
@@ -419,14 +419,14 @@ app.winTie = function() {
 
 app.lose = function() {
 	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text("you lost 💀");
+	$win.children("h2").text("Oh no!");
+	$win.children("p").text("You lost. Keep trying though! 💀");
 };
 
 app.loseSpecial = function() {
 	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text(`house got 21, that's just bad luck`);
+	$win.children("h2").text("Oh no!");
+	$win.children("p").text(`The house got 21, that's just bad luck.`);
 };
 
 // ======= //

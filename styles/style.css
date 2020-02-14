@@ -374,6 +374,12 @@ h2 {
   color: #fdd262;
 }
 
+@media (max-width: 950px) {
+  h2 {
+    font-size: 3.4rem;
+  }
+}
+
 .p1 h2,
 .p2 h2 {
   position: absolute;
