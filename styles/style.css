@@ -751,6 +751,11 @@ button:focus {
   outline: 2px #fdd262 dotted;
 }
 
+button:hover:not(:disabled),
+label:hover {
+  cursor: pointer;
+}
+
 .closeRules, .closeShop {
   position: absolute;
   top: 10px;
