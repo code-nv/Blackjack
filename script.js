@@ -23,9 +23,6 @@ const $hitButton = $(".hit");
 const $stayButton = $(".stay");
 const $betButton = $(".bet");
 
-// p1Hand is receiving array
-// p1 is the array for total calc
-
 // making a clone of initial unpopulated player areas and cards
 app.captureInitialState = function() {
 	for (let i = 0, y = 1; i < 5; i++, y++) {
@@ -80,7 +77,7 @@ app.dealCards = () => {
 		app.cards.splice(app.cardOne, 1);
 	}
 };
-
+// hides deal button
 app.hideMe = () => {
 	$(".deal")
 		.removeClass("animatingIn")
@@ -92,7 +89,7 @@ app.hideMe = () => {
 			"animation-iteration-count": "1"
 		});
 };
-
+// reveals deal button
 app.showMe = () => {
 	$(".deal")
 		.toggleClass("animatingOut, animatingIn")
@@ -502,7 +499,9 @@ $(`.shop`).on("click", function() {
 	checkPrice();
 });
 
-// table color pallets
+// =================== //
+// table color palettes //
+// =================== //
 $(".closeShop").on("click", function() {
 	$(".shopWindow").css("display", "none");
 });
@@ -558,7 +557,7 @@ $(".changeTable4").on("click", function() {
 // ========================================= //
 //  IINNNNNIIIITTTTTTIIAALLLIIIZEEEE IIIITTT //
 // ========================================= //
-
+// as this is a click based game all of my functions are running in response to listener events which is why I've structured it like this. I was having issues with events running more than once when the listeners were inside other functions
 app.init = function() {
 	app.captureInitialState();
 	app.createDeck();
@@ -605,7 +604,6 @@ app.init = function() {
 		}, 1500);
 	});
 
-	// disable the hit button once player has chosen to stay, remember to re-enable this on new round
 	$(".winScreen").on("click", ".playAgain", function(e) {
 		e.preventDefault();
 		app.nextRound();
@@ -617,27 +615,3 @@ app.init = function() {
 $(function() {
 	app.init();
 });
-
-let splitMod = [];
-const checkSplit = function() {
-	app.p1Hand.forEach(item => {
-		splitMod.push(item.split(" "));
-	});
-	if (splitMod[0][0] != splitMod[1][0]) {
-		console.log(splitMod[0][0], splitMod[1][0], "nope");
-	} else {
-		console.log("working", splitMod[0][0], splitMod[1][0]);
-	}
-};
-
-const buzz = () => {
-	$(".p1").append(app.p1Clone[1]);
-};
-
-// figure out a way to differentiate the two hands
-// add class 'original' to all the p1 cards? then append all the clones?
-// if split is hit, modify the hit step plugging in the p1a parameters maybe instead of just p1 parameters?
-// might have to make a new 'stay' button or write an if statement inside the if button whereby if split == true then call 'hit(p1b) or something.
-// figure out a way to compare each of the hands and pay out accordingly.
-
-ugh;
