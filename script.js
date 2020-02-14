@@ -5,6 +5,7 @@ app.p2 = [];
 app.p1Hand = [];
 app.p2Hand = [];
 app.cardOne = "";
+app.cardTwo = "";
 app.hitCard = [];
 app.p1Total = 0;
 app.p2Total = 0;
@@ -12,6 +13,10 @@ app.p1Clone = [];
 app.p2Clone = [];
 app.p1ScoreClone;
 app.p2ScoreClone;
+
+app.p0 = [];
+app.p0Hand = [];
+app.p0Total;
 
 // betting caching / setting up
 app.current = 500;
@@ -52,7 +57,7 @@ app.restoreInitialState = function() {
 	app.p2ScoreClone = $(`.p2Score p`).clone();
 };
 
-app.createDeck = () => {
+app.createDeck = function() {
 	app.cards.length = 0;
 	for (let i = 2; i < 15; i++) {
 		app.cards.push(i + " ♣️");
@@ -62,7 +67,7 @@ app.createDeck = () => {
 	}
 };
 
-app.dealCards = () => {
+app.dealCards = function() {
 	// Hand one
 	for (let i = 0; i < 2; i++) {
 		app.cardOne = Math.floor(Math.random() * app.cards.length);
@@ -79,9 +84,15 @@ app.dealCards = () => {
 		// take card out of the deck
 		app.cards.splice(app.cardOne, 1);
 	}
+	let compare1 = app.p1Hand[0].split(" ");
+	let compare2 = app.p1Hand[1].split(" ");
+	// if (compare1 === compare2){
+	// enable split button
+	app.p0Hand.push(app.p1Hand[0]);
+	// }
 };
 
-app.hideMe = () => {
+app.hideMe = function() {
 	$(".deal")
 		.removeClass("animatingIn")
 		.addClass("animatingOut")
@@ -93,14 +104,14 @@ app.hideMe = () => {
 		});
 };
 
-app.showMe = () => {
+app.showMe = function() {
 	$(".deal")
 		.toggleClass("animatingOut, animatingIn")
 		.css("animation-fill-mode", "reverse")
 		.removeAttr("disabled");
 };
 
-app.checkTotal = (player, playerHand, playerTotal) => {
+app.checkTotal = function(player, playerHand, playerTotal) {
 	// parsing card number from raw data by splitting and taking the first value (card format ex [5, clubs])
 	app[player].push(app[playerHand][0].split(" "));
 	app[player].push(app[playerHand][1].split(" "));
@@ -128,7 +139,7 @@ app.checkTotal = (player, playerHand, playerTotal) => {
 };
 
 // put data on empty divs to look like playing cards
-app.populateCards = function(playerHand, player) {
+app.populateCards = function(playerHand, player, hand = "") {
 	// logic to show the face card letter opposed to a number
 	$(`.card1, .card2`).css("display", "flex");
 	for (let i = 0; i < 2; i++) {
@@ -148,20 +159,21 @@ app.populateCards = function(playerHand, player) {
 	}
 
 	// populate card number and suit
-	$(`.${player} .card1 h3, .${player} .card1 h4`)
+	$(` .${player} ${hand} .card1 h3,  .${player} ${hand} .card1 h4`)
 		.text(app[playerHand][0].split(" ")[0])
 		.addClass(app[player][0][1]);
 	// populate middle suit symbol
-	$(`.${player} .card1 .cardSuit`).text(app[player][0][1]);
+	$(`.${player} ${hand} .card1 .cardSuit`).text(app[player][0][1]);
 
 	// same thing for card 2
-	$(`.${player} .card2 h3, .${player} .card2 h4`)
+	$(` .${player} ${hand} .card2 h3, main .${player} ${hand} .card2 h4`)
 		.text(app[playerHand][1].split(" ")[0])
 		.addClass(app[player][1][1]);
 
-	$(`.${player} .card2 .cardSuit`).text(app[player][1][1]);
+	$(` .${player} ${hand} .card2 .cardSuit`).text(app[player][1][1]);
 
 	// color the diamond and heart cards
+	app.colorCards("p0");
 	app.colorCards("p1");
 	app.colorCards("p2");
 	$(`.p2 .card1 h3, .p2 .card1 .cardSuit, .p2 .card1 h4`).css("opacity", "0");
@@ -273,13 +285,13 @@ app.checkWin = function() {
 };
 
 // stop player from hitting / staying outside of their turn
-app.unfreezePlayer = () => {
+app.unfreezePlayer = function() {
 	$hitButton.removeAttr("disabled");
 	$stayButton.removeAttr("disabled");
 	$betButton.attr("disabled", "true");
 };
 
-app.freezePlayer = () => {
+app.freezePlayer = function() {
 	$hitButton.attr("disabled", "true");
 	$stayButton.attr("disabled", "true");
 };
@@ -334,7 +346,7 @@ app.endRound = function() {
 	} else if (app.p1Total > app.p2Total) {
 		app.winEnd();
 		app.payOutLogic(2);
-	} else if (app.p1Total === app.p2Total) {
+	} else if (app.p1Total > 1 && app.p1Total === app.p2Total) {
 		app.winTie();
 		app.payOutLogic(1);
 	} else {
@@ -435,7 +447,7 @@ app.loseSpecial = function() {
 // ======= //
 // BETTING //
 // ======= //
-app.betLogic = () => {
+app.betLogic = function() {
 	app.current -= 50;
 	app.pool += 50;
 	$myMoney.text("Wallet: $" + app.current);
@@ -445,7 +457,7 @@ app.betLogic = () => {
 	}
 };
 
-app.payOutLogic = amount => {
+app.payOutLogic = function(amount) {
 	if (app.winner) {
 		app.current += app.pool * amount;
 	}
@@ -579,12 +591,13 @@ app.init = function() {
 		app.checkTotal("p1", "p1Hand", "p1Total");
 		app.checkTotal("p2", "p2Hand", "p2Total");
 		app.populateCards("p1Hand", "p1");
-		app.populateCards("p2Hand", "p2");
+		app.populateCards("p2Hand", "p2", ".houseHand");
 		app.doubleDown();
 	});
 
 	$(`.hit`).on("click", function(e) {
 		e.preventDefault();
+		// add if statement redirecting the first hit call
 		app.hit("p1", "p1Hand", "p1Total");
 	});
 
@@ -596,10 +609,14 @@ app.init = function() {
 	});
 
 	$(".doubleDown").on("click", function() {
+		app.current -= app.pool;
+		app.pool += app.pool;
+		$(".bettingPool").text("Current Bet $" + app.pool);
+		$("earnings").text("Wallet: $" + app.current);
 		app.hit("p1", "p1Hand", "p1Total");
 		$(".doubleDown").attr("disabled", "true");
+		app.freezePlayer();
 		setTimeout(function() {
-			app.freezePlayer();
 			app.showHouse();
 			app.computerHit();
 		}, 1500);
@@ -619,18 +636,51 @@ $(function() {
 });
 
 let splitMod = [];
+const hand1a = $(`.hand1`)
+	.clone()
+	.removeClass("hand1");
+
 const checkSplit = function() {
-	app.p1Hand.forEach(item => {
-		splitMod.push(item.split(" "));
-	});
-	if (splitMod[0][0] != splitMod[1][0]) {
-		console.log(splitMod[0][0], splitMod[1][0], "nope");
-	} else {
-		console.log("working", splitMod[0][0], splitMod[1][0]);
-	}
+	$("p0score").css("display", "block");
+	// prepend the split hand
+	$(`.hand0`).append(hand1a);
+	$(".hand0").css({ height: "100%", width: "50%" });
+	$(".hand1").css("width", "50%");
+	// take the first card out of the second hand's data
+	app.p1Hand.shift();
+
+	// draw second card for each hand
+	app.cardOne = Math.floor(Math.random() * app.cards.length);
+	app.p0Hand.push(app.cards[app.cardOne]);
+	app.cards.splice(app.cardOne, 1);
+	app.cardTwo = Math.floor(Math.random() * app.cards.length);
+	app.p1Hand.push(app.cards[app.cardTwo]);
+	app.cards.splice(app.cardTwo, 1);
+	console.log('p0 hand ' + app.p0Hand);
+	console.log('p1 hand ' +app.p1Hand);
+	app.populateCards("p0Hand", "p1", ".hand0");
+	app.populateCards("p1Hand", "p1", ".hand1");
+	app.checkTotal("p0", "p0Hand", "p0Total");
+	app.p1.length =0;
+	// if(app.p1[1] == "J" || app.p1[1] == "Q" || app.p1[1] == "K"){
+	// 	app.p1[1]=10
+	// }
+	app.checkTotal("p1", "p1Hand", "p1Total");
+	
+	// console.log("p0hand:", app.p0Hand, "p0", app.p0);
 };
 
-const buzz = () => {
+// if (splitMod[0][0] != splitMod[1][0]) {
+// 	console.log(splitMod[0][0], splitMod[1][0], "nope");
+// } else {
+// 	console.log("working", splitMod[0][0], splitMod[1][0]);
+// }
+// };
+
+$(`.splitHand`).on("click", function() {
+	checkSplit();
+});
+const splitHand = function() {
 	$(".p1").append(app.p1Clone[1]);
 };
 
@@ -639,5 +689,3 @@ const buzz = () => {
 // if split is hit, modify the hit step plugging in the p1a parameters maybe instead of just p1 parameters?
 // might have to make a new 'stay' button or write an if statement inside the if button whereby if split == true then call 'hit(p1b) or something.
 // figure out a way to compare each of the hands and pay out accordingly.
-
-ugh;
