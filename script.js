@@ -13,6 +13,8 @@ app.p2Clone = [];
 app.p1ScoreClone;
 app.p2ScoreClone;
 
+app.card = {};
+
 // betting caching / setting up
 app.current = 500;
 app.pool = 0;
@@ -52,10 +54,38 @@ app.restoreInitialState = function() {
 app.createDeck = () => {
 	app.cards.length = 0;
 	for (let i = 2; i < 15; i++) {
-		app.cards.push(i + " ♣️");
-		app.cards.push(i + " ♦️");
-		app.cards.push(i + " ♥️");
-		app.cards.push(i + " ♠️");
+		app.cards.push({
+			number: i,
+			value: i,
+			suit: "♣️"
+		});
+		app.cards.push({
+			number: i,
+			value: i,
+			suit: "♦️"
+		});
+		app.cards.push({
+			number: i,
+			value: i,
+			suit: "♥️"
+		});
+		app.cards.push({
+			number: i,
+			value: i,
+			suit: "♠️"
+		});
+	}
+	for (let i = 0; i < app.cards.length; i++) {
+		if (i>39){
+			app.cards[i].value = 10
+		}
+		if (app.cards[i].number == 12) {
+			app.cards[i].number = "J";
+		} else if (app.cards[i].number == 13) {
+			app.cards[i].number = "Q";
+		} else if (app.cards[i].number == 14) {
+			app.cards[i].number = "K";
+		}
 	}
 };
 
@@ -98,25 +128,15 @@ app.showMe = () => {
 };
 
 app.checkTotal = (player, playerHand, playerTotal) => {
-	// parsing card number from raw data by splitting and taking the first value (card format ex [5, clubs])
-	app[player].push(app[playerHand][0].split(" "));
-	app[player].push(app[playerHand][1].split(" "));
-	// logic for face cards (12 = J, 13 = Q, 14 = K but numeric value is 10)
-	if (app[player][0][0] > 11) {
-		app[player][0][0] = 10;
-	}
-	if (app[player][1][0] > 11) {
-		app[player][1][0] = 10;
-	}
 	// adding two cards together
 	// parse will ignore the words and only keep the number 🤯🤟🏻
-	app[playerTotal] = parseInt(app[player][0]) + parseInt(app[player][1]);
-
+	app[playerTotal] = app.p1Hand[0].value + app.p1Hand[1].value;
+	console.log(app.p1Total)
 	// if dealt two aces
 	for (let i = 0; i < app[player].length; i++) {
-		if (app[playerTotal] > 21 && app[player][i][0] == 11) {
-			app[player][i][0] = 1;
-			app[playerTotal] -= 10;
+		if (app[playerTotal] > 21 && app[player][i].value == 11) {
+			app[player][i].value = 1;
+			app[playerTotal] = app.p1Hand[0].value + app.p1Hand[1].value;
 		}
 		$(`.${player}Score p`).text(app[playerTotal]);
 	}
@@ -128,21 +148,6 @@ app.checkTotal = (player, playerHand, playerTotal) => {
 app.populateCards = function(playerHand, player) {
 	// logic to show the face card letter opposed to a number
 	$(`.card1, .card2`).css("display", "flex");
-	for (let i = 0; i < 2; i++) {
-		app[playerHand][i].split(" ");
-		if (parseInt(app[playerHand][i]) == 11 || app[playerHand][i] == 1) {
-			app[playerHand][i] = "A";
-		}
-		if (parseInt(app[playerHand][i]) == 12) {
-			app[playerHand][i] = "J";
-		}
-		if (parseInt(app[playerHand][i]) == 13) {
-			app[playerHand][i] = "Q";
-		}
-		if (parseInt(app[playerHand][i]) == 14) {
-			app[playerHand][i] = "K";
-		}
-	}
 
 	// populate card number and suit
 	$(`.${player} .card1 h3, .${player} .card1 h4`)
