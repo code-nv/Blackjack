@@ -331,10 +331,10 @@ app.endRound = function() {
 	} else if (app.p1Total > app.p2Total) {
 		app.winEnd();
 		app.payOutLogic(2);
-	} else if (app.p1Total === app.p2Total) {
+	} else if (app.p1Total === app.p2Total && app.p1Total > 0) {
 		app.winTie();
 		app.payOutLogic(1);
-	} else {
+	} else if (app.p1Total > 0) {
 		app.winner = false;
 		app.lose();
 		app.payOutLogic(0);
@@ -595,10 +595,14 @@ app.init = function() {
 	});
 
 	$(".doubleDown").on("click", function() {
+		app.current -= app.pool;
+		app.pool += app.pool;
+		$(".bettingPool").text("Current Bet $" + app.pool);
+		$("earnings").text("Wallet: $" + app.current);
 		app.hit("p1", "p1Hand", "p1Total");
 		$(".doubleDown").attr("disabled", "true");
+		app.freezePlayer();
 		setTimeout(function() {
-			app.freezePlayer();
 			app.showHouse();
 			app.computerHit();
 		}, 1500);

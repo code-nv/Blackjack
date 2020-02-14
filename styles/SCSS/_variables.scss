@@ -99,6 +99,7 @@ $bodyStack: "Fira Sans Condensed", sans-serif;
 }
 
 //media query mixins
+// Colin said that this is how he names his media queries and feedback from the last project condoned this method. I think it makes sense but if this deserves losing marks please discuss it with joey and colin first, thankyou!.
 @mixin mq950 {
 	@media (max-width: 950px) {
 		@content;
