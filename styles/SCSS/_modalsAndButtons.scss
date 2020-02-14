@@ -181,6 +181,10 @@ button:focus {
 	outline: 2px $accent dotted;
 }
 
+button:hover {
+	cursor: pointer;
+}
+
 .closeRules {
 	position: absolute;
 	top: 10px;

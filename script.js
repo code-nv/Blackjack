@@ -76,8 +76,11 @@ app.createDeck = () => {
 		});
 	}
 	for (let i = 0; i < app.cards.length; i++) {
-		if (i>39){
-			app.cards[i].value = 10
+		if (app.cards[i].number == 11) {
+			app.cards[i].number = "A";
+		}
+		if (i > 39) {
+			app.cards[i].value = 10;
 		}
 		if (app.cards[i].number == 12) {
 			app.cards[i].number = "J";
@@ -127,11 +130,10 @@ app.showMe = () => {
 		.removeAttr("disabled");
 };
 
-app.checkTotal = (player, playerHand, playerTotal) => {
+app.checkTotal = ( playerTotal, playerHand, player) => {
 	// adding two cards together
-	// parse will ignore the words and only keep the number 🤯🤟🏻
-	app[playerTotal] = app.p1Hand[0].value + app.p1Hand[1].value;
-	console.log(app.p1Total)
+	app[playerTotal] = app[playerHand][0].value + app[playerHand][1].value;
+
 	// if dealt two aces
 	for (let i = 0; i < app[player].length; i++) {
 		if (app[playerTotal] > 21 && app[player][i].value == 11) {
@@ -151,21 +153,21 @@ app.populateCards = function(playerHand, player) {
 
 	// populate card number and suit
 	$(`.${player} .card1 h3, .${player} .card1 h4`)
-		.text(app[playerHand][0].split(" ")[0])
-		.addClass(app[player][0][1]);
+		.text(app[playerHand][0].number)
+		.addClass(app[playerHand][0].suit);
 	// populate middle suit symbol
-	$(`.${player} .card1 .cardSuit`).text(app[player][0][1]);
+	$(`.${player} .card1 .cardSuit`).text(app[playerHand][0].suit);
 
 	// same thing for card 2
 	$(`.${player} .card2 h3, .${player} .card2 h4`)
-		.text(app[playerHand][1].split(" ")[0])
-		.addClass(app[player][1][1]);
+		.text(app[playerHand][1].number)
+		.addClass(app[playerHand][1].suit);
 
-	$(`.${player} .card2 .cardSuit`).text(app[player][1][1]);
+	$(`.${player} .card2 .cardSuit`).text(app[playerHand][1].suit);
 
 	// color the diamond and heart cards
-	app.colorCards("p1");
-	app.colorCards("p2");
+	app.colorCards("p1Hand", "p1");
+	app.colorCards("p2Hand", "p2");
 	$(`.p2 .card1 h3, .p2 .card1 .cardSuit, .p2 .card1 h4`).css("opacity", "0");
 
 	if (app.p1Total == 21 || app.p2Total == 21) {
@@ -176,10 +178,10 @@ app.populateCards = function(playerHand, player) {
 	}
 };
 
-app.colorCards = function(player) {
+app.colorCards = function(playerHand, player) {
 	// future proofing for larger hands
-	for (let y = 0; y < app[player].length; y++) {
-		if (app[player][y][1] == "♥️" || app[player][y][1] == "♦️") {
+	for (let y = 0; y < app[playerHand].length; y++) {
+		if (app[playerHand][y].suit == "♥️" || app[playerHand][y].suit == "♦️") {
 			$(`.${player} .card${y + 1}`).addClass("brightSuit");
 		}
 	}
@@ -192,7 +194,7 @@ app.doubleDown = function() {
 };
 
 // logic to hit new cards
-app.hit = function(player, playerHand, playerTotal) {
+app.hit = function(playerHand, player, playerTotal) {
 	$(".doubleDown").attr("disabled", "true");
 	setTimeout(function() {
 		// pick a random card
@@ -202,57 +204,31 @@ app.hit = function(player, playerHand, playerTotal) {
 		// take card out of the deck
 		app.cards.splice(app.hitCard, 1);
 
-		// pushing card to the player array to do face card logic
-		let i = app[playerHand].length - 1;
-		app[player].push(app[playerHand][i].split(" "));
-
-		// face card logic for array value
-		if (parseInt(app[player][i][0]) > 11) {
-			app[player][i][0] = 10;
-		}
-
-		// face card display in hand logic
-		for (let b = 0; b < app[player].length; b++) {
-			app[playerHand][i].split(" ");
-			if (parseInt(app[playerHand][b]) == 11 || app[playerHand][i] == 1) {
-				app[playerHand][b] = "A";
-			}
-			if (parseInt(app[playerHand][b]) == 12) {
-				app[playerHand][b] = "J";
-			}
-			if (parseInt(app[playerHand][b]) == 13) {
-				app[playerHand][b] = "Q";
-			}
-			if (parseInt(app[playerHand][b]) == 14) {
-				app[playerHand][b] = "K";
-			}
-		}
-
 		// populateNewCard
-		let q = app[playerHand].length;
+		let i = app[playerHand].length;
 		// show card
-		$(`.${player} .card${q}`)
+		$(`.${player} .card${i}`)
 			.css("display", "flex")
 			.addClass("animated");
 		// populate card
-		$(`.${player} .card${q} h3, .${player} .card${q} h4`)
-			.text(app[playerHand][i].split(" ")[0])
-			.addClass(app[player][i][1]);
+		$(`.${player} .card${i} h3, .${player} .card${i} h4`)
+			.text(app[playerHand][i - 1].number)
+			.addClass(app[playerHand][i - 1].suit);
 
 		// populate middle suit symbol
-		$(`.${player} .card${q} .cardSuit`).text(app[player][i][1]);
+		$(`.${player} .card${i} .cardSuit`).text(app[playerHand][i - 1].suit);
 
 		// color those diamonds and hearts
-		app.colorCards(player);
+		app.colorCards(playerHand, player);
 
 		// get new total
-		app[playerTotal] += parseInt(app[player][i]);
+		app[playerTotal] += app[playerHand][i - 1].value;
 
 		// check for bust
-		for (let i = 0; i < app[player].length; i++) {
+		for (let b = 0; b < app[playerHand].length; b++) {
 			// ace logic
-			if (app[playerTotal] > 21 && app[player][i][0] == 11) {
-				app[player][i][0] = 1;
+			if (app[playerTotal] > 21 && app[playerHand][b].value == 11) {
+				app[playerHand][b].value = 1;
 				app[playerTotal] -= 10;
 			}
 			$(`.${player}Score p`).text(app[playerTotal]);
@@ -298,17 +274,17 @@ app.showHouse = function() {
 app.computerHit = function() {
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2", "p2Hand", "p2Total");
+			app.hit("p2Hand", "p2", "p2Total");
 		}
 	}, 200);
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2", "p2Hand", "p2Total");
+			app.hit("p2Hand", "p2", "p2Total");
 		}
 	}, 600);
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2", "p2Hand", "p2Total");
+			app.hit("p2Hand", "p2", "p2Total");
 		}
 	}, 1000);
 	setTimeout(function() {
@@ -580,8 +556,8 @@ app.init = function() {
 		app.dealCards();
 		app.hideMe();
 		app.unfreezePlayer();
-		app.checkTotal("p1", "p1Hand", "p1Total");
-		app.checkTotal("p2", "p2Hand", "p2Total");
+		app.checkTotal( "p1Total", "p1Hand", "p1",);
+		app.checkTotal("p2Total", "p2Hand", "p2");
 		app.populateCards("p1Hand", "p1");
 		app.populateCards("p2Hand", "p2");
 		app.doubleDown();
@@ -589,7 +565,7 @@ app.init = function() {
 
 	$(`.hit`).on("click", function(e) {
 		e.preventDefault();
-		app.hit("p1", "p1Hand", "p1Total");
+		app.hit("p1Hand", "p1", "p1Total");
 	});
 
 	$(`.stay`).on("click", function(e) {
@@ -604,7 +580,7 @@ app.init = function() {
 		app.pool += app.pool;
 		$(".bettingPool").text("Current Bet $" + app.pool);
 		$("earnings").text("Wallet: $" + app.current);
-		app.hit("p1", "p1Hand", "p1Total");
+		app.hit( "p1Hand", "p1", "p1Total");
 		$(".doubleDown").attr("disabled", "true");
 		app.freezePlayer();
 		setTimeout(function() {
