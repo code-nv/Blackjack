@@ -130,7 +130,7 @@ app.showMe = () => {
 		.removeAttr("disabled");
 };
 
-app.checkTotal = ( playerTotal, playerHand, player) => {
+app.checkTotal = (playerTotal, playerHand, player) => {
 	// adding two cards together
 	app[playerTotal] = app[playerHand][0].value + app[playerHand][1].value;
 
@@ -147,7 +147,7 @@ app.checkTotal = ( playerTotal, playerHand, player) => {
 };
 
 // put data on empty divs to look like playing cards
-app.populateCards = function(playerHand, player) {
+app.populateCards = function(player, playerHand) {
 	// logic to show the face card letter opposed to a number
 	$(`.card1, .card2`).css("display", "flex");
 
@@ -383,7 +383,7 @@ app.winScreen = function() {
 
 app.winBy21 = function() {
 	app.winScreen();
-	$win.children("h2").text(`BLACKJACK!!`);
+	$win.children("h2").text(`BLACKJACK!`);
 	$win.children("p").text(`Congrats! You get the big bucks$$$`);
 };
 
@@ -556,10 +556,10 @@ app.init = function() {
 		app.dealCards();
 		app.hideMe();
 		app.unfreezePlayer();
-		app.checkTotal( "p1Total", "p1Hand", "p1",);
+		app.checkTotal("p1Total", "p1Hand", "p1");
 		app.checkTotal("p2Total", "p2Hand", "p2");
-		app.populateCards("p1Hand", "p1");
-		app.populateCards("p2Hand", "p2");
+		app.populateCards("p1", "p1Hand");
+		app.populateCards("p2", "p2Hand");
 		app.doubleDown();
 	});
 
@@ -580,7 +580,7 @@ app.init = function() {
 		app.pool += app.pool;
 		$(".bettingPool").text("Current Bet $" + app.pool);
 		$("earnings").text("Wallet: $" + app.current);
-		app.hit( "p1Hand", "p1", "p1Total");
+		app.hit("p1Hand", "p1", "p1Total");
 		$(".doubleDown").attr("disabled", "true");
 		app.freezePlayer();
 		setTimeout(function() {
@@ -600,6 +600,11 @@ app.init = function() {
 $(function() {
 	app.init();
 });
+app.p0Hand = [];
+let splitMod = [];
+const hand1a = $(`.hand1`)
+	.clone()
+	.removeClass("hand1");
 
 const checkSplit = function() {
 	$("p0score").css("display", "block");
@@ -608,6 +613,7 @@ const checkSplit = function() {
 	$(".hand0").css({ height: "100%", width: "50%" });
 	$(".hand1").css("width", "50%");
 	// take the first card out of the second hand's data
+	app.p0Hand.push(app.p1Hand[0]);
 	app.p1Hand.shift();
 
 	// draw second card for each hand
@@ -617,17 +623,15 @@ const checkSplit = function() {
 	app.cardTwo = Math.floor(Math.random() * app.cards.length);
 	app.p1Hand.push(app.cards[app.cardTwo]);
 	app.cards.splice(app.cardTwo, 1);
-	console.log('p0 hand ' + app.p0Hand);
-	console.log('p1 hand ' +app.p1Hand);
-	app.populateCards("p0Hand", "p1", ".hand0");
-	app.populateCards("p1Hand", "p1", ".hand1");
-	app.checkTotal("p0", "p0Hand", "p0Total");
-	app.p1.length =0;
+	app.populateCards("p1", "p0Hand");
+	app.populateCards("p1", "p1Hand");
+	app.checkTotal("p0Total", "p0Hand", "p0");
+	// app.p1.length =0;
 	// if(app.p1[1] == "J" || app.p1[1] == "Q" || app.p1[1] == "K"){
 	// 	app.p1[1]=10
 	// }
-	app.checkTotal("p1", "p1Hand", "p1Total");
-	
+	app.checkTotal("p1Total", "p1Hand", "p1");
+
 	// console.log("p0hand:", app.p0Hand, "p0", app.p0);
 };
 

@@ -107,11 +107,15 @@
 .hand1,
 .houseHand {
 	width: calc(100% - 20px);
-	height: 100%
+	height: 100%;
+	position: relative;
 }
 
 .hand0 {
-	display: none;
+	// display: none;
+	width: 0;
+	height: 0;
+	position: relative;
 }
 
 .scoreCounter {
@@ -150,6 +154,11 @@
 			font-size: 3rem;
 		}
 	}
+}
+
+.p0Score {
+
+	top: -100px;
 }
 
 .p2Score {
@@ -232,35 +241,35 @@
 	z-index: 2;
 	position: absolute;
 	left: 20%;
-	top:10px;
+	top:0;
 }
 
 .card3 {
 	z-index: 3;
 	position: absolute;
 	left: 40%;
-	top:10px;
+	top:0;
 }
 
 .card4 {
 	z-index: 4;
 	position: absolute;
 	left: 60%;
-	top:10px;
+	top:0;
 }
 
 .card5 {
 	z-index: 5;
 	position: absolute;
 	left: 80%;
-	top:10px;
+	top:0;
 }
 
 .card6 {
 	z-index: 6;
 	position: absolute;
 	left: 100%;
-	top:10px;
+	top:0;
 }
 
 @include maxWidth950 {

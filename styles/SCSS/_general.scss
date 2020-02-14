@@ -86,6 +86,10 @@ h2 {
 	margin: 10px;
 	line-height: 1;
 	color: $accent;
+
+	@include maxWidth950 {
+		font-style: 3.55rem;
+	}
 }
 
 .p1 h2,
