@@ -1,8 +1,7 @@
 .gameBoard {
 	position: relative;
 	@include flexRow(space-around);
-	box-shadow: 0 0 0px 10px var(--tertiary), 0 10px 5px 5px $tertiary,
-		0px 25px 0px 5px var(--tertiaryDark);
+	box-shadow: 0 0 0px 10px var(--tertiary), 0 10px 5px 5px $tertiary, 0px 25px 0px 5px var(--tertiaryDark);
 	align-items: flex-end;
 	background: linear-gradient(var(--primaryDark20) 10%, var(--primary));
 	border-radius: 50px 50px 50% 50%;
@@ -40,7 +39,7 @@
 		padding: 25px 0;
 	}
 }
-
+// The deck asset;
 .deck {
 	@include cardBack;
 	position: absolute;
@@ -51,9 +50,8 @@
 	border: 1px solid white;
 	border-radius: 5px;
 	transform: rotateX(30deg);
-	box-shadow: -1px 2px 0 $white, -2px 4px 0 $black, -3px 6px 0 $white,
-		-4px 8px 0 $black, -5px 10px 0 $white, -6px 12px 0 $black,
-		-7px 14px 0 $white, -8px 16px 0 $black, -9px 18px 0 $white;
+	box-shadow: -1px 2px 0 $white, -2px 4px 0 $black, -3px 6px 0 $white, -4px 8px 0 $black, -5px 10px 0 $white,
+		-6px 12px 0 $black, -7px 14px 0 $white, -8px 16px 0 $black, -9px 18px 0 $white;
 
 	@include maxWidth740 {
 		width: 12%;
@@ -68,6 +66,7 @@
 		width: 150px;
 	}
 }
+// player general styles
 .p1 {
 	transform: rotateZ(8deg);
 	@include maxWidth500 {
@@ -104,6 +103,7 @@
 	}
 }
 
+// hand styles
 .hand1,
 .houseHand {
 	width: calc(100% - 20px);
@@ -118,6 +118,7 @@
 	position: relative;
 }
 
+// score counter styles
 .scoreCounter {
 	position: absolute;
 	left: -50px;
@@ -157,8 +158,31 @@
 }
 
 .p0Score {
+	display: none;
+}
 
-	top: -100px;
+.score1 {
+	left: initial;
+	top: 0;
+	right: -50px;
+}
+.score0:before {
+	content: " Hand 1";
+	position: absolute;
+	top: -20px;
+	left: -8px;
+	width: calc(40px + 1.7rem);
+	color: $white;
+	font-size: 1.8rem;
+}
+.score1:before {
+	content: " Hand 2";
+	position: absolute;
+	top: -20px;
+	left: -5px;
+	width: calc(40px + 1.7rem);
+	color: $white;
+	font-size: 1.8rem;
 }
 
 .p2Score {
@@ -241,35 +265,35 @@
 	z-index: 2;
 	position: absolute;
 	left: 20%;
-	top:0;
+	top: 0;
 }
 
 .card3 {
 	z-index: 3;
 	position: absolute;
 	left: 40%;
-	top:0;
+	top: 0;
 }
 
 .card4 {
 	z-index: 4;
 	position: absolute;
 	left: 60%;
-	top:0;
+	top: 0;
 }
 
 .card5 {
 	z-index: 5;
 	position: absolute;
 	left: 80%;
-	top:0;
+	top: 0;
 }
 
 .card6 {
 	z-index: 6;
 	position: absolute;
 	left: 100%;
-	top:0;
+	top: 0;
 }
 
 @include maxWidth950 {

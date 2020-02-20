@@ -1,3 +1,5 @@
+// rules pop up styles
+// come back and fix the tab focus pop up info
 .rulesModal {
 	position: absolute;
 	z-index: 10;
@@ -57,6 +59,7 @@
 	}
 }
 
+// win screen general styles
 .winScreen {
 	@extend .rulesModal;
 	top: 200px;
@@ -168,6 +171,9 @@
 	display: none;
 }
 
+// ============= //
+// Button styles //
+// ============= //
 button {
 	@include buttonStyle;
 	position: relative;
@@ -207,8 +213,7 @@ button:hover {
 	position: absolute;
 	top: -50px;
 	width: 40%;
-	box-shadow: inset -4px -2px 3px darken($accentDarker, 40%),
-		3px 3px 3px var(--primaryDark20);
+	box-shadow: inset -4px -2px 3px darken($accentDarker, 40%), 3px 3px 3px var(--primaryDark20);
 }
 
 .stay,
@@ -268,6 +273,31 @@ button:hover {
 	}
 }
 
+// split hit button styles
+.splitHand0:before {
+	content: "Hand 1";
+	color: $accent;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	left: 0;
+	top: -20px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+.splitHand1:before {
+	content: "Hand 2";
+	color: $accent;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	left: 0;
+	top: -20px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
 .deal,
 .bet {
 	top: -95px;
@@ -278,12 +308,10 @@ button:hover {
 	width: 80%;
 	left: 50%;
 	transform: translateX(-50%);
-	box-shadow: inset 5px -2px 3px darken($accentDarker, 40%),
-		3px 3px 3px var(--primaryDark20);
+	box-shadow: inset 5px -2px 3px darken($accentDarker, 40%), 3px 3px 3px var(--primaryDark20);
 
 	@include maxWidth740 {
-		box-shadow: inset -4px -2px 3px darken($accentDarker, 40%),
-			3px 3px 3px var(--primaryDark20);
+		box-shadow: inset -4px -2px 3px darken($accentDarker, 40%), 3px 3px 3px var(--primaryDark20);
 	}
 
 	@include maxWidth600 {

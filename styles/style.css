@@ -376,7 +376,7 @@ h2 {
 
 @media (max-width: 950px) {
   h2 {
-    font-style: 3.55rem;
+    font-size: 3.4rem;
   }
 }
 
@@ -864,6 +864,30 @@ button:hover {
   .doubleDown {
     top: 90px;
   }
+}
+
+.splitHand0:before {
+  content: "Hand 1";
+  color: #fdd262;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: -20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.splitHand1:before {
+  content: "Hand 2";
+  color: #fdd262;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: -20px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .deal,
@@ -1402,7 +1426,33 @@ button:hover {
 }
 
 .p0Score {
-  top: -100px;
+  display: none;
+}
+
+.score1 {
+  left: initial;
+  top: 0;
+  right: -50px;
+}
+
+.score0:before {
+  content: " Hand 1";
+  position: absolute;
+  top: -20px;
+  left: -8px;
+  width: calc(40px + 1.7rem);
+  color: #fafafa;
+  font-size: 1.8rem;
+}
+
+.score1:before {
+  content: " Hand 2";
+  position: absolute;
+  top: -20px;
+  left: -5px;
+  width: calc(40px + 1.7rem);
+  color: #fafafa;
+  font-size: 1.8rem;
 }
 
 .p2Score {

@@ -147,30 +147,30 @@ app.checkTotal = (playerTotal, playerHand, player) => {
 };
 
 // put data on empty divs to look like playing cards
-app.populateCards = function(player, playerHand) {
+app.populateCards = function(player, playerHand, hand = "") {
 	// logic to show the face card letter opposed to a number
 	$(`.card1, .card2`).css("display", "flex");
 
 	// populate card number and suit
-	$(`.${player} .card1 h3, .${player} .card1 h4`)
+	$(`.${player} ${hand} .card1 h3, .${player} ${hand} .card1 h4`)
 		.text(app[playerHand][0].number)
 		.addClass(app[playerHand][0].suit);
 	// populate middle suit symbol
-	$(`.${player} .card1 .cardSuit`).text(app[playerHand][0].suit);
+	$(`.${player} ${hand} .card1 .cardSuit`).text(app[playerHand][0].suit);
 
 	// same thing for card 2
-	$(`.${player} .card2 h3, .${player} .card2 h4`)
+	$(`.${player} ${hand} .card2 h3, .${player} ${hand} .card2 h4`)
 		.text(app[playerHand][1].number)
 		.addClass(app[playerHand][1].suit);
 
-	$(`.${player} .card2 .cardSuit`).text(app[playerHand][1].suit);
+	$(`.${player} ${hand} .card2 .cardSuit`).text(app[playerHand][1].suit);
 
 	// color the diamond and heart cards
 	app.colorCards("p1Hand", "p1");
 	app.colorCards("p2Hand", "p2");
 	$(`.p2 .card1 h3, .p2 .card1 .cardSuit, .p2 .card1 h4`).css("opacity", "0");
-
-	if (app.p1Total == 21 || app.p2Total == 21) {
+	console.log(app.p2Total);
+	if (app.p1Total == 21) {
 		app.showHouse();
 		setTimeout(function() {
 			app.endRound();
@@ -194,7 +194,7 @@ app.doubleDown = function() {
 };
 
 // logic to hit new cards
-app.hit = function(playerHand, player, playerTotal) {
+app.hit = function(playerHand, player, hand, playerTotal) {
 	$(".doubleDown").attr("disabled", "true");
 	setTimeout(function() {
 		// pick a random card
@@ -207,16 +207,16 @@ app.hit = function(playerHand, player, playerTotal) {
 		// populateNewCard
 		let i = app[playerHand].length;
 		// show card
-		$(`.${player} .card${i}`)
+		$(`.${player} ${hand} .card${i}`)
 			.css("display", "flex")
 			.addClass("animated");
 		// populate card
-		$(`.${player} .card${i} h3, .${player} .card${i} h4`)
+		$(`.${player} ${hand} .card${i} h3, .${player} ${hand} .card${i} h4`)
 			.text(app[playerHand][i - 1].number)
 			.addClass(app[playerHand][i - 1].suit);
 
 		// populate middle suit symbol
-		$(`.${player} .card${i} .cardSuit`).text(app[playerHand][i - 1].suit);
+		$(`.${player} ${hand} .card${i} .cardSuit`).text(app[playerHand][i - 1].suit);
 
 		// color those diamonds and hearts
 		app.colorCards(playerHand, player);
@@ -271,7 +271,7 @@ app.showHouse = function() {
 	$(`.p2Score p`).css("opacity", "1");
 };
 
-app.computerHit = function() {
+app.computerHit = function(split) {
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
 			app.hit("p2Hand", "p2", "p2Total");
@@ -292,10 +292,41 @@ app.computerHit = function() {
 	}, 1500);
 };
 
-app.endRound = function() {
+app.computerHitSplit = function() {
+	let p1Best = 0;
+	if (app.p0Total > 21) {
+		p1Best = app.p1.Total;
+	} else if (app.p1Total > 21) {
+		p1Best = app.p0Total;
+	} else if (app.p0Total > app.p1Total) {
+		p1Best = app.p0Total;
+	} else {
+		p1Best = app.p1Total;
+	}
+	setTimeout(function() {
+		if (app.p2Total < 17 && p1Best > app.p2Total) {
+			app.hit("p2Hand", "p2", "p2Total");
+		}
+	}, 200);
+	setTimeout(function() {
+		if (app.p2Total < 17 && p1Best > app.p2Total) {
+			app.hit("p2Hand", "p2", "p2Total");
+		}
+	}, 600);
+	setTimeout(function() {
+		if (app.p2Total < 17 && p1Best > app.p2Total) {
+			app.hit("p2Hand", "p2", "p2Total");
+		}
+	}, 1000);
+	setTimeout(function() {
+		app.endRoundSplit();
+	}, 1500);
+};
+
+app.endRound = function(p1Best = app.p1Total) {
 	app.winner = true;
 	app.freezePlayer();
-	if (app.p1Total === 21) {
+	if (p1Best === 21) {
 		app.winBy21();
 		app.payOutLogic(3);
 	} else if (app.p2Total === 21) {
@@ -305,21 +336,69 @@ app.endRound = function() {
 	} else if (app.p2Total > 21) {
 		app.winEnd();
 		app.payOutLogic(2);
-	} else if (app.p1Total > 21) {
+	} else if (p1Best > 21) {
 		app.winner = false;
 		app.lose();
 		app.payOutLogic(0);
-	} else if (app.p1Total > app.p2Total) {
+	} else if (p1Best > app.p2Total) {
 		app.winEnd();
 		app.payOutLogic(2);
-	} else if (app.p1Total === app.p2Total && app.p1Total > 0) {
+	} else if (p1Best === app.p2Total && p1Best > 0) {
 		app.winTie();
 		app.payOutLogic(1);
-	} else if (app.p1Total > 0) {
+	} else if (p1Best > 0) {
 		app.winner = false;
 		app.lose();
 		app.payOutLogic(0);
 	}
+};
+
+app.endRoundSplit = function() {
+	app.winObj = {};
+	// const { hand1, hand2 } = app.winObj;
+	const $hand1 = app.winObj.hand1;
+	app.winObj.hand1 = {
+		value: app.p0Total,
+		blackjack: false,
+		win: false,
+		tie: false,
+		lose: false
+	};
+	app.winObj.hand2 = {
+		value: app.p1Total,
+		blackjack: false,
+		win: false,
+		tie: false,
+		lose: false
+	};
+	app.freezePlayer();
+
+	for (let i = 1; i < 3; i++) {
+		const $hand = `hand${i}`;
+		// app.winner = true;
+		if (app.winObj[$hand].value === 21) {
+			app.winObj[$hand].blackjack = true;
+		} else if (app.p2Total === 21) {
+			app.winner = false;
+			app.winObj[$hand].lose = true;
+		} else if (app.p2Total > 21) {
+			app.winObj[$hand].win = true;
+		} else if (app.winObj[$hand].value > 21) {
+			app.winner = false;
+			app.winObj[$hand].bust = true;
+		} else if (app.winObj[$hand].value > app.p2Total) {
+			app.winObj[$hand].win = true;
+		} else if (app.winObj[$hand].value === app.p2Total && app.winObj[$hand].value > 0) {
+			app.winObj[$hand].tie = true;
+		} else if (app.winObj[$hand].value > 0) {
+			app.winner = false;
+			app.winObj[$hand].lose = true;
+		}
+	}
+	console.log(app.winObj);
+
+	// SavePoint
+	// write special win screen and payout logic based on the winobjects
 };
 
 app.nextRound = function() {
@@ -349,9 +428,7 @@ app.moreMoney = function() {
 	$win
 		.css("display", "block")
 		.children("p")
-		.text(
-			"You can't afford the minimum bet, that's rough! Let's try again, here's $500"
-		);
+		.text("You can't afford the minimum bet, that's rough! Let's try again, here's $500");
 	$win
 		.children("button")
 		.removeClass("playAgain")
@@ -538,7 +615,6 @@ $(".changeTable4").on("click", function() {
 // ========================================= //
 //  IINNNNNIIIITTTTTTIIAALLLIIIZEEEE IIIITTT //
 // ========================================= //
-// as this is a click based game all of my functions are running in response to listener events which is why I've structured it like this. I was having issues with events running more than once when the listeners were inside other functions
 app.init = function() {
 	app.captureInitialState();
 	app.createDeck();
@@ -565,14 +641,40 @@ app.init = function() {
 
 	$(`.hit`).on("click", function(e) {
 		e.preventDefault();
-		app.hit("p1Hand", "p1", "p1Total");
+
+		if ($(this).hasClass("splitHand0")) {
+			app.hit("p0Hand", "p1", ".hand0", "p0Total");
+			console.log($(this).attr("class"));
+		} else if ($(this).hasClass("splitHand1")) {
+			app.hit("p1Hand", "p1", ".hand1", "p1Total");
+		} else {
+			app.hit("p1Hand", "p1", ".hand1", "p1Total");
+		}
 	});
+	// work on making hit just first hand then hitting second hand and checking if bust on hands etc
+	// on split add class to hit button, on stay, manipulate hit class.
+	// if this has class split0 then hit p1 hand 0, on stay, switch class to split1 then hit p1 hand1, on stay remove class and engage computer hit.
+	// this will work
 
 	$(`.stay`).on("click", function(e) {
-		e.preventDefault();
-		app.freezePlayer();
-		app.showHouse();
-		app.computerHit();
+		if ($(".hit").hasClass("splitHand0")) {
+			$(".hit")
+				.toggleClass("splitHand0 splitHand1")
+				.text("Hand 2");
+		} else if ($(".hit").hasClass("splitHand1")) {
+			$(".hit")
+				.removeClass("splitHand1")
+				.text("Hit");
+			e.preventDefault();
+			app.freezePlayer();
+			app.showHouse();
+			app.computerHitSplit();
+		} else {
+			e.preventDefault();
+			app.freezePlayer();
+			app.showHouse();
+			app.computerHit();
+		}
 	});
 
 	$(".doubleDown").on("click", function() {
@@ -600,21 +702,29 @@ app.init = function() {
 $(function() {
 	app.init();
 });
+
 app.p0Hand = [];
+app.p0Total;
 let splitMod = [];
 const hand1a = $(`.hand1`)
 	.clone()
 	.removeClass("hand1");
 
 const checkSplit = function() {
-	$("p0score").css("display", "block");
+	app.p0Hand.push(app.p1Hand[0]);
+	$(".p0Score")
+		.addClass("score0")
+		.css("display", "block");
+	$(".p1Score").addClass("score1");
+
 	// prepend the split hand
 	$(`.hand0`).append(hand1a);
 	$(".hand0").css({ height: "100%", width: "50%" });
 	$(".hand1").css("width", "50%");
 	// take the first card out of the second hand's data
-	app.p0Hand.push(app.p1Hand[0]);
 	app.p1Hand.shift();
+	// make hit button for only hand 1
+	$(".hit").addClass("splitHand0");
 
 	// draw second card for each hand
 	app.cardOne = Math.floor(Math.random() * app.cards.length);
@@ -623,24 +733,12 @@ const checkSplit = function() {
 	app.cardTwo = Math.floor(Math.random() * app.cards.length);
 	app.p1Hand.push(app.cards[app.cardTwo]);
 	app.cards.splice(app.cardTwo, 1);
-	app.populateCards("p1", "p0Hand");
-	app.populateCards("p1", "p1Hand");
-	app.checkTotal("p0Total", "p0Hand", "p0");
-	// app.p1.length =0;
-	// if(app.p1[1] == "J" || app.p1[1] == "Q" || app.p1[1] == "K"){
-	// 	app.p1[1]=10
-	// }
+	app.populateCards("p1", "p0Hand", ".hand0");
+	app.populateCards("p1", "p1Hand", ".hand1");
+	app.checkTotal("p0Total", "p0Hand", "p1");
 	app.checkTotal("p1Total", "p1Hand", "p1");
-
-	// console.log("p0hand:", app.p0Hand, "p0", app.p0);
+	$(".p0Score p").text(app.p0Total);
 };
-
-// if (splitMod[0][0] != splitMod[1][0]) {
-// 	console.log(splitMod[0][0], splitMod[1][0], "nope");
-// } else {
-// 	console.log("working", splitMod[0][0], splitMod[1][0]);
-// }
-// };
 
 $(`.splitHand`).on("click", function() {
 	checkSplit();
