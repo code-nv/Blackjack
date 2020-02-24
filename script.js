@@ -148,28 +148,43 @@ app.checkTotal = (playerTotal, playerHand, player) => {
 
 // put data on empty divs to look like playing cards
 app.populateCards = function(player, playerHand, hand = "") {
+	// additional logic for split hand deal animation
+	$(`.card1, .card2`)
+		.css("display", "none")
+		.removeClass("animated");
 	// logic to show the face card letter opposed to a number
-	$(`.card1, .card2`).css("display", "flex");
+	$(".card2")
+		.css("display", "none")
+		.removeClass("animated");
 
 	// populate card number and suit
-	$(`.${player} ${hand} .card1 h3, .${player} ${hand} .card1 h4`)
-		.text(app[playerHand][0].number)
-		.addClass(app[playerHand][0].suit);
-	// populate middle suit symbol
-	$(`.${player} ${hand} .card1 .cardSuit`).text(app[playerHand][0].suit);
+	setTimeout(function() {
+		$(`.card1`)
+			.css("display", "flex")
+			.addClass("animated");
+		$(`.${player} ${hand} .card1 h3, .${player} ${hand} .card1 h4`)
+			.text(app[playerHand][0].number)
+			.addClass(app[playerHand][0].suit);
+		// populate middle suit symbol
+		$(`.${player} ${hand} .card1 .cardSuit`).text(app[playerHand][0].suit);
+	}, 100);
 
 	// same thing for card 2
-	$(`.${player} ${hand} .card2 h3, .${player} ${hand} .card2 h4`)
-		.text(app[playerHand][1].number)
-		.addClass(app[playerHand][1].suit);
+	setTimeout(function() {
+		$(`.card2`)
+			.css("display", "flex")
+			.addClass("animated");
+		$(`.${player} ${hand} .card2 h3, .${player} ${hand} .card2 h4`)
+			.text(app[playerHand][1].number)
+			.addClass(app[playerHand][1].suit);
 
-	$(`.${player} ${hand} .card2 .cardSuit`).text(app[playerHand][1].suit);
+		$(`.${player} ${hand} .card2 .cardSuit`).text(app[playerHand][1].suit);
+	}, 400);
 
 	// color the diamond and heart cards
 	app.colorCards("p1Hand", "p1");
 	app.colorCards("p2Hand", "p2");
 	$(`.p2 .card1 h3, .p2 .card1 .cardSuit, .p2 .card1 h4`).css("opacity", "0");
-	console.log(app.p2Total);
 	if (app.p1Total == 21) {
 		app.showHouse();
 		setTimeout(function() {
@@ -231,7 +246,11 @@ app.hit = function(playerHand, player, hand, playerTotal) {
 				app[playerHand][b].value = 1;
 				app[playerTotal] -= 10;
 			}
-			$(`.${player}Score p`).text(app[playerTotal]);
+			if (hand == ".hand0") {
+				$(`.p0Score p`).text(app[playerTotal]);
+			} else {
+				$(`.${player}Score p`).text(app[playerTotal]);
+			}
 		}
 		if (app.p1Total > 21) {
 			app.freezePlayer();
@@ -274,17 +293,17 @@ app.showHouse = function() {
 app.computerHit = function(split) {
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 200);
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 600);
 	setTimeout(function() {
 		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 1000);
 	setTimeout(function() {
@@ -305,17 +324,17 @@ app.computerHitSplit = function() {
 	}
 	setTimeout(function() {
 		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 200);
 	setTimeout(function() {
 		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 600);
 	setTimeout(function() {
 		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "p2Total");
+			app.hit("p2Hand", "p2", "", "p2Total");
 		}
 	}, 1000);
 	setTimeout(function() {
@@ -356,7 +375,6 @@ app.endRound = function(p1Best = app.p1Total) {
 app.endRoundSplit = function() {
 	app.winObj = {};
 	// const { hand1, hand2 } = app.winObj;
-	const $hand1 = app.winObj.hand1;
 	app.winObj.hand1 = {
 		value: app.p0Total,
 		blackjack: false,
@@ -364,6 +382,7 @@ app.endRoundSplit = function() {
 		tie: false,
 		lose: false
 	};
+	const $hand1 = app.winObj.hand2;
 	app.winObj.hand2 = {
 		value: app.p1Total,
 		blackjack: false,
@@ -371,34 +390,43 @@ app.endRoundSplit = function() {
 		tie: false,
 		lose: false
 	};
+	const $hand2 = app.winObj.hand2;
+
+	app.results = [];
 	app.freezePlayer();
 
 	for (let i = 1; i < 3; i++) {
-		const $hand = `hand${i}`;
+		i === 1 ? ($hand = app.winObj.hand1) : ($hand = app.winObj.hand2);
 		// app.winner = true;
-		if (app.winObj[$hand].value === 21) {
-			app.winObj[$hand].blackjack = true;
+		if ($hand.value === 21) {
+			$hand.blackjack = true;
+			app.results.push(i + "winBlackjack");
 		} else if (app.p2Total === 21) {
 			app.winner = false;
-			app.winObj[$hand].lose = true;
+			$hand.lose = true;
+			app.results.push(i + "loseBlackjack");
 		} else if (app.p2Total > 21) {
-			app.winObj[$hand].win = true;
-		} else if (app.winObj[$hand].value > 21) {
+			$hand.win = true;
+			app.results.push(i + "winBust");
+		} else if ($hand.value > 21) {
 			app.winner = false;
-			app.winObj[$hand].bust = true;
-		} else if (app.winObj[$hand].value > app.p2Total) {
-			app.winObj[$hand].win = true;
-		} else if (app.winObj[$hand].value === app.p2Total && app.winObj[$hand].value > 0) {
-			app.winObj[$hand].tie = true;
-		} else if (app.winObj[$hand].value > 0) {
+			$hand.bust = true;
+			app.results.push(i + "loseBust");
+		} else if ($hand.value > app.p2Total) {
+			$hand.win = true;
+			app.results.push(i + "winNormal");
+		} else if ($hand.value === app.p2Total && $hand.value > 0) {
+			$hand.tie = true;
+			app.results.push(i + "tie");
+		} else if ($hand.value > 0) {
 			app.winner = false;
-			app.winObj[$hand].lose = true;
+			$hand.lose = true;
+			app.results.push(i + "loseNormal");
 		}
 	}
-	console.log(app.winObj);
-
-	// SavePoint
-	// write special win screen and payout logic based on the winobjects
+	console.log(app.results);
+	// results are pushed into app.results
+	// create win screen based on these values
 };
 
 app.nextRound = function() {
@@ -644,17 +672,12 @@ app.init = function() {
 
 		if ($(this).hasClass("splitHand0")) {
 			app.hit("p0Hand", "p1", ".hand0", "p0Total");
-			console.log($(this).attr("class"));
 		} else if ($(this).hasClass("splitHand1")) {
 			app.hit("p1Hand", "p1", ".hand1", "p1Total");
 		} else {
 			app.hit("p1Hand", "p1", ".hand1", "p1Total");
 		}
 	});
-	// work on making hit just first hand then hitting second hand and checking if bust on hands etc
-	// on split add class to hit button, on stay, manipulate hit class.
-	// if this has class split0 then hit p1 hand 0, on stay, switch class to split1 then hit p1 hand1, on stay remove class and engage computer hit.
-	// this will work
 
 	$(`.stay`).on("click", function(e) {
 		if ($(".hit").hasClass("splitHand0")) {
@@ -711,6 +734,8 @@ const hand1a = $(`.hand1`)
 	.removeClass("hand1");
 
 const checkSplit = function() {
+	$(".card1, .card2").removeClass("animated");
+	$(".p1").addClass("split");
 	app.p0Hand.push(app.p1Hand[0]);
 	$(".p0Score")
 		.addClass("score0")
@@ -719,8 +744,8 @@ const checkSplit = function() {
 
 	// prepend the split hand
 	$(`.hand0`).append(hand1a);
-	$(".hand0").css({ height: "100%", width: "50%" });
-	$(".hand1").css("width", "50%");
+	$(".hand0").css({ height: "40%", width: "calc(100% - 20px)", "margin-bottom": "20px" });
+	$(".hand1").css({ height: "40%", width: "calc(100% - 20px)" });
 	// take the first card out of the second hand's data
 	app.p1Hand.shift();
 	// make hit button for only hand 1

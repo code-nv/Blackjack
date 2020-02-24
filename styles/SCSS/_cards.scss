@@ -81,12 +81,13 @@
 .p2 {
 	@include flexRow(flex-start);
 	position: relative;
-	width: calc(20rem + 5%);
+	width: calc(18rem + 5%);
 	height: calc(12rem + 5%);
 	min-height: 7rem;
 	border: 5px solid $accent;
 	border-radius: 10px 10px 50% 50%;
 	padding: 10px;
+	transition: height 0.4s;
 
 	@include maxWidth740 {
 		width: calc(15rem + 10%);
@@ -101,6 +102,15 @@
 		border-radius: 10px;
 		width: 48%;
 	}
+}
+
+.p1.split {
+	height: calc(22rem + 5%);
+	min-height: 14rem;
+	border-radius: 10px 10px 75px 75px;
+	flex-wrap: wrap;
+	padding: 5px;
+	align-content: flex-start;
 }
 
 // hand styles
@@ -163,8 +173,8 @@
 
 .score1 {
 	left: initial;
-	top: 0;
-	right: -50px;
+	top: 50%;
+	left: -50px;
 }
 .score0:before {
 	content: " Hand 1";
@@ -179,7 +189,7 @@
 	content: " Hand 2";
 	position: absolute;
 	top: -20px;
-	left: -5px;
+	left: -9px;
 	width: calc(40px + 1.7rem);
 	color: $white;
 	font-size: 1.8rem;
