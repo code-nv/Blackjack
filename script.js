@@ -290,143 +290,114 @@ app.showHouse = function() {
 	$(`.p2Score p`).css("opacity", "1");
 };
 
-app.computerHit = function(split) {
-	setTimeout(function() {
-		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
-		}
-	}, 200);
-	setTimeout(function() {
-		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
-		}
-	}, 600);
-	setTimeout(function() {
-		if (app.p2Total < 17 && app.p1Total > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
-		}
-	}, 1000);
-	setTimeout(function() {
-		app.endRound();
-	}, 1500);
-};
-
-app.computerHitSplit = function() {
-	let p1Best = 0;
-	if (app.p0Total > 21) {
-		p1Best = app.p1.Total;
-	} else if (app.p1Total > 21) {
-		p1Best = app.p0Total;
-	} else if (app.p0Total > app.p1Total) {
-		p1Best = app.p0Total;
-	} else {
-		p1Best = app.p1Total;
+app.computerHit = function() {
+	let i = 300;
+	if (app.p2Total < 17) {
+		app.hit("p2Hand", "p2", "", "p2Total");
 	}
+	i += 700;
 	setTimeout(function() {
-		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
+		if (app.p2Total < 17) {
+			app.computerHit();
+		} else {
+			setTimeout(function() {
+				app.endRound();
+			}, 500);
 		}
-	}, 200);
-	setTimeout(function() {
-		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
-		}
-	}, 600);
-	setTimeout(function() {
-		if (app.p2Total < 17 && p1Best > app.p2Total) {
-			app.hit("p2Hand", "p2", "", "p2Total");
-		}
-	}, 1000);
-	setTimeout(function() {
-		app.endRoundSplit();
-	}, 1500);
+	}, i);
 };
 
-app.endRound = function(p1Best = app.p1Total) {
-	app.winner = true;
+app.endRound = function() {
+	app.winnerObj = [
+		{
+			hand1: true,
+			winner: true,
+			type: "",
+			total: app.p1Total,
+			payout: 0
+		},
+		{
+			hand0: true,
+			winner: false,
+			type: "",
+			total: app.p0Total,
+			payout: 0
+		}
+	];
+
+	app.checkOutcome(app.winnerObj[0]);
+	if (app.winnerObj[1].total > 0) {
+		console.log("still", app.winnerObj[1].total);
+		app.checkOutcome(app.winnerObj[1]);
+	}
+	app.winLogic();
+};
+
+app.checkOutcome = function(hand) {
+	hand.winner = true;
 	app.freezePlayer();
-	if (p1Best === 21) {
-		app.winBy21();
-		app.payOutLogic(3);
+	if (hand.total === 21) {
+		hand.type = "blackjack";
+		hand.payout = 3;
 	} else if (app.p2Total === 21) {
-		app.winner = false;
-		app.loseSpecial();
-		app.payOutLogic(0);
+		hand.winner = false;
+		hand.type = "blackjack";
+		hand.payout = 0;
 	} else if (app.p2Total > 21) {
-		app.winEnd();
-		app.payOutLogic(2);
-	} else if (p1Best > 21) {
-		app.winner = false;
-		app.lose();
-		app.payOutLogic(0);
-	} else if (p1Best > app.p2Total) {
-		app.winEnd();
-		app.payOutLogic(2);
-	} else if (p1Best === app.p2Total && p1Best > 0) {
-		app.winTie();
-		app.payOutLogic(1);
-	} else if (p1Best > 0) {
-		app.winner = false;
-		app.lose();
-		app.payOutLogic(0);
+		hand.type = "normal";
+		hand.payout = 2;
+	} else if (hand.total > 21) {
+		hand.winner = false;
+		hand.type = "normal";
+		hand.payout = 0;
+	} else if (hand.total > app.p2Total) {
+		hand.type = "normal";
+		hand.payout = 2;
+	} else if (hand.total === app.p2Total && hand.total > 0) {
+		hand.type = "tie";
+		hand.payout = 1;
+	} else if (hand.total > 0) {
+		hand.winner = false;
+		hand.type = "normal";
+		hand.payout = 0;
 	}
 };
 
-app.endRoundSplit = function() {
-	app.winObj = {};
-	// const { hand1, hand2 } = app.winObj;
-	app.winObj.hand1 = {
-		value: app.p0Total,
-		blackjack: false,
-		win: false,
-		tie: false,
-		lose: false
-	};
-	const $hand1 = app.winObj.hand2;
-	app.winObj.hand2 = {
-		value: app.p1Total,
-		blackjack: false,
-		win: false,
-		tie: false,
-		lose: false
-	};
-	const $hand2 = app.winObj.hand2;
+const $win = $(`.winScreen`);
 
-	app.results = [];
-	app.freezePlayer();
+app.winScreen = function() {
+	$win.css("display", "block");
+};
 
-	for (let i = 1; i < 3; i++) {
-		i === 1 ? ($hand = app.winObj.hand1) : ($hand = app.winObj.hand2);
-		// app.winner = true;
-		if ($hand.value === 21) {
-			$hand.blackjack = true;
-			app.results.push(i + "winBlackjack");
-		} else if (app.p2Total === 21) {
-			app.winner = false;
-			$hand.lose = true;
-			app.results.push(i + "loseBlackjack");
-		} else if (app.p2Total > 21) {
-			$hand.win = true;
-			app.results.push(i + "winBust");
-		} else if ($hand.value > 21) {
-			app.winner = false;
-			$hand.bust = true;
-			app.results.push(i + "loseBust");
-		} else if ($hand.value > app.p2Total) {
-			$hand.win = true;
-			app.results.push(i + "winNormal");
-		} else if ($hand.value === app.p2Total && $hand.value > 0) {
-			$hand.tie = true;
-			app.results.push(i + "tie");
-		} else if ($hand.value > 0) {
-			app.winner = false;
-			$hand.lose = true;
-			app.results.push(i + "loseNormal");
+app.winLogic = function() {
+	if (app.winnerObj[1].total > 0) {
+		const hand1 = app.winnerObj[1];
+		const hand2 = app.winnerObj[0];
+		const message1 =
+			hand1.type == "tie" ? "Hand 1: Tie!" : hand1.winner === true ? "Hand 1: Winner!" : "Hand 1: Loser!";
+		const message2 =
+			hand2.type == "tie" ? "Hand 2: Tie!" : hand2.winner === true ? "Hand 2: Winner!" : "Hand 2: Loser!";
+		app.winScreen();
+		$win.prepend(`<h3>${message1}</h3> <h3>${message2}</h3>`);
+		$win.children("h2, p").empty();
+	} else {
+		const { winner, type } = app.winnerObj[0];
+		console.log(winner, type);
+		app.winScreen();
+		$win.children("h2").text(winner == true ? "winner!" : "you lost");
+		if (winner == true) {
+			$win
+				.children("p")
+				.text(type == "normal" ? "Congratulations, enjoy your winnings!" : "You got black jack! Enjoy the big bucks!");
+		} else if (type == "tie") {
+			$win.children("h2").text("You tied!");
+			$win.children("p").text(`No one wins, but at least you get your bet back!`);
+		} else {
+			$win.children("p").text("too bad 💀");
 		}
 	}
-	console.log(app.results);
-	// results are pushed into app.results
-	// create win screen based on these values
+
+	app.payOutLogic();
 };
 
 app.nextRound = function() {
@@ -440,14 +411,26 @@ app.nextRound = function() {
 	}
 	app.p1.length = 0;
 	app.p2.length = 0;
+	app.p0Hand.length = 0;
 	app.p1Hand.length = 0;
 	app.p2Hand.length = 0;
+	app.p0Total = 0;
 	app.p1Total = 0;
 	app.p2Total = 0;
-
 	$betButton.removeAttr("disabled");
 	$(".doubleDown").attr("disabled", "true");
 	$(".earnings").toggleClass("attention attention2");
+	if ($(".p1").hasClass("split") === true) {
+		$(".p1").removeClass("split");
+		$(".p0Score")
+			.removeClass("score0")
+			.css("display", "none");
+		$(".p1Score").removeClass("score1");
+		$(".hand0").empty();
+		$(".hand0").css({ height: "0", width: "0", "margin-bottom": "0" });
+		$(".hand1").css({ height: "100%", width: "calc(100% - 20px)" });
+		$(".winScreen h3").remove();
+	}
 };
 
 app.moreMoney = function() {
@@ -476,49 +459,10 @@ app.moreMoney = function() {
 	app.showMe();
 };
 
-// ===================== //
-//  win state  functions //
-// ===================== //
-$win = $(`.winScreen`);
-
-app.winScreen = function() {
-	$win.css("display", "block");
-	$win.children("h2").text("Winner! Ganier!");
-};
-
-app.winBy21 = function() {
-	app.winScreen();
-	$win.children("h2").text(`BLACKJACK!`);
-	$win.children("p").text(`Congrats! You get the big bucks$$$`);
-};
-
-app.winEnd = function() {
-	app.winScreen();
-	$win.children("p").text("YOU DID IT HELL YEAH");
-};
-
-app.winTie = function() {
-	app.winScreen();
-	$win.children("h2").text("You tied!");
-	$win.children("p").text(`No one wins, but at least you get your bet back!`);
-};
-
-app.lose = function() {
-	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text("you lost 💀");
-};
-
-app.loseSpecial = function() {
-	app.winScreen();
-	$win.children("h2").text("wasted");
-	$win.children("p").text(`house got 21, that's just bad luck`);
-};
-
 // ======= //
 // BETTING //
 // ======= //
-app.betLogic = () => {
+app.betLogic = function() {
 	app.current -= 50;
 	app.pool += 50;
 	$myMoney.text("Wallet: $" + app.current);
@@ -528,9 +472,12 @@ app.betLogic = () => {
 	}
 };
 
-app.payOutLogic = amount => {
-	if (app.winner) {
-		app.current += app.pool * amount;
+app.payOutLogic = function() {
+	if (app.winnerObj[0].winner == true) {
+		app.current += app.pool * app.winnerObj[0].payout;
+	}
+	if (app.winnerObj[1].winner == true) {
+		app.current += app.pool * app.winnerObj[0].payout;
 	}
 	app.pool = 0;
 	$myMoney.text("Wallet: $" + app.current);
@@ -672,8 +619,6 @@ app.init = function() {
 
 		if ($(this).hasClass("splitHand0")) {
 			app.hit("p0Hand", "p1", ".hand0", "p0Total");
-		} else if ($(this).hasClass("splitHand1")) {
-			app.hit("p1Hand", "p1", ".hand1", "p1Total");
 		} else {
 			app.hit("p1Hand", "p1", ".hand1", "p1Total");
 		}
@@ -691,7 +636,7 @@ app.init = function() {
 			e.preventDefault();
 			app.freezePlayer();
 			app.showHouse();
-			app.computerHitSplit();
+			app.computerHit();
 		} else {
 			e.preventDefault();
 			app.freezePlayer();
@@ -712,6 +657,10 @@ app.init = function() {
 			app.showHouse();
 			app.computerHit();
 		}, 1500);
+	});
+
+	$(`.splitHand`).on("click", function() {
+		checkSplit();
 	});
 
 	$(".winScreen").on("click", ".playAgain", function(e) {
@@ -765,9 +714,6 @@ const checkSplit = function() {
 	$(".p0Score p").text(app.p0Total);
 };
 
-$(`.splitHand`).on("click", function() {
-	checkSplit();
-});
 const splitHand = function() {
 	$(".p1").append(app.p1Clone[1]);
 };

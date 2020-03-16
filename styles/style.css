@@ -587,6 +587,10 @@ a {
   width: 40%;
 }
 
+.winScreen h3, .shopWindow h3 {
+  font-size: 3rem;
+}
+
 @media (max-width: 740px) {
   .winScreen, .shopWindow {
     top: 50%;
